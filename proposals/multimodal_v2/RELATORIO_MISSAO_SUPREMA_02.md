@@ -136,4 +136,4 @@ Quando o pacote chegar, o caminho já existe: `verify_package.py` → `adapters`
 | `aef819c` | Etapa B: matriz, adaptadores legados, modo sombra |
 | `1b14434` | Etapa C: SQLite (L1 medido, patch), lease, recuperação, filtros sem resultado, isolamento da fixture |
 | `509ca80` | Etapa D: cenários, qualidade temporal, biblioteca de técnicas |
-| (final) | Etapa E/G: ponta a ponta, pacote `handoff/`, plano, riscos, benchmark e este relatório |
+| `37bafbd` | Etapa E/G: ponta a ponta, pacote `handoff/`, plano, riscos, benchmark e este relatório |
