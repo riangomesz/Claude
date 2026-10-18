@@ -131,7 +131,8 @@ def build_result(mission_id: str, state: str, executed=(), skipped=(), analysis_
                    "human" if error_code in ("CONFLICT", "BUDGET_DENIED") else
                    "provide_evidence" if error_code == "MISSING_EVIDENCE" else
                    "fix_message" if error_code == "VALIDATION_ERROR" else
-                   "await_review" if state == "awaiting_review" else "none")
+                   "await_review" if state == "awaiting_review" else
+                   "retry_later" if state == "busy" else "none")
     return {
         "schema_version": RESULT_SCHEMA, "mission_id": mission_id, "state": state,
         "executed": list(executed), "skipped": list(skipped), "analysis_id": analysis_id,
@@ -145,7 +146,7 @@ def validate_result(res: Any) -> List[str]:
     p: List[str] = []
     if not isinstance(res, dict) or res.get("schema_version") != RESULT_SCHEMA:
         return [f"resultado deve ser objeto {RESULT_SCHEMA}"]
-    if res.get("state") not in STAGES + ("failed", "rejected"):
+    if res.get("state") not in STAGES + ("failed", "rejected", "busy"):
         p.append(f"state inválido {res.get('state')}")
     err = res.get("error")
     if err is not None and (err.get("code") not in ERROR_CODES or err.get("retryable") != ERROR_CODES[err["code"]]):

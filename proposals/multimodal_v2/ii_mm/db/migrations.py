@@ -205,7 +205,13 @@ M007 = Migration(7, "registro_de_missoes_idempotentes", (
     )""",
 ))
 
-MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004, M005, M006, M007)
+# M008 (Missão Suprema 02): posse e lease de etapa, para dois executores não rodarem a mesma etapa.
+M008 = Migration(8, "posse_e_lease_de_etapa", (
+    "ALTER TABLE processing_state ADD COLUMN owner TEXT",
+    "ALTER TABLE processing_state ADD COLUMN lease_until REAL",
+))
+
+MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004, M005, M006, M007, M008)
 LATEST_VERSION = MIGRATIONS[-1].version
 
 

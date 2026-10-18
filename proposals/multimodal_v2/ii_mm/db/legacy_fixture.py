@@ -16,9 +16,11 @@ from __future__ import annotations
 import ast
 import sqlite3
 import sys
+from contextlib import closing
 from pathlib import Path
 from typing import List
 
+REDIRECTED_DIRS = ("IMPORTS_DIR", "PROCESSED_DIR", "FAILED_DIR")
 SCHEMA_ORDER = (
     ("core.account_connection", "ensure_connection_schema"),
     ("core.curation", "ensure_curation_columns"),
@@ -48,7 +50,7 @@ def build_legacy_catalog(db_path: Path, projeto_dir: Path) -> None:
     db_path = Path(db_path)
     if db_path.name.lower() == "catalog.sqlite":
         raise RuntimeError("a fixture nunca escreve num arquivo chamado catalog.sqlite")
-    with sqlite3.connect(str(db_path)) as conn:
+    with closing(sqlite3.connect(str(db_path))) as conn, conn:  # closing: não depende do coletor de ciclos (achado L1)
         for sql in extract_base_ddl(projeto_dir):
             conn.execute(sql)
     root = str(Path(projeto_dir).resolve())
@@ -56,4 +58,15 @@ def build_legacy_catalog(db_path: Path, projeto_dir: Path) -> None:
         sys.path.insert(0, root)
     import importlib
     for mod, fn in SCHEMA_ORDER:
-        getattr(importlib.import_module(mod), fn)(db_path)
+        module = importlib.import_module(mod)
+        # account_connection cria storage/imports/{processed,failed} relativo ao BASE_DIR do PROJETO
+        # (efeito colateral descoberto na Missão Suprema 02): redireciona para junto do banco temporário.
+        saved = {name: getattr(module, name) for name in REDIRECTED_DIRS if hasattr(module, name)}
+        sandbox = db_path.resolve().parent / "legacy_storage" / "imports"
+        for name in saved:
+            setattr(module, name, sandbox if name == "IMPORTS_DIR" else sandbox / name.split("_")[0].lower())
+        try:
+            getattr(module, fn)(db_path)
+        finally:
+            for name, value in saved.items():
+                setattr(module, name, value)

@@ -13,11 +13,15 @@ e a referência de saída. Regras:
 - Interrupção (KeyboardInterrupt/SystemExit) deixa a etapa como `running`; a próxima execução a retoma.
 - Exceção comum marca `failed` com a mensagem; nova execução tenta de novo até `max_attempts`.
 - `awaiting_review` só conclui quando o handler devolve uma saída (ex.: id da revisão); `None` = aguardando.
+- Posse e lease (Missão Suprema 02): cada executor tem um `owner`. Uma etapa `running` de OUTRO dono com lease
+  válido não é tocada (estado `busy`); lease vencido (dono caiu) libera a retomada; o mesmo dono retoma na hora.
 """
 from __future__ import annotations
 
 import hashlib
 import sqlite3
+import time
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Callable, Dict, Iterable, List, Optional
@@ -52,7 +56,8 @@ def _now() -> str:
 
 
 class Pipeline:
-    def __init__(self, conn: sqlite3.Connection, handlers: Dict[str, Handler], max_attempts: int = 3):
+    def __init__(self, conn: sqlite3.Connection, handlers: Dict[str, Handler], max_attempts: int = 3,
+                 owner: Optional[str] = None, lease_s: float = 600.0, clock: Callable[[], float] = time.time):
         unknown = set(handlers) - set(STAGES)
         if unknown:
             raise ValueError(f"etapas desconhecidas: {sorted(unknown)}")
@@ -62,24 +67,38 @@ class Pipeline:
         if conn.isolation_level is not None:
             raise ValueError("use migrations.connect() (transações explícitas)")
         self.conn, self.handlers, self.max_attempts = conn, handlers, max_attempts
+        self.owner = owner or f"runner-{uuid.uuid4().hex[:8]}"
+        self.lease_s, self.clock = lease_s, clock
 
     def _row(self, video_pk: int, stage: str):
         return self.conn.execute("SELECT * FROM processing_state WHERE video_pk = ? AND stage = ?", (video_pk, stage)).fetchone()
 
     def _write(self, video_pk: int, stage: str, status: str, attempt: int, input_hash: str,
-               output_ref: Optional[str] = None, error: Optional[str] = None) -> None:
+               output_ref: Optional[str] = None, error: Optional[str] = None, claim: bool = False) -> Optional[str]:
+        """Grava o estado. Com `claim=True`, só grava se a etapa não estiver com lease válido de OUTRO dono;
+        devolve o dono atual nesse caso (e não grava). Leitura e escrita na mesma transação IMMEDIATE."""
         self.conn.execute("BEGIN IMMEDIATE")
         try:
+            if claim:
+                row = self.conn.execute("SELECT status, owner, lease_until FROM processing_state WHERE video_pk = ? AND stage = ?",
+                                        (video_pk, stage)).fetchone()
+                if row and row["status"] == "running" and row["owner"] not in (None, self.owner) \
+                        and (row["lease_until"] or 0) > self.clock():
+                    self.conn.execute("ROLLBACK")
+                    return row["owner"]
+            lease = self.clock() + self.lease_s if status == "running" else None
             self.conn.execute(
-                "INSERT INTO processing_state(video_pk, stage, status, attempt, input_hash, output_ref, error, updated_at) "
-                "VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(video_pk, stage) DO UPDATE SET status=excluded.status, "
+                "INSERT INTO processing_state(video_pk, stage, status, attempt, input_hash, output_ref, error, updated_at, owner, lease_until) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT(video_pk, stage) DO UPDATE SET status=excluded.status, "
                 "attempt=excluded.attempt, input_hash=excluded.input_hash, output_ref=excluded.output_ref, "
-                "error=excluded.error, updated_at=excluded.updated_at",
-                (video_pk, stage, status, attempt, input_hash, output_ref, error, _now()))
+                "error=excluded.error, updated_at=excluded.updated_at, owner=excluded.owner, lease_until=excluded.lease_until",
+                (video_pk, stage, status, attempt, input_hash, output_ref, error, _now(), self.owner, lease))
             self.conn.execute("COMMIT")
         except BaseException:
-            self.conn.execute("ROLLBACK")
+            if self.conn.in_transaction:
+                self.conn.execute("ROLLBACK")
             raise
+        return None
 
     @staticmethod
     def _input_hash(stage: str, upstream: Dict[str, str]) -> str:
@@ -112,7 +131,10 @@ class Pipeline:
                 if row["status"] == "failed" and row["attempt"] >= self.max_attempts:
                     report.state, report.error = TERMINAL_FAILED, f"{stage}: limite de {self.max_attempts} tentativas ({row['error']})"
                     return report
-            self._write(video_pk, stage, "running", attempt, ih)
+            holder = self._write(video_pk, stage, "running", attempt, ih, claim=True)
+            if holder is not None:
+                report.state, report.error = "busy", f"{stage}: em execução por {holder} (lease válido)"
+                return report
             try:
                 out = self.handlers[stage](StageContext(video_pk, stage, dict(upstream), attempt))
             except (KeyboardInterrupt, SystemExit):

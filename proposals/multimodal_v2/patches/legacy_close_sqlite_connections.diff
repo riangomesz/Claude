@@ -1,0 +1,284 @@
+--- a/core/account_connection.py
++++ b/core/account_connection.py
+@@ -17,6 +17,7 @@
+ import os
+ import shutil
+ import sqlite3
++from contextlib import closing
+ import zipfile
+ from pathlib import Path
+ from typing import Any, Dict, List, Optional, Tuple
+@@ -138,7 +139,7 @@
+     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+     FAILED_DIR.mkdir(parents=True, exist_ok=True)
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+ 
+         # 1. Tabela de contas conectadas
+@@ -393,7 +394,7 @@
+     Comprova que os 83 itens atuais pertencem à conta riangomessport10@gmail.com (exportação rianrocha.ia).
+     """
+     p = Path(db_path).resolve()
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         c = conn.cursor()
+ 
+@@ -438,7 +439,7 @@
+     latest_session_id: Optional[str] = None
+     latest_session_with_new_id: Optional[str] = None
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         c = conn.cursor()
+ 
+@@ -609,7 +610,7 @@
+     p = Path(db_path).resolve()
+     ensure_connection_schema(p)
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         row = conn.execute("SELECT * FROM connected_accounts WHERE account_identifier = ?", (account_identifier,)).fetchone()
+         account_data = dict(row) if row else {}
+@@ -723,7 +724,7 @@
+             total_new_reels += new_reels
+ 
+             # Registrar histórico
+-            with sqlite3.connect(str(p)) as conn:
++            with closing(sqlite3.connect(str(p))) as conn, conn:
+                 conn.execute("""
+                     INSERT INTO meta_imports_history (
+                         account_identifier, archive_filename, archive_path,
+@@ -813,7 +814,7 @@
+     p = Path(db_path).resolve()
+     ensure_connection_schema(p)
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute("SELECT id, triage_decision, quality_rating FROM instagram_items WHERE id = ?", (item_id,))
+         row = cursor.fetchone()
+@@ -1017,7 +1018,7 @@
+ 
+     pending_slide_registrations: List[Tuple[str, List[Dict[str, Any]]]] = []
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 
+--- a/core/audiovisual_pilot.py
++++ b/core/audiovisual_pilot.py
+@@ -4,7 +4,7 @@
+ from typing import Dict, List, Optional, Tuple
+ from pydantic import BaseModel
+ import sqlite3
+-
++from contextlib import closing
+ from config.settings import settings
+ from core.audio_processor import probe_audio, extract_audio_track, AudioMetadata
+ from core.cost_tracker import (
+@@ -312,7 +312,7 @@
+ 
+     if mode_lower == ExecutionMode.REAL:
+         # Modo Real: Persiste vídeo verificado e registra auditoria de custo na tabela analyses
+-        with sqlite3.connect(str(Path(db_path).resolve())) as conn:
++        with closing(sqlite3.connect(str(Path(db_path).resolve()))) as conn, conn:
+             cursor = conn.cursor()
+             cursor.execute("""
+                 INSERT OR REPLACE INTO videos (id, sha256_hash, title, author, source_type, original_url, local_path)
+@@ -333,7 +333,7 @@
+ 
+     elif mode_lower == ExecutionMode.LOCAL:
+         # Modo Local: Registra metadados técnicos do vídeo no catálogo, sem registro de análise cognitiva
+-        with sqlite3.connect(str(Path(db_path).resolve())) as conn:
++        with closing(sqlite3.connect(str(Path(db_path).resolve()))) as conn, conn:
+             cursor = conn.cursor()
+             cursor.execute("""
+                 INSERT OR REPLACE INTO videos (id, sha256_hash, title, author, source_type, original_url, local_path)
+@@ -353,7 +353,7 @@
+         # REGRA INVIOLÁVEL: O modo de teste NUNCA alimenta o catálogo de produção como conhecimento real
+         # Somente grava caso um banco de teste explícito e isolado tenha sido fornecido
+         if not is_production_db:
+-            with sqlite3.connect(str(Path(db_path).resolve())) as conn:
++            with closing(sqlite3.connect(str(Path(db_path).resolve()))) as conn, conn:
+                 cursor = conn.cursor()
+                 cursor.execute("""
+                     INSERT OR REPLACE INTO videos (id, sha256_hash, title, author, source_type, original_url, local_path)
+--- a/core/cost_tracker.py
++++ b/core/cost_tracker.py
+@@ -1,4 +1,5 @@
+ import sqlite3
++from contextlib import closing
+ from pathlib import Path
+ from typing import Dict, Optional
+ from pydantic import BaseModel
+@@ -218,7 +219,7 @@
+     path = Path(db_path)
+     if not path.exists():
+         return
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.execute("""
+             INSERT INTO analyses (video_id, model_used, tokens_input, tokens_output, cost_usd, markdown_path)
+             VALUES (?, ?, ?, ?, ?, ?)
+--- a/core/curation.py
++++ b/core/curation.py
+@@ -2,6 +2,7 @@
+ import json
+ import re
+ import sqlite3
++from contextlib import closing
+ from pathlib import Path
+ from typing import Any, Dict, List, Optional, Tuple
+ 
+@@ -300,7 +301,7 @@
+ 
+     rules_applied: Dict[str, int] = {}
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute("""
+             SELECT id, owner_username, owner_name, caption, hashtags_json, curator_note, curation_rule
+@@ -413,7 +414,7 @@
+ 
+     sql = f"UPDATE instagram_items SET {', '.join(updates)} WHERE id = ?"
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute(sql, params)
+         conn.commit()
+@@ -461,7 +462,7 @@
+         }
+ 
+     ensure_curation_columns(path)
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute("SELECT COUNT(*) FROM instagram_items")
+         total = cursor.fetchone()[0]
+@@ -549,7 +550,7 @@
+     path = Path(db_path).resolve()
+     ensure_curation_columns(path)
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute("SELECT triage_decision, is_archived, review_status FROM instagram_items WHERE id = ?", (item_id,))
+         row = cursor.fetchone()
+@@ -574,7 +575,7 @@
+     from core import trash_manager
+     trash_manager.restore_item_from_trash(item_id, db_path=path)
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         cursor.execute("SELECT triage_decision, is_archived, review_status FROM instagram_items WHERE id = ?", (item_id,))
+         row = cursor.fetchone()
+@@ -623,7 +624,7 @@
+     path = Path(db_path).resolve()
+     ensure_curation_columns(path)
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         cursor = conn.cursor()
+         if item_id:
+             cursor.execute(
+--- a/core/instagram_importer.py
++++ b/core/instagram_importer.py
+@@ -3,6 +3,7 @@
+ import json
+ import re
+ import sqlite3
++from contextlib import closing
+ import zipfile
+ from pathlib import Path
+ from typing import Any, Dict, List, Optional, Tuple
+@@ -780,7 +781,7 @@
+     provenance_source = f"{collection} ({account})"
+     sess_id = f"single_{now_ts}"
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 
+@@ -953,7 +954,7 @@
+     db = Path(db_path).resolve()
+     inserted, duplicates, total = save_instagram_items_to_sqlite(db, items)
+ 
+-    with sqlite3.connect(str(db)) as conn:
++    with closing(sqlite3.connect(str(db))) as conn, conn:
+         cursor = conn.cursor()
+         for it in items:
+             opp_exists = cursor.execute(
+--- a/core/trash_manager.py
++++ b/core/trash_manager.py
+@@ -18,6 +18,7 @@
+ import os
+ import shutil
+ import sqlite3
++from contextlib import closing
+ from pathlib import Path
+ from typing import Any, Dict, List, Optional, Tuple
+ 
+@@ -75,7 +76,7 @@
+     eff_trash_t.mkdir(parents=True, exist_ok=True)
+     (eff_trash / "images").mkdir(parents=True, exist_ok=True)
+ 
+-    with sqlite3.connect(str(p)) as conn:
++    with closing(sqlite3.connect(str(p))) as conn, conn:
+         conn.execute("""
+             CREATE TABLE IF NOT EXISTS trash_items (
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+@@ -152,7 +153,7 @@
+     if not video_path:
+         return False
+ 
+-    with sqlite3.connect(str(db_path)) as conn:
++    with closing(sqlite3.connect(str(db_path))) as conn, conn:
+         cursor = conn.cursor()
+         # Procura por outras referências que apontem para o mesmo arquivo ou mesmo nome
+         v_name = Path(video_path).name
+@@ -185,7 +186,7 @@
+     eff_trash_img = eff_trash / "images"
+     eff_trash_img.mkdir(parents=True, exist_ok=True)
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 
+@@ -402,7 +403,7 @@
+     ensure_trash_schema(path)
+     eff_base, _, _, _, _ = _resolve_env_dirs(path)
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 
+@@ -526,7 +527,7 @@
+     purged_items: List[str] = []
+     freed_bytes = 0
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 
+@@ -621,7 +622,7 @@
+     items = []
+     now = datetime.datetime.now()
+ 
+-    with sqlite3.connect(str(path)) as conn:
++    with closing(sqlite3.connect(str(path))) as conn, conn:
+         conn.row_factory = sqlite3.Row
+         cursor = conn.cursor()
+ 

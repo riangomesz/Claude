@@ -30,26 +30,26 @@ def tables(conn):
 class MigrationTest(unittest.TestCase):
     def test_fresh_database_reaches_latest_and_is_idempotent(self):
         conn = fresh(self)
-        self.assertEqual(migrate(conn), [1, 2, 3, 4, 5, 6, 7])
+        self.assertEqual(migrate(conn), [1, 2, 3, 4, 5, 6, 7, 8])
         self.assertEqual(current_version(conn), LATEST_VERSION)
         self.assertEqual(migrate(conn), [])
-        self.assertEqual(len(applied(conn)), 7)
+        self.assertEqual(len(applied(conn)), 8)
         self.assertTrue({"refs", "videos", "analyses", "evidence", "reviews", "processing_state", "issues"} <= tables(conn))
 
     def test_stepwise_upgrade(self):
         conn = fresh(self)
         self.assertEqual(migrate(conn, target=2), [1, 2])
         self.assertNotIn("reviews", tables(conn))
-        self.assertEqual(migrate(conn), [3, 4, 5, 6, 7])
+        self.assertEqual(migrate(conn), [3, 4, 5, 6, 7, 8])
 
     def test_failed_migration_rolls_back_entirely(self):
-        bad = Migration(8, "quebrada", ("CREATE TABLE nova_ok (x INTEGER)", "CREATE TABLE refs (x INTEGER)"))
+        bad = Migration(9, "quebrada", ("CREATE TABLE nova_ok (x INTEGER)", "CREATE TABLE refs (x INTEGER)"))
         conn = opened(self)
         with self.assertRaises(MigrationError) as ctx:
             migrate(conn, MIGRATIONS + (bad,))
         self.assertIn("desfeita", str(ctx.exception))
         self.assertNotIn("nova_ok", tables(conn))
-        self.assertEqual(current_version(conn), 7)
+        self.assertEqual(current_version(conn), 8)
 
     def test_edited_applied_migration_is_detected(self):
         conn = opened(self)

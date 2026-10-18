@@ -79,6 +79,8 @@ class ResultAndSignatureTest(unittest.TestCase):
         self.assertEqual(build_result("m", "failed", error_code="TRANSIENT")["next_action"], "retry")
         self.assertEqual(build_result("m", "failed", error_code="MISSING_EVIDENCE")["next_action"], "provide_evidence")
         self.assertEqual(build_result("m", "failed", error_code="CONFLICT")["next_action"], "human")
+        busy = build_result("m", "busy")  # etapa com lease de outro executor (pipeline M008)
+        self.assertEqual((busy["next_action"], validate_result(busy)), ("retry_later", []))
         with self.assertRaises(ValueError):
             build_result("m", "failed", error_code="QUALQUER")
         bad = build_result("m", "failed", error_code="TRANSIENT"); bad["error"]["retryable"] = False

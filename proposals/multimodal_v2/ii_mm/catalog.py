@@ -134,8 +134,30 @@ def build_sql(q: Query, cursor: Optional[str], limit: int) -> Tuple[str, List[An
     return sql, args + [limit + 1]
 
 
+def _value_exists_anywhere(conn: sqlite3.Connection, q: Query) -> bool:
+    """Checagem barata por índice: se o valor filtrado não existe em NENHUMA análise, o resultado é vazio.
+
+    Sem isso, um filtro sem resultado percorria o catálogo inteiro (24 ms com 10.000 registros no benchmark).
+    Só existência global: nunca decide inclusão de um item específico, logo não esconde resultado real."""
+    checks = []
+    if q.tool:
+        checks.append(("SELECT 1 FROM tools WHERE name = ?" + (" AND status = 'visually_identified'" if q.tool_visual_only else "") + " LIMIT 1", [q.tool]))
+    if q.technique:
+        checks.append(("SELECT 1 FROM techniques WHERE technique = ?" + (" AND level = ?" if q.technique_level else "") + " LIMIT 1",
+                       [q.technique] + ([q.technique_level] if q.technique_level else [])))
+    if q.evidence_tag:
+        checks.append(("SELECT 1 FROM evidence WHERE tag = ? LIMIT 1", [q.evidence_tag]))
+    if q.category:
+        checks.append(("SELECT 1 FROM categories WHERE category = ? LIMIT 1", [q.category]))
+    if q.author:
+        checks.append(("SELECT 1 FROM refs WHERE author_handle = ? LIMIT 1", [q.author]))
+    return all(conn.execute(sql, args).fetchone() for sql, args in checks)
+
+
 def search(conn: sqlite3.Connection, q: Query, cursor: Optional[str] = None, limit: int = 50) -> Page:
-    sql, args = build_sql(q, cursor, limit)
+    sql, args = build_sql(q, cursor, limit)  # valida a consulta antes de qualquer atalho
+    if not _value_exists_anywhere(conn, q):
+        return Page([], None, sql)
     rows = [dict(r) for r in conn.execute(sql, args)]
     has_more = len(rows) > limit
     rows = rows[:limit]
