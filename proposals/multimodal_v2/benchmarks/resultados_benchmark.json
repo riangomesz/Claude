@@ -1,0 +1,275 @@
+{
+  "methodology": "Benchmark reproduzível com dados SINTÉTICOS (Tarefa 17).\n\nUso:  python3 tools/benchmark.py [--sizes 82,1000,10000] [--seed 7] [--out benchmarks/resultados_benchmark.json]\n\nAs cargas (82 / 1.000 / 10.000) são volumes de teste, NÃO o tamanho real do catálogo do projeto.\nOs números valem para o ambiente registrado no JSON e não são garantia de desempenho em produção.\nMede: classificação, inserção (1 transação por análise), reenvio idempotente, aliases, consultas\n(1ª página, página profunda por cursor vs OFFSET, filtros), varredura paginada vs fetchall (memória)\ne retomada do pipeline após interrupção.",
+  "seed": 7,
+  "environment": {
+    "python": "3.13.16",
+    "sqlite": "3.45.1",
+    "platform": "Linux-6.18.44-fc-v139-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cpu_count": 4,
+    "mem_total_mb": 16093,
+    "processor": "x86_64",
+    "journal_mode": "WAL (arquivo temporário em disco)"
+  },
+  "runs": [
+    {
+      "records": 82,
+      "classify_total_ms": 58.41,
+      "classify_per_doc_ms": 0.7123,
+      "evidence_total": 203,
+      "insert_total_ms": 245.19,
+      "insert_peak_python_mb": 0.61,
+      "insert_per_doc_ms": 2.9901,
+      "db_size_mb": 0.8,
+      "resave_10pct_ms": 1.4,
+      "resave_new_rows": 0,
+      "url_variant_resave_5pct_ms": 0.56,
+      "row_counts": {
+        "refs": 82,
+        "videos": 82,
+        "analyses": 82,
+        "evidence": 203,
+        "ref_aliases": 0
+      },
+      "duplicates_created": 0,
+      "query_first_page": {
+        "median_ms": 0.38,
+        "min_ms": 0.327,
+        "max_ms": 0.696,
+        "n": 5
+      },
+      "deep_page_offset_rows": 0,
+      "query_deep_page_cursor": {
+        "median_ms": 0.326,
+        "min_ms": 0.305,
+        "max_ms": 0.334,
+        "n": 5
+      },
+      "query_deep_page_offset": {
+        "median_ms": 0.126,
+        "min_ms": 0.116,
+        "max_ms": 0.211,
+        "n": 5
+      },
+      "query_category": {
+        "median_ms": 0.302,
+        "min_ms": 0.264,
+        "max_ms": 0.389,
+        "n": 5
+      },
+      "query_tool_visual": {
+        "median_ms": 0.073,
+        "min_ms": 0.068,
+        "max_ms": 0.181,
+        "n": 5
+      },
+      "query_subject": {
+        "median_ms": 0.261,
+        "min_ms": 0.247,
+        "max_ms": 0.395,
+        "n": 5
+      },
+      "query_platform_author": {
+        "median_ms": 0.013,
+        "min_ms": 0.012,
+        "max_ms": 0.101,
+        "n": 5
+      },
+      "scan_paginated": {
+        "ms": 2.25,
+        "rows": 82,
+        "peak_python_mb": 0.106
+      },
+      "scan_fetchall_documents": {
+        "ms": 12.56,
+        "rows": 82,
+        "peak_python_mb": 1.268
+      },
+      "resume": {
+        "videos": 82,
+        "stage_executions_needed": 738,
+        "before_crash": 369,
+        "after_resume": 370,
+        "repeated_executions": 1,
+        "rerun_all_done_calls": 0,
+        "ms_before_crash": 123.32,
+        "ms_resume": 108.08,
+        "ms_noop_rerun": 4.94
+      },
+      "wall_total_s": 0.6
+    },
+    {
+      "records": 1000,
+      "classify_total_ms": 660.71,
+      "classify_per_doc_ms": 0.6607,
+      "evidence_total": 2481,
+      "insert_total_ms": 3217.83,
+      "insert_peak_python_mb": 0.11,
+      "insert_per_doc_ms": 3.2178,
+      "db_size_mb": 8.23,
+      "resave_10pct_ms": 17.88,
+      "resave_new_rows": 0,
+      "url_variant_resave_5pct_ms": 8.18,
+      "row_counts": {
+        "refs": 1000,
+        "videos": 1000,
+        "analyses": 1000,
+        "evidence": 2481,
+        "ref_aliases": 0
+      },
+      "duplicates_created": 0,
+      "query_first_page": {
+        "median_ms": 0.364,
+        "min_ms": 0.333,
+        "max_ms": 0.795,
+        "n": 5
+      },
+      "deep_page_offset_rows": 500,
+      "query_deep_page_cursor": {
+        "median_ms": 0.408,
+        "min_ms": 0.34,
+        "max_ms": 0.458,
+        "n": 5
+      },
+      "query_deep_page_offset": {
+        "median_ms": 0.396,
+        "min_ms": 0.379,
+        "max_ms": 0.55,
+        "n": 5
+      },
+      "query_category": {
+        "median_ms": 0.59,
+        "min_ms": 0.522,
+        "max_ms": 1.154,
+        "n": 5
+      },
+      "query_tool_visual": {
+        "median_ms": 2.002,
+        "min_ms": 1.897,
+        "max_ms": 2.4,
+        "n": 5
+      },
+      "query_subject": {
+        "median_ms": 0.564,
+        "min_ms": 0.543,
+        "max_ms": 0.998,
+        "n": 5
+      },
+      "query_platform_author": {
+        "median_ms": 0.172,
+        "min_ms": 0.131,
+        "max_ms": 0.495,
+        "n": 5
+      },
+      "scan_paginated": {
+        "ms": 29.43,
+        "rows": 1000,
+        "peak_python_mb": 0.287
+      },
+      "scan_fetchall_documents": {
+        "ms": 170.42,
+        "rows": 1000,
+        "peak_python_mb": 15.857
+      },
+      "resume": {
+        "videos": 1000,
+        "stage_executions_needed": 9000,
+        "before_crash": 4500,
+        "after_resume": 4501,
+        "repeated_executions": 1,
+        "rerun_all_done_calls": 0,
+        "ms_before_crash": 1761.34,
+        "ms_resume": 1692.64,
+        "ms_noop_rerun": 73.29
+      },
+      "wall_total_s": 7.71
+    },
+    {
+      "records": 10000,
+      "classify_total_ms": 8779.09,
+      "classify_per_doc_ms": 0.8779,
+      "evidence_total": 24994,
+      "insert_total_ms": 37290.48,
+      "insert_peak_python_mb": 0.22,
+      "insert_per_doc_ms": 3.729,
+      "db_size_mb": 81.5,
+      "resave_10pct_ms": 166.01,
+      "resave_new_rows": 0,
+      "url_variant_resave_5pct_ms": 83.5,
+      "row_counts": {
+        "refs": 10000,
+        "videos": 10000,
+        "analyses": 10000,
+        "evidence": 24994,
+        "ref_aliases": 0
+      },
+      "duplicates_created": 0,
+      "query_first_page": {
+        "median_ms": 0.429,
+        "min_ms": 0.339,
+        "max_ms": 0.953,
+        "n": 5
+      },
+      "deep_page_offset_rows": 5000,
+      "query_deep_page_cursor": {
+        "median_ms": 0.582,
+        "min_ms": 0.543,
+        "max_ms": 0.776,
+        "n": 5
+      },
+      "query_deep_page_offset": {
+        "median_ms": 3.712,
+        "min_ms": 3.243,
+        "max_ms": 5.311,
+        "n": 5
+      },
+      "query_category": {
+        "median_ms": 0.695,
+        "min_ms": 0.614,
+        "max_ms": 1.488,
+        "n": 5
+      },
+      "query_tool_visual": {
+        "median_ms": 24.067,
+        "min_ms": 23.828,
+        "max_ms": 32.515,
+        "n": 5
+      },
+      "query_subject": {
+        "median_ms": 0.717,
+        "min_ms": 0.63,
+        "max_ms": 1.517,
+        "n": 5
+      },
+      "query_platform_author": {
+        "median_ms": 1.851,
+        "min_ms": 1.73,
+        "max_ms": 2.29,
+        "n": 5
+      },
+      "scan_paginated": {
+        "ms": 318.35,
+        "rows": 10000,
+        "peak_python_mb": 0.303
+      },
+      "scan_fetchall_documents": {
+        "ms": 4463.16,
+        "rows": 10000,
+        "peak_python_mb": 159.157
+      },
+      "resume": {
+        "videos": 1000,
+        "stage_executions_needed": 9000,
+        "before_crash": 4500,
+        "after_resume": 4501,
+        "repeated_executions": 1,
+        "rerun_all_done_calls": 0,
+        "ms_before_crash": 1768.92,
+        "ms_resume": 1903.91,
+        "ms_noop_rerun": 59.55
+      },
+      "wall_total_s": 55.56
+    }
+  ],
+  "max_rss_mb": 521.6
+}

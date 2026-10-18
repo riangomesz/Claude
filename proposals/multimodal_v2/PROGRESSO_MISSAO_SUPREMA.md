@@ -23,7 +23,8 @@ Não repita a auditoria inicial: ela está em `BASELINE_ATUAL.md`.
 | 14 | Revisão humana | IMPLEMENTADO / TESTADO | `ii_mm/review.py`, migração M005, `tests/test_review.py` |
 | 15 | Exportação Obsidian (staging) | IMPLEMENTADO / TESTADO | `ii_mm/obsidian_export.py`, `tests/test_obsidian_export.py` |
 | 16 | Contrato n8n | IMPLEMENTADO / TESTADO | `ii_mm/n8n_contract.py`, migração M007, `fixtures/n8n_*_example.json`, `tests/test_n8n_contract.py` |
-| 17–18 | (fila) | PENDENTE | |
+| 17 | Benchmark sintético | IMPLEMENTADO / TESTADO (smoke) / EXECUTADO | `tools/benchmark.py`, `BENCHMARK.md`, `benchmarks/resultados_benchmark.json` |
+| 18 | Demonstração isolada | IMPLEMENTADO / TESTADO | `ii_mm/demo.py`, `tests/test_demo_end_to_end.py` |
 
 ## Bloqueio de mídia (registrado uma vez)
 
@@ -65,3 +66,8 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - T15: nota com as 10 seções pedidas, escrita atômica, `unchanged` quando nada muda, bloco de curadoria e chaves `curador_*` preservados, recusa de cofre real (`.obsidian/`), texto de transcrição escapado (não fecha o bloco de curadoria).
 - T16: missão e resultado com contrato fechado, `mission_id` ligado ao conteúdo, URIs só relativas (bloqueia `..`, unidade Windows, UNC, http/file), modelos pagos proibidos por padrão, HMAC em tempo constante, gateway idempotente (reenvio devolve o resultado salvo; falha transitória é reexecutada).
 - Próxima: T17 (benchmark) e T18 (demonstração e relatório).
+
+### C6: Tarefas 17 e 18
+- Benchmark com 82, 1.000 e 10.000 registros executado. O próprio benchmark revelou um O(N²) na busca da análise corrente; corrigido com `CROSS JOIN`, plano travado em teste. Números em `BENCHMARK.md`.
+- Demonstração de ponta a ponta com formatos brutos (SRT, stdout do ffmpeg, ffprobe, manifesto de pacote, observações). Revelou o falso positivo "clica no link" virando demonstração; corrigido com exclusões nas pistas narrativas.
+- Próxima: documento de integração para o Antigravity e relatório final.

@@ -163,7 +163,7 @@ class Repository:
 
     def current_analysis_id(self, reference_id: str) -> Optional[str]:
         row = self.conn.execute(
-            "SELECT a.analysis_id FROM ref_videos rv JOIN analyses a ON a.video_pk = rv.video_pk "
+            "SELECT a.analysis_id FROM ref_videos rv CROSS JOIN analyses a ON a.video_pk = rv.video_pk "
             "WHERE rv.reference_id = ? AND a.status = 'current' ORDER BY a.created_at DESC, a.analysis_id LIMIT 1",
             (reference_id,)).fetchone()
         return row["analysis_id"] if row else None

@@ -119,6 +119,19 @@ class CatalogTest(unittest.TestCase):
         plan = " | ".join(explain(self.conn, Query(category="tutorial")))
         self.assertIn("SEARCH c USING", plan)
 
+    def test_current_analysis_lookup_is_per_reference_not_global(self):
+        """Regressão do O(N²) encontrado no benchmark: a análise corrente deve ser buscada por (status, video_pk)."""
+        for q in (Query(), Query(category="tutorial")):
+            plan = explain(self.conn, q)
+            lookups = [l for l in plan if l.startswith("SEARCH a ")]
+            self.assertTrue(lookups)
+            for l in lookups:
+                self.assertIn("video_pk=?", l, plan)
+        rplan = [r[-1] for r in self.conn.execute(
+            "EXPLAIN QUERY PLAN SELECT a.analysis_id FROM ref_videos rv CROSS JOIN analyses a ON a.video_pk = rv.video_pk "
+            "WHERE rv.reference_id = ? AND a.status = 'current'", ("x",))]
+        self.assertTrue(any("video_pk=?" in l for l in rplan if l.startswith("SEARCH a ")), rplan)
+
 
 if __name__ == "__main__":
     unittest.main()

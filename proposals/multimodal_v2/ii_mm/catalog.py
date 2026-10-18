@@ -116,7 +116,9 @@ def build_sql(q: Query, cursor: Optional[str], limit: int) -> Tuple[str, List[An
                 raise QueryError("intervalo temporal invertido")
             conds.append("e.t_start_s IS NOT NULL AND e.t_start_s <= ? AND COALESCE(e.t_end_s, e.t_start_s) >= ?"); eargs += [t1, t0]
         an_where.append(f"EXISTS (SELECT 1 FROM evidence e WHERE {' AND '.join(conds)})"); an_args += eargs
-    current = ("SELECT a.analysis_id FROM ref_videos rv JOIN analyses a ON a.video_pk = rv.video_pk "
+    # CROSS JOIN força a ordem ref_videos -> analyses. Com JOIN comum o planner varria todas as análises
+    # correntes por referência (idx_analyses_current só com status=?), um custo O(N²) visto no benchmark.
+    current = ("SELECT a.analysis_id FROM ref_videos rv CROSS JOIN analyses a ON a.video_pk = rv.video_pk "
                "WHERE rv.reference_id = r.reference_id AND a.status = 'current'")
     where, args = [f"EXISTS ({current}{''.join(' AND ' + w for w in an_where)})"], list(an_args)
     where += ref_where

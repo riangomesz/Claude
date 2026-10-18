@@ -44,6 +44,14 @@ class NarrativeTest(unittest.TestCase):
         doc["narrative_blocks"] = blocks
         self.assertEqual(validate_document(doc), [])
 
+    def test_cta_click_is_not_demonstration(self):
+        n = norm(); say(n, [(10, 14, "comenta e clica no link na bio")])
+        types = {b["type"] for b in suggest_blocks(n.build())}
+        self.assertIn("cta", types)
+        self.assertNotIn("demonstracao", types)
+        n = norm(); say(n, [(10, 14, "agora clica em legendas automaticas")])
+        self.assertIn("demonstracao", {b["type"] for b in suggest_blocks(n.build())})
+
     def test_position_only_hook_is_hypothesis(self):
         n = norm(); say(n, [(0.5, 2, "bom dia pessoal")])
         blocks = suggest_blocks(n.build())

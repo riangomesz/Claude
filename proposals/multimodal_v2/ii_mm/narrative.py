@@ -29,12 +29,29 @@ TEXT_CUES: Dict[str, List[str]] = {
     "oferta": ["desconto", "cupom", "gratis por", "semana gratis", "oferta", "teste gratis", "discount", "free trial"],
     "cta": ["link na bio", "comenta", "comente", "salva esse", "salve esse", "segue", "siga", "clica no link", "link in bio", "follow"],
 }
+# Pista dentro de uma frase excluída não conta ("clica no link" é CTA, não demonstração).
+TEXT_EXCLUDE: Dict[str, List[str]] = {
+    "demonstracao": ["clica no link", "clique no link", "clica no botao seguir", "olha so que preco"],
+    "beneficios": ["automatico do carro", "cambio automatico"],
+}
 VISUAL_CUES = {
     "ui_screen_visible": "demonstracao", "step_sequence_visible": "demonstracao", "cursor_or_click_visible": "demonstracao",
     "sales_offer_on_screen": "oferta", "price_or_discount_on_screen": "oferta",
 }
 
 _PATTERNS = {b: [(c, compile_keyword(c)) for c in cues] for b, cues in TEXT_CUES.items()}
+_EXCLUDE = {b: [compile_keyword(c) for c in cues] for b, cues in TEXT_EXCLUDE.items()}
+
+
+def _cue_hits(btype: str, norm: str) -> List[str]:
+    spans = [m.span() for p in _EXCLUDE.get(btype, []) for m in p.finditer(norm)]
+    hits = []
+    for cue, pat in _PATTERNS[btype]:
+        for m in pat.finditer(norm):
+            if not any(a <= m.start() and m.end() <= b for a, b in spans):
+                hits.append(cue)
+                break
+    return hits
 
 
 def _block_id(btype: str, t0: Optional[float], t1: Optional[float], source: str) -> str:
@@ -59,8 +76,8 @@ def suggest_blocks(doc: Dict[str, Any]) -> List[Dict[str, Any]]:
                     key=lambda e: (e["t_start_s"], e["evidence_id"]))
     for e in speech:
         norm = normalize(e["claim"])
-        for btype, pats in _PATTERNS.items():
-            hits = [c for c, p in pats if p.search(norm)]
+        for btype in _PATTERNS:
+            hits = _cue_hits(btype, norm)
             if hits:
                 add(btype, e["t_start_s"], e["t_end_s"], e, "mentioned_speech", "text_cue", hits)
     if speech and speech[0]["t_start_s"] <= HOOK_WINDOW_S:
@@ -73,7 +90,7 @@ def suggest_blocks(doc: Dict[str, Any]) -> List[Dict[str, Any]]:
         if e["status"] == "metadata_claim":
             norm = normalize(e["claim"])
             for btype in ("oferta", "cta"):
-                hits = [c for c, p in _PATTERNS[btype] if p.search(norm)]
+                hits = _cue_hits(btype, norm)
                 if hits:
                     add(btype, None, None, e, "suggested_metadata", "metadata_cue", hits)
     return sorted(blocks.values(), key=lambda b: (b["t_start_s"] is None, b["t_start_s"] or 0, b["type"], b["block_id"]))
