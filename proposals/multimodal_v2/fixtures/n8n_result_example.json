@@ -1,0 +1,17 @@
+{
+  "schema_version": "ii.mission_result.v1",
+  "mission_id": "ms_e95a4ddd5dbf1f43b3d6856f",
+  "state": "awaiting_review",
+  "executed": [
+    "evidence_normalized",
+    "classified"
+  ],
+  "skipped": [],
+  "analysis_id": "an_1_0123456789abcdef",
+  "error": null,
+  "next_action": "await_review",
+  "provenance": {
+    "classifier_version": "ii_mm.classifier/2.0.0",
+    "schema_version": "ii.reference_analysis.v2"
+  }
+}

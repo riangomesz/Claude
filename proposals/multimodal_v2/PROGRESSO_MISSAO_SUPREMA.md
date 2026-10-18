@@ -21,7 +21,9 @@ Não repita a auditoria inicial: ela está em `BASELINE_ATUAL.md`.
 | 12 | Engenharia reversa audiovisual | IMPLEMENTADO / TESTADO | `ii_mm/techniques.py`, `ii_mm/vocabulary.py`, `tests/test_narrative_techniques.py` |
 | 13 | Catálogo pesquisável | IMPLEMENTADO / TESTADO | `ii_mm/catalog.py`, migração M006, `tests/test_catalog.py` |
 | 14 | Revisão humana | IMPLEMENTADO / TESTADO | `ii_mm/review.py`, migração M005, `tests/test_review.py` |
-| 15–18 | (fila) | PENDENTE | |
+| 15 | Exportação Obsidian (staging) | IMPLEMENTADO / TESTADO | `ii_mm/obsidian_export.py`, `tests/test_obsidian_export.py` |
+| 16 | Contrato n8n | IMPLEMENTADO / TESTADO | `ii_mm/n8n_contract.py`, migração M007, `fixtures/n8n_*_example.json`, `tests/test_n8n_contract.py` |
+| 17–18 | (fila) | PENDENTE | |
 
 ## Bloqueio de mídia (registrado uma vez)
 
@@ -58,3 +60,8 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - T13: cursor keyset. O EXPLAIN mostrou `TEMP B-TREE` (ordenação do conjunto inteiro a cada página) na primeira versão; corrigido com a migração M006 (`idx_refs_created`), percurso por índice e `MAX()` no lugar de `ORDER BY` na subconsulta. O teste trava o plano.
 - T14: histórico imutável, estado corrente materializado (M005), concorrência otimista, sobreposição válida pelo contrato. O contrato pegou um caso real (ferramenta "visual" após rebaixar a observação) e o status passou a ser recalculado.
 - Próxima: T15 (Obsidian), T16 (n8n), T17 (benchmark), T18 (demonstração e relatório).
+
+### C5: Tarefas 15 e 16
+- T15: nota com as 10 seções pedidas, escrita atômica, `unchanged` quando nada muda, bloco de curadoria e chaves `curador_*` preservados, recusa de cofre real (`.obsidian/`), texto de transcrição escapado (não fecha o bloco de curadoria).
+- T16: missão e resultado com contrato fechado, `mission_id` ligado ao conteúdo, URIs só relativas (bloqueia `..`, unidade Windows, UNC, http/file), modelos pagos proibidos por padrão, HMAC em tempo constante, gateway idempotente (reenvio devolve o resultado salvo; falha transitória é reexecutada).
+- Próxima: T17 (benchmark) e T18 (demonstração e relatório).

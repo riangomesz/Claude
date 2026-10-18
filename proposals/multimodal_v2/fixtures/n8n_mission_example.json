@@ -1,0 +1,30 @@
+{
+  "schema_version": "ii.mission.v1",
+  "reference": {
+    "platform": "instagram",
+    "url": "https://www.instagram.com/reel/SYNTHn8n01/"
+  },
+  "requested_stages": [
+    "evidence_normalized",
+    "classified"
+  ],
+  "artifacts": [
+    {
+      "kind": "transcript",
+      "sha256": "e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+      "uri": "missions/SYNTHn8n01/transcript.json"
+    },
+    {
+      "kind": "frames_manifest",
+      "sha256": "252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111",
+      "uri": "missions/SYNTHn8n01/manifesto_pacote.json"
+    }
+  ],
+  "budget": {
+    "allow_paid_models": false,
+    "max_usd": 0
+  },
+  "requested_by": "n8n:workflow-teste",
+  "created_at": "2026-10-18T00:00:00Z",
+  "mission_id": "ms_e95a4ddd5dbf1f43b3d6856f"
+}

@@ -196,7 +196,16 @@ M006 = Migration(6, "indice_de_paginacao_do_catalogo", (
     "CREATE INDEX idx_refs_created ON refs(created_at, reference_id)",
 ))
 
-MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004, M005, M006)
+M007 = Migration(7, "registro_de_missoes_idempotentes", (
+    """CREATE TABLE missions (
+        mission_id TEXT PRIMARY KEY,
+        received_at TEXT NOT NULL,
+        state TEXT NOT NULL,
+        result_json TEXT
+    )""",
+))
+
+MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004, M005, M006, M007)
 LATEST_VERSION = MIGRATIONS[-1].version
 
 
