@@ -77,3 +77,34 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - Suíte final: 220 testes (216 OK e 4 pulados sem `PROJETO_MVP_DIR`; 220 OK com o clone).
 - As 18 frentes estão implementadas. Bloqueado: segunda análise visual do DQV5dm6gCvH (falta o pacote de mídia).
 - Para retomar: ler `RELATORIO_MISSAO_SUPREMA_01.md`, seção 11 (próximas tarefas).
+
+---
+
+# Missão Suprema 02: validação adversarial e handoff
+
+Estado inicial confirmado: commit `6005134`, `main` intocada (`34ee777`), clone do Projeto-MVP limpo (`c6845a4`), 220 testes verdes.
+T16 (verificação única): `/mnt/user-data/uploads` e `/mnt/attach` vazios, sem frames no disco. O piloto segue `blocked_missing_evidence` e não será verificado de novo nesta missão.
+
+### M2-C1: Etapa A (T01 a T03), 13 defeitos reproduzidos e corrigidos
+
+Método: script de sondagem → teste que falha no código atual → correção localizada → suíte verde. O registro de antes/depois fica no relatório final.
+
+| # | Defeito | Correção |
+|---|---|---|
+| A1 | Mesmo texto em NFC e NFD gerava evidências diferentes (dedup falhava entre Windows e macOS) | `contract.nfc()` no ID e no texto; adaptadores normalizam em NFC |
+| A2 | 3 quadros amostrados "provavam" mecanismo (transição/animação → `temporal_sequence`, categoria `supported_visual`) | Quadros amostrados registram `temporal_variation` observada e o mecanismo como `inference`; `temporal_sequence` exige `video_clip`; o contrato recusa tag de movimento observada sem trecho contínuo |
+| A3 | Revisão humana herdada por categoria cujas evidências mudaram | Só herda com o mesmo conjunto de evidências; senão `pending` + `stale_review_ref` |
+| A4 | Alias de URL podia apontar para a chave de OUTRA referência (resolução ambígua) | Alias recusado, issue de conflito registrada |
+| A5 | Documento salvo com `reference_id` diferente do registro | Grava com o ID registrado e preserva `original_reference_id` |
+| A6 | Markdown/HTML da transcrição ativo na nota (imagem remota, `<img>`, wikilink, código) | `_esc` neutraliza `< > [ ] ` * _ | &` |
+| A7 | Nome reservado do Windows (`CON`, `AUX.x`) gerava arquivo inválido | Prefixo e hash |
+| A8 | IDs que só diferem por maiúsculas colidiam em NTFS | Sufixo de hash do ID exato quando há maiúscula ou alteração |
+| A9 | Exceção do executor derrubava o gateway (e poderia vazar caminho local) | Vira `TRANSIENT` só com o nome da classe |
+| A10 | Corpo de qualquer tamanho era lido e parseado | Limite de 256 KB antes da assinatura |
+| A11 | Adaptadores sem limite de registros e de texto | `MAX_RECORDS=50.000` e `MAX_TEXT_CHARS=10.000`, com erro registrado |
+| A12 | Chave de primeiro nível com erro de digitação era aceita (dados somem em silêncio) | Lista de chaves conhecidas; extensões com `x_` |
+| A13 | Reconhecer interface pela aparência contava como identificação visual da ferramenta | Só `tool_name_visible`/`logo_visible` identificam; `external_knowledge` vira tipo de fonte (só `inference`) |
+
+Testes antigos que codificavam as regras revistas (A2, A7, A8, A13) foram ajustados explicitamente, com comentário apontando a regra.
+Guardas sem defeito (já protegidos, agora travados em teste): escrita através de symlink, staging-symlink para cofre, SQL malicioso nos filtros, hosts sósias (IDN, homóglifo, subdomínio), instrução embutida em transcrição.
+Suíte: 244 testes (240 OK, 4 pulados).

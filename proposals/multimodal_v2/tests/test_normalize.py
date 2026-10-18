@@ -53,13 +53,16 @@ class NormalizerTest(unittest.TestCase):
         self.assertEqual(bases, {"split_screen": "static_frame", "layered_composition": "frame_pair", "b_roll_visible": "frame_sequence"})
         self.assertTrue(any("rebaixada" in d for d in n.report["downgraded"]))
 
-    def test_motion_from_one_or_two_frames_becomes_inference(self):
+    def test_motion_from_sampled_frames_becomes_inference(self):
+        # Regra A2 (Missão Suprema 02): 3 quadros registram variação observada; o mecanismo segue hipótese.
         n = norm()
         n.add_observations(obs("P01", "P02", tag="kinetic_typography"))
         n.add_observations(obs("P01", "P02", "P03", tag="motion_text_in_clip"))
-        ev = {e["tag"]: e["status"] for e in n.build()["evidence"]}
-        self.assertEqual(ev["kinetic_typography"], "inference")
-        self.assertEqual(ev["motion_text_in_clip"], "observed_visual")
+        ev = {(e["tag"], e["status"]) for e in n.build()["evidence"]}
+        self.assertIn(("kinetic_typography", "inference"), ev)
+        self.assertIn(("motion_text_in_clip", "inference"), ev)
+        self.assertIn(("temporal_variation", "observed_visual"), ev)
+        self.assertNotIn(("motion_text_in_clip", "observed_visual"), ev)
         self.assertEqual(validate_document(n.build()), [])
 
     def test_unknown_frame_reference_is_rejected(self):

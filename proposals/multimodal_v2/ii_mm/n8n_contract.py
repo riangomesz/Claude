@@ -36,6 +36,7 @@ ARTIFACT_KINDS = ("transcript", "srt", "scene_candidates", "ffmpeg_scene_stdout"
 ERROR_CODES = {"VALIDATION_ERROR": False, "MISSING_EVIDENCE": False, "CONFLICT": False, "TRANSIENT": True,
                "BUDGET_DENIED": False}
 MAX_ARTIFACTS, MAX_STR = 64, 2048
+MAX_BODY_BYTES = 256 * 1024  # missão é metadado; artefatos vão por URI, nunca no corpo
 _SHA = re.compile(r"^[0-9a-f]{64}$")
 _MISSION_KEYS = {"schema_version", "mission_id", "reference", "requested_stages", "artifacts", "budget", "requested_by", "created_at"}
 _REF_KEYS = {"platform", "url", "video_id"}
@@ -177,6 +178,9 @@ class MissionGateway:
         self.conn, self.executor, self._secret = conn, executor, secret
 
     def receive(self, body: bytes, signature: Optional[str]) -> Dict[str, Any]:
+        if not isinstance(body, (bytes, bytearray)) or len(body) > MAX_BODY_BYTES:
+            return build_result("desconhecida", "rejected", error_code="VALIDATION_ERROR",
+                                error_message=f"corpo ausente ou acima do tamanho máximo ({MAX_BODY_BYTES} bytes)")
         if not verify_signature(body, self._secret, signature):
             return build_result("desconhecida", "rejected", error_code="VALIDATION_ERROR", error_message="assinatura inválida")
         try:
@@ -192,7 +196,10 @@ class MissionGateway:
             prev = json.loads(row["result_json"])
             if not (prev.get("error") or {}).get("retryable"):
                 return dict(prev, replayed=True)
-        result = self.executor(msg)
+        try:
+            result = self.executor(msg)
+        except Exception as exc:  # não vaza a mensagem (pode conter caminhos locais ou dados privados)
+            result = build_result(mid, "failed", error_code="TRANSIENT", error_message=f"erro interno no executor ({exc.__class__.__name__})")
         problems = validate_result(result)
         if problems:
             result = build_result(mid, "failed", error_code="TRANSIENT", error_message="executor devolveu resultado inválido: " + "; ".join(problems))

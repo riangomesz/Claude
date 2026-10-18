@@ -115,11 +115,14 @@ class EvidenceSemanticsTest(unittest.TestCase):
         self.assertEqual(len(c["evidence_ids"]), 3)
         self.assertEqual({b["rule"] for b in c["basis"]}, {"text_v2", "visual_tag"})
 
-    def test_motion_from_two_frames_is_only_hypothesis(self):
+    def test_motion_from_sampled_frames_is_only_hypothesis(self):
+        # Regra revista na Missão Suprema 02 (A2): nem 2 nem 3 quadros amostrados provam o mecanismo.
         n = base(); see(n, "kinetic_typography", "P01", "P02")
         self.assertEqual(cat(run(n), "motion_design")["support"], "hypothesis")
         n = base(); see(n, "kinetic_typography", "P01", "P02", "P03")
-        self.assertEqual(cat(run(n), "motion_design")["support"], "supported_visual")
+        doc = run(n)
+        self.assertEqual(cat(doc, "motion_design")["support"], "hypothesis")
+        self.assertIn(("observed_visual", "temporal_variation"), {(e["status"], e["tag"]) for e in doc["evidence"]})
 
     def test_no_numeric_confidence_and_canonical_order(self):
         n = base(); say(n, "desconto no tutorial de motion design com n8n")
@@ -136,7 +139,8 @@ class EvidenceSemanticsTest(unittest.TestCase):
 
 class ToolsTest(unittest.TestCase):
     def test_mentioned_vs_visually_identified(self):
-        n = base(); say(n, "eu uso o capcut e o n8n"); see(n, "ui_screen_visible", text="interface do CapCut com timeline")
+        # Regra A13 (Missão Suprema 02): só nome/logotipo legível identifica a ferramenta
+        n = base(); say(n, "eu uso o capcut e o n8n"); see(n, "tool_name_visible", text="nome CapCut legível acima da timeline")
         tools = {t["name"]: t["status"] for t in run(n)["tools"]}
         self.assertEqual(tools, {"CapCut": "visually_identified", "n8n": "mentioned_only"})
 

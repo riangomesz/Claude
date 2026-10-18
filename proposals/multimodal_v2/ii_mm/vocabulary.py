@@ -47,7 +47,9 @@ VISUAL_TAGS: Dict[str, TagSpec] = {
     "shallow_depth_of_field": TagSpec("cinematografia", "composicao_cinematografica"),
     "aesthetic_reference": TagSpec("referencia_estetica", None),
     "typography_styled": TagSpec("motion_design", "tipografia"),
-    # movimento: exige sequência temporal
+    # variação entre quadros amostrados: observável, mas não diz QUAL efeito ou mecanismo a produziu
+    "temporal_variation": TagSpec(None, None),
+    # movimento/mecanismo: só é observação com trecho contínuo (video_clip); com quadros amostrados é hipótese
     "kinetic_typography": TagSpec("motion_design", "tipografia_cinetica", motion=True),
     "animated_caption": TagSpec("edicao_audiovisual", "legenda_animada", motion=True),
     "transition": TagSpec("edicao_audiovisual", "transicao", motion=True),

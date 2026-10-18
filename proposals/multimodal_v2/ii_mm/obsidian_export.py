@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -50,16 +51,33 @@ def assert_staging(path: Path) -> Path:
     return p
 
 
+WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in range(1, 10)} | {f"LPT{i}" for i in range(1, 10)}
+
+
 def safe_name(reference_id: str) -> str:
-    name = re.sub(r"[^A-Za-z0-9_.-]", "_", reference_id).strip("._")
+    """Nome de arquivo seguro e sem colisão em sistemas que ignoram maiúsculas (NTFS, APFS padrão).
+
+    Shortcodes do Instagram diferenciam maiúsculas: se o ID tem maiúscula, foi alterado pela limpeza
+    ou é nome reservado do Windows, recebe sufixo com hash do ID exato.
+    """
+    name = re.sub(r"[^A-Za-z0-9_.-]", "_", reference_id).strip("._")[:120]
     if not name:
         raise ExportError("reference_id não gera nome de arquivo válido")
-    return name[:120]
+    reserved = name.split(".")[0].upper() in WINDOWS_RESERVED
+    if name != reference_id or name != name.lower() or reserved:
+        name = f"{'_' if reserved else ''}{name}_{hashlib.sha256(reference_id.encode('utf-8')).hexdigest()[:8]}"
+    return name
+
+
+_MD_ESCAPES = (("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"), ("|", "\\|"), ("[", "\\["), ("]", "\\]"),
+               ("`", "'"), ("*", "\\*"), ("_", "\\_"))
 
 
 def _esc(text: Any) -> str:
+    """Texto externo (fala, legenda, observação) vira texto puro: sem HTML, imagem remota, wikilink ou código."""
     t = " ".join(str(text if text is not None else "").split())
-    t = t.replace("<!--", "&lt;!--").replace("-->", "--&gt;").replace("|", "\\|")
+    for a, b in _MD_ESCAPES:
+        t = t.replace(a, b)
     return t
 
 

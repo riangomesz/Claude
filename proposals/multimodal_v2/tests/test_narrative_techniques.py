@@ -2,7 +2,7 @@ import unittest
 
 from tests import _helpers  # noqa: F401
 from ii_mm import adapters as A
-from ii_mm.contract import validate_document
+from ii_mm.contract import make_evidence, validate_document
 from ii_mm.narrative import coverage, suggest_blocks, validate_blocks
 from ii_mm.normalize import Normalizer
 from ii_mm.synthetic import sha
@@ -96,9 +96,13 @@ class TechniqueLevelsTest(unittest.TestCase):
         n = norm()
         see(n, "split_screen", ["P01"])                         # 1
         see(n, "punch_in_scale", ["P01", "P02"])                # 2
-        see(n, "kinetic_typography", ["P01", "P02", "P03"])     # 3
         see(n, "mask_shape", ["P04"], kind="hypothesis")        # 4
         doc = n.build()
+        # 3: só trecho contínuo prova movimento (regra A2 da Missão Suprema 02)
+        doc["evidence"].append(make_evidence(doc["video"]["content_sha256"], status="observed_visual", source_type="human_observation",
+                                             claim="texto se move no trecho", t_start_s=10, t_end_s=12, ref="clip_10_12",
+                                             tag="kinetic_typography", basis="video_clip",
+                                             provenance={"source": "human", "artifact_sha256": sha("clip")}))
         techs = build_techniques(doc, suggestions=[{"technique": "split_screen", "text": "gravar tela e rosto separados e compor em 9:16",
                                                     "requires": ["captura de tela", "editor com camadas"], "author": "agent:t"}])
         got = {(t["technique"], t["level"]) for t in techs}
@@ -108,10 +112,11 @@ class TechniqueLevelsTest(unittest.TestCase):
         doc["techniques"] = techs
         self.assertEqual(validate_document(doc), [])
 
-    def test_frame_pair_never_proves_animation(self):
-        n = norm(); see(n, "kinetic_typography", ["P01", "P02"])
-        techs = build_techniques(n.build())
-        self.assertEqual([(t["technique"], t["level"]) for t in techs], [("tipografia_cinetica", "hypothesis")])
+    def test_sampled_frames_never_prove_animation(self):
+        for refs in (["P01", "P02"], ["P01", "P02", "P03"]):
+            n = norm(); see(n, "kinetic_typography", refs)
+            techs = build_techniques(n.build())
+            self.assertEqual([(t["technique"], t["level"]) for t in techs], [("tipografia_cinetica", "hypothesis")], refs)
         self.assertIn("confirmar", open_questions(techs)[0])
 
     def test_pair_tags_from_single_frame_are_hypotheses(self):

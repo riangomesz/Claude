@@ -57,7 +57,8 @@ FRAMES = {"schema_version": "ii.evidence_package.v1", "frames": [
     {"pacote_id": "P03", "t_s": 14.033, "sha256": sha("demo-p03"), "file": "frames/p03_corte_depois_t014033ms.jpg", "papel": "corte_depois", "par_com": "P02"},
     {"pacote_id": "P04", "t_s": 21.0, "sha256": sha("demo-p04"), "file": "frames/p04_oferta_t021000ms.jpg", "papel": "interface_ou_legenda"}]}
 OBSERVATIONS = {"observations": [
-    {"frame_refs": ["P01"], "t_s": 9.0, "tag": "ui_screen_visible", "text": "Interface do CapCut com timeline e botão de legendas"},
+    {"frame_refs": ["P01"], "t_s": 9.0, "tag": "ui_screen_visible", "text": "Interface de edição com timeline e botão de legendas"},
+    {"frame_refs": ["P01"], "t_s": 9.0, "tag": "tool_name_visible", "text": "Nome 'CapCut' legível no canto superior da interface"},
     {"frame_refs": ["P01"], "t_s": 9.0, "tag": "split_screen", "text": "Apresentador embaixo, tela da ferramenta em cima"},
     {"frame_refs": ["P01"], "t_s": 9.0, "tag": "burned_caption", "text": "Legenda branca com contorno sobre o apresentador"},
     {"frame_refs": ["P02", "P03"], "t_s": 14.0, "tag": "punch_in_scale", "text": "Rosto maior no segundo quadro do par"},
@@ -112,9 +113,10 @@ def run_demo(workdir: Path) -> Dict[str, Any]:
                             "tool_after": reviewed["tools"][0]["name"], "original_untouched": repo.get_document(saved.analysis_id) == doc}
 
         stage = workdir / "obsidian_staging"
-        report["export_first"] = export_reference(reviewed, stage)["markdown"]
+        first = export_reference(reviewed, stage)
+        report["export_first"] = first["markdown"]
         report["export_second"] = export_reference(reviewed, stage)["markdown"]
-        report["note_path"] = str(stage / "ref_DEMO01.md")
+        report["note_path"] = first["path"]
 
         secret = b"segredo-demo-nao-real"
         mission = {"schema_version": MISSION_SCHEMA, "reference": {"platform": "instagram", "url": "https://www.instagram.com/reel/SYNTHdemo01/"},

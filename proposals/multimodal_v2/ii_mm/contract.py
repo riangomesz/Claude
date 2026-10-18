@@ -8,6 +8,7 @@ sobre ele, sempre com a natureza de cada afirmação explícita:
     transcript_claim dito na fala (transcrição automática = dado não confiável)
     metadata_claim   declarado em metadados (legenda, hashtags, autor informado)
     inference        conclusão derivada de outras evidências; não é observação
+                     (inclui conhecimento externo: source_type="external_knowledge")
     unverified       registrado, mas sem base verificável (ex.: afirmação promocional)
 
 Os documentos são dicts JSON puros; este módulo oferece construtores e um validador estrito.
@@ -17,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import unicodedata
 from typing import Any, Dict, Iterable, List, Optional
 
 from . import SCHEMA_VERSION
@@ -28,7 +30,7 @@ EVIDENCE_STATUSES = (
 VISUAL_BASES = ("static_frame", "frame_pair", "frame_sequence", "video_clip")
 SOURCE_TYPES = (
     "agent_observation", "human_observation", "whisper", "ffprobe", "scene_detection",
-    "frame_extraction", "visual_metric", "instagram_metadata", "text_classifier", "derived",
+    "frame_extraction", "visual_metric", "instagram_metadata", "text_classifier", "derived", "external_knowledge",
 )
 # Fontes permitidas por status: impede, por construção, "fala vira fato visual".
 STATUS_SOURCES = {
@@ -36,7 +38,7 @@ STATUS_SOURCES = {
     "measured_signal": {"ffprobe", "scene_detection", "frame_extraction", "visual_metric"},
     "transcript_claim": {"whisper"},
     "metadata_claim": {"instagram_metadata"},
-    "inference": {"text_classifier", "derived", "agent_observation", "human_observation"},
+    "inference": {"text_classifier", "derived", "agent_observation", "human_observation", "external_knowledge"},
     "unverified": set(SOURCE_TYPES),
 }
 PLATFORMS = ("instagram", "youtube", "tiktok", "x", "vimeo", "local", "other")
@@ -51,6 +53,12 @@ TECHNIQUE_LEVELS = (
 REVIEW_STATES = ("pending", "accepted", "rejected", "edited")
 FORBIDDEN_NUMERIC_KEYS = ("confidence", "probability", "accuracy", "precision_pct", "score_pct", "percent")
 TIME_TOLERANCE_S = 0.5
+# Chaves de primeiro nível conhecidas; extensões de integração usam o prefixo "x_".
+KNOWN_TOP_LEVEL = {
+    "schema_version", "reference", "video", "segments", "transcript", "frames", "evidence", "metrics", "categories",
+    "tools", "techniques", "narrative_blocks", "hypotheses", "pending", "review_history",
+    "topic_facets", "classification_runs", "orphan_decisions",
+}
 
 
 class ContractError(ValueError):
@@ -61,12 +69,17 @@ def canonical_json(obj: Any) -> str:
     return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def nfc(text: Optional[str]) -> Optional[str]:
+    """Forma Unicode canônica (NFC): o mesmo texto vindo de Windows (NFC) e macOS (NFD) é idêntico."""
+    return None if text is None else unicodedata.normalize("NFC", str(text))
+
+
 def evidence_id(video_key: str, status: str, source_type: str, t_start_s: Optional[float],
                 t_end_s: Optional[float], ref: Optional[str], claim: str, tag: Optional[str] = None) -> str:
-    """ID estável por conteúdo: a mesma evidência gera o mesmo ID em qualquer execução e ordem."""
+    """ID estável por conteúdo: a mesma evidência gera o mesmo ID em qualquer execução, ordem e forma Unicode."""
     def _t(x):
         return None if x is None else round(float(x), 3)
-    payload = canonical_json([video_key, status, source_type, _t(t_start_s), _t(t_end_s), ref, claim, tag])
+    payload = canonical_json([video_key, status, source_type, _t(t_start_s), _t(t_end_s), nfc(ref), nfc(claim), nfc(tag)])
     return "ev_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
 
 
@@ -77,6 +90,7 @@ def make_evidence(video_key: str, *, status: str, source_type: str, claim: str,
                   extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     if t_start_s is not None and t_end_s is None:
         t_end_s = t_start_s
+    claim, ref, tag = nfc(claim), nfc(ref), nfc(tag)
     ev = {
         "evidence_id": evidence_id(video_key, status, source_type, t_start_s, t_end_s, ref, claim, tag),
         "status": status,
@@ -163,6 +177,9 @@ def validate_document(doc: Any) -> List[str]:
         return ["documento deve ser um objeto JSON"]
     if doc.get("schema_version") != SCHEMA_VERSION:
         p.append(f"schema_version deve ser {SCHEMA_VERSION}")
+    unknown = sorted(k for k in doc if k not in KNOWN_TOP_LEVEL and not str(k).startswith("x_"))
+    if unknown:
+        p.append(f"chaves de primeiro nível desconhecidas (use prefixo x_ para extensões): {unknown}")
     for key in ("reference", "video"):
         if not isinstance(doc.get(key), dict):
             p.append(f"'{key}' ausente ou não é objeto")
@@ -229,6 +246,10 @@ def validate_document(doc: Any) -> List[str]:
         _check_interval(p, f"evidence:{eid}", e.get("t_start_s"), e.get("t_end_s"), dur,
                         st in ("observed_visual", "transcript_claim"))
         if st == "observed_visual":
+            from .vocabulary import VISUAL_TAGS  # import tardio
+            spec = VISUAL_TAGS.get(e.get("tag"))
+            if spec and spec.motion and e.get("basis") != "video_clip":
+                p.append(f"evidence:{eid}: tag de movimento '{e.get('tag')}' só pode ser observed_visual com basis video_clip")
             if e.get("basis") not in VISUAL_BASES:
                 p.append(f"evidence:{eid}: observed_visual exige basis em {VISUAL_BASES}")
             if not prov.get("artifact_sha256"):
@@ -293,8 +314,8 @@ def validate_document(doc: Any) -> List[str]:
             p.append(f"techniques:{name}: observed_in_frame exige evidência visual")
         if lvl == "frame_pair_difference" and not bases & {"frame_pair", "frame_sequence", "video_clip"}:
             p.append(f"techniques:{name}: frame_pair_difference exige basis frame_pair ou superior")
-        if lvl == "temporal_sequence" and not bases & {"frame_sequence", "video_clip"}:
-            p.append(f"techniques:{name}: temporal_sequence exige frame_sequence ou video_clip (par de quadros não prova movimento)")
+        if lvl == "temporal_sequence" and "video_clip" not in bases:
+            p.append(f"techniques:{name}: temporal_sequence exige video_clip (quadros amostrados não provam movimento nem mecanismo)")
 
     for h in doc.get("hypotheses", []):
         _refs(f"hypotheses:{h.get('hypothesis_id')}", h.get("evidence_ids", []))

@@ -10,6 +10,7 @@ Política de gravação (`save_analysis`):
 """
 from __future__ import annotations
 
+import copy
 import json
 import sqlite3
 from contextlib import contextmanager
@@ -65,13 +66,19 @@ class Repository:
         ref, video = doc["reference"], doc["video"]
         platform = ref["platform"]
         key = canonical_reference_key(ref.get("origin_url") or video["video_id"], platform_hint=platform)
-        input_hash = analysis_input_hash(doc)
         sha = video.get("content_sha256")
         now = _now()
         with self.tx() as c:
             row = c.execute("SELECT reference_id FROM refs WHERE canonical_key = ?", (key,)).fetchone()
             if row is None:
                 row = c.execute("SELECT reference_id FROM ref_aliases WHERE alias_key = ?", (key,)).fetchone()
+            if row is not None and row["reference_id"] != ref["reference_id"]:
+                # mesma publicação, outro reference_id: grava sob o ID já registrado e guarda o original
+                doc = copy.deepcopy(doc)
+                doc["reference"]["original_reference_id"] = ref["reference_id"]
+                doc["reference"]["reference_id"] = row["reference_id"]
+                ref = doc["reference"]
+            input_hash = analysis_input_hash(doc)
             if row is None:
                 reference_id = ref["reference_id"]
                 if c.execute("SELECT 1 FROM refs WHERE reference_id = ?", (reference_id,)).fetchone():
@@ -81,10 +88,15 @@ class Repository:
                                                      ref.get("author_handle"), ref.get("subject"), now))
             else:
                 reference_id = row["reference_id"]
+            alias_conflict = False
             if seen_url:
                 alias = canonical_reference_key(seen_url, platform_hint=platform)
-                if alias != key:
-                    c.execute("INSERT OR IGNORE INTO ref_aliases(alias_key, reference_id, seen_url, created_at) VALUES (?,?,?,?)",
+                owner = c.execute("SELECT reference_id FROM refs WHERE canonical_key = ? UNION ALL "
+                                  "SELECT reference_id FROM ref_aliases WHERE alias_key = ?", (alias, alias)).fetchall()
+                if any(o["reference_id"] != reference_id for o in owner):
+                    alias_conflict = True  # a URL já identifica outra publicação: não redireciona em silêncio
+                elif alias != key and not owner:
+                    c.execute("INSERT INTO ref_aliases(alias_key, reference_id, seen_url, created_at) VALUES (?,?,?,?)",
                               (alias, reference_id, seen_url, now))
 
             linked = c.execute("SELECT v.video_pk, v.content_sha256 FROM ref_videos rv JOIN videos v USING(video_pk) "
@@ -106,6 +118,10 @@ class Repository:
             if conflict:
                 c.execute("INSERT INTO issues(video_pk, kind, description, blocking, created_at) VALUES (?,?,?,?,?)",
                           (video_pk, "conflict", f"publicação {key} recebeu conteúdo com SHA-256 diferente do já registrado", 1, now))
+            if alias_conflict:
+                c.execute("INSERT INTO issues(video_pk, kind, description, blocking, created_at) VALUES (?,?,?,?,?)",
+                          (video_pk, "conflict", f"alias {alias} já pertence a outra referência; não foi associado a {reference_id}", 1, now))
+                conflict = True
 
             existing = c.execute("SELECT analysis_id FROM analyses WHERE video_pk = ? AND input_hash = ?",
                                  (video_pk, input_hash)).fetchone()

@@ -176,17 +176,26 @@ class Normalizer:
             elif claimed in BASIS_ORDER:
                 basis = claimed
             status = "observed_visual" if o["kind"] == "observation" else "inference"
-            if status == "observed_visual" and is_motion_tag(o["tag"]) and basis in ("static_frame", "frame_pair"):
-                status = "inference"
-                self.report["downgraded"].append(f"'{o['tag']}': movimento não se prova com {basis}; registrado como inference")
             t_vals = sorted(f["t_s"] for f in frames)
             source_type = "human_observation" if o["observer"].startswith("human:") else "agent_observation"
-            ev = self._add(make_evidence(
-                self.video_key, status=status, source_type=source_type, claim=o["text"],
-                t_start_s=t_vals[0], t_end_s=t_vals[-1], ref=o["frame_refs"][0], tag=o["tag"], basis=basis,
-                provenance={"source": res.source.get("source"), "observer": o["observer"],
-                            "artifact_sha256": frames[0]["sha256"], "frame_refs": list(o["frame_refs"]),
-                            "frame_sha256s": [f["sha256"] for f in frames]}))
+            prov = {"source": res.source.get("source"), "observer": o["observer"], "artifact_sha256": frames[0]["sha256"],
+                    "frame_refs": list(o["frame_refs"]), "frame_sha256s": [f["sha256"] for f in frames]}
+            common = dict(t_start_s=t_vals[0], t_end_s=t_vals[-1], ref=o["frame_refs"][0], basis=basis)
+            if status == "observed_visual" and is_motion_tag(o["tag"]):
+                # Quadros amostrados nunca são trecho contínuo: o mecanismo vira hipótese.
+                status = "inference"
+                if basis == "frame_sequence":
+                    var = self._add(make_evidence(
+                        self.video_key, status="observed_visual", source_type=source_type, tag="temporal_variation",
+                        claim=f"variação visual observada entre {len(frames)} quadros amostrados: {o['text']}",
+                        provenance=dict(prov, derived_from_tag=o["tag"]), **common))
+                    ids.append(var["evidence_id"])
+                    self.report["downgraded"].append(f"'{o['tag']}': {len(frames)} quadros mostram variação, não o mecanismo; "
+                                                     "variação registrada como observed_visual e mecanismo como inference")
+                else:
+                    self.report["downgraded"].append(f"'{o['tag']}': movimento não se prova com {basis}; registrado como inference")
+            ev = self._add(make_evidence(self.video_key, status=status, source_type=source_type, claim=o["text"],
+                                         tag=o["tag"], provenance=prov, **common))
             ids.append(ev["evidence_id"])
         return ids
 
@@ -195,6 +204,12 @@ class Normalizer:
         ev = self._add(make_evidence(self.video_key, status="inference", source_type="text_classifier",
                                      claim=f"rótulo legado '{label}' ({rule})", tag="legacy_label",
                                      provenance={"source": source, "rule": rule}))
+        return ev["evidence_id"]
+
+    def add_external_knowledge(self, claim: str, source: str) -> str:
+        """Conhecimento prévio sobre ferramenta/produto (não visto no vídeo): sempre inferência, sem tempo."""
+        ev = self._add(make_evidence(self.video_key, status="inference", source_type="external_knowledge", claim=claim,
+                                     tag="external_knowledge", provenance={"source": source}))
         return ev["evidence_id"]
 
     def add_unverified(self, claim: str, source: str, t_start_s: Optional[float] = None,

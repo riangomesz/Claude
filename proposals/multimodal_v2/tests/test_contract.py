@@ -93,7 +93,7 @@ class ContractTest(unittest.TestCase):
     def test_technique_levels_require_matching_basis(self):
         pair = vis(basis="frame_pair"); d = doc_with(pair)
         d["techniques"] = [{"technique": "transicao", "level": "temporal_sequence", "evidence_ids": [pair["evidence_id"]]}]
-        self.assertTrue(any("par de quadros não prova movimento" in p for p in validate_document(d)))
+        self.assertTrue(any("quadros amostrados não provam movimento" in p for p in validate_document(d)))
         d["techniques"][0]["level"] = "frame_pair_difference"
         self.assertEqual(validate_document(d), [])
         single = vis(); d2 = doc_with(single)

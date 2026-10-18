@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import math
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
@@ -39,6 +40,30 @@ def _load(payload: Any) -> Any:
     if isinstance(payload, str):
         return json.loads(payload)
     return payload
+
+
+MAX_RECORDS = 50_000      # por chamada de adaptador; um Reel típico tem dezenas a centenas de registros
+MAX_TEXT_CHARS = 10_000   # por texto (segmento, observação); excedente é truncado e sinalizado
+
+
+def _clean(text: str) -> str:
+    """Espaços colapsados e forma Unicode NFC."""
+    return unicodedata.normalize("NFC", " ".join(str(text).split()))
+
+
+def _bounded_text(res: "AdapterResult", text: str, where: str) -> str:
+    t = _clean(text)
+    if len(t) > MAX_TEXT_CHARS:
+        res.errors.append(f"{where}: texto truncado em {MAX_TEXT_CHARS} caracteres (original {len(t)})")
+        t = t[:MAX_TEXT_CHARS]
+    return t
+
+
+def _over_limit(res: "AdapterResult", items: list) -> list:
+    if len(items) > MAX_RECORDS:
+        res.errors.append(f"{len(items)} registros excedem o limite de {MAX_RECORDS}; só os primeiros foram lidos")
+        return items[:MAX_RECORDS]
+    return items
 
 
 def _num(x) -> Optional[float]:
@@ -89,7 +114,7 @@ def transcript_from_segments(payload: Any, source: str = "whisper") -> AdapterRe
         res.errors.append("esperada lista de segmentos (ou objeto com 'segments'/'segmentos')")
         return res
     seen = set()
-    for n, seg in enumerate(data, start=1):
+    for n, seg in enumerate(_over_limit(res, data), start=1):
         if not isinstance(seg, dict):
             res.errors.append(f"segmento {n}: não é objeto")
             continue
@@ -103,13 +128,14 @@ def transcript_from_segments(payload: Any, source: str = "whisper") -> AdapterRe
         if not isinstance(text, str) or not text.strip():
             res.errors.append(f"segmento {sid}: texto vazio")
             continue
-        key = (round(start, 3), round(end, 3), " ".join(text.split()))
+        text = _bounded_text(res, text, f"segmento {sid}")
+        key = (round(start, 3), round(end, 3), text)
         if key in seen:
             res.errors.append(f"segmento {sid}: duplicado, ignorado")
             continue
         seen.add(key)
         res.records.append({"segment_id": f"s{sid}", "t_start_s": round(start, 3), "t_end_s": round(end, 3),
-                            "text": " ".join(text.split()), "source": source})
+                            "text": text, "source": source})
     res.records.sort(key=lambda r: (r["t_start_s"], r["t_end_s"], r["segment_id"]))
     return res
 
@@ -161,7 +187,7 @@ def scenes_from_candidates_json(payload: Any) -> AdapterResult:
         res.errors.append("esperado objeto ii.scene_candidates.v1 com lista 'candidatos'")
         return res
     res.source.update({"threshold": data.get("limiar"), "method": data.get("metodo")})
-    for c in data["candidatos"]:
+    for c in _over_limit(res, data["candidatos"]):
         t, sc = (_num(c.get("t_s")), _num(c.get("score"))) if isinstance(c, dict) else (None, None)
         if t is None or sc is None or t < 0:
             res.errors.append(f"candidato inválido: {c!r}"[:120])
@@ -224,7 +250,7 @@ def metrics_from_frame_pairs(payload: Any) -> AdapterResult:
     if not isinstance(data, list):
         res.errors.append("esperada lista de pares de métricas")
         return res
-    for n, p in enumerate(data, start=1):
+    for n, p in enumerate(_over_limit(res, data), start=1):
         if not isinstance(p, dict):
             res.errors.append(f"par {n}: não é objeto")
             continue
@@ -257,7 +283,7 @@ def frames_from_manifest(payload: Any) -> AdapterResult:
     schema = data.get("schema_version")
     res.source = {"source": schema or "manifesto_desconhecido", "video_sha256": data.get("video_sha256") or (data.get("video") or {}).get("sha256")}
     seen = set()
-    for f in data["frames"]:
+    for f in _over_limit(res, data["frames"]):
         if not isinstance(f, dict):
             res.errors.append("frame não é objeto")
             continue
@@ -295,7 +321,7 @@ def observations_from_json(payload: Any, observer: str) -> AdapterResult:
     if not isinstance(data, list):
         res.errors.append("esperada lista 'observations'")
         return res
-    for n, o in enumerate(data, start=1):
+    for n, o in enumerate(_over_limit(res, data), start=1):
         if not isinstance(o, dict):
             res.errors.append(f"observação {n}: não é objeto")
             continue
@@ -306,6 +332,6 @@ def observations_from_json(payload: Any, observer: str) -> AdapterResult:
             res.errors.append(f"observação {n}: exige frame_refs, t_s, tag, text e kind válido")
             continue
         res.records.append({"frame_refs": [str(r) for r in refs], "t_s": round(t, 3), "tag": str(o["tag"]),
-                            "text": " ".join(str(o["text"]).split()), "kind": kind, "basis": o.get("basis"),
+                            "text": _bounded_text(res, o["text"], f"observação {n}"), "kind": kind, "basis": o.get("basis"),
                             "observer": observer})
     return res

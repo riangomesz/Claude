@@ -18,7 +18,7 @@ def controlled(i, speech, tag=None, refs=("P01",), platform="instagram", author=
     n.add_frames(A.frames_from_manifest({"frames": [{"pacote_id": f"P0{k}", "t_s": 20 + k * 0.033, "sha256": sha(f"c{i}{k}")} for k in (1, 2, 3)]}))
     n.add_transcript(A.transcript_from_segments([{"start": 1, "end": 4, "text": speech}]))
     if tag:
-        n.add_observations(A.observations_from_json([{"frame_refs": list(refs), "t_s": 20, "tag": tag, "text": f"{tag} da interface do CapCut"}], "agent:t"))
+        n.add_observations(A.observations_from_json([{"frame_refs": list(refs), "t_s": 20, "tag": tag, "text": f"{tag}: nome CapCut legível"}], "agent:t"))
     doc = Classifier().classify(n.build())
     doc["reference"]["subject"] = subject
     doc["techniques"] = build_techniques(doc)
@@ -32,7 +32,7 @@ class CatalogTest(unittest.TestCase):
         cls.repo = Repository(cls.conn)
         for i in range(60):
             cls.repo.save_analysis(make_reference(i))
-        cls.c1 = cls.repo.save_analysis(controlled(1, "tutorial de edição no capcut", "ui_screen_visible", subject="prompting cinematográfico"))
+        cls.c1 = cls.repo.save_analysis(controlled(1, "tutorial de edição no capcut", "tool_name_visible", subject="prompting cinematográfico"))
         cls.c2 = cls.repo.save_analysis(controlled(2, "eu uso o capcut às vezes", None, author="autor_y"))
         cls.c3 = cls.repo.save_analysis(controlled(3, "olha a transição", "kinetic_typography", refs=("P01", "P02", "P03")))
         ReviewService(cls.repo).accept_category(cls.c1.reference_id, "tutorial", "human:ana")
@@ -76,8 +76,9 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual(self.ids(Query(tool="CapCut", tool_visual_only=True)), [self.c1.reference_id])
         self.assertEqual(self.ids(Query(category="demonstracao_ferramenta", min_support="supported_visual", author="autor_x")), [self.c1.reference_id])
         self.assertEqual(self.ids(Query(author="autor_y")), [self.c2.reference_id])
-        self.assertEqual(self.ids(Query(technique="tipografia_cinetica", technique_level="temporal_sequence")), [self.c3.reference_id])
-        self.assertEqual(self.ids(Query(evidence_tag="ui_screen_visible", author="autor_x")), [self.c1.reference_id])
+        self.assertEqual(self.ids(Query(technique="tipografia_cinetica", technique_level="hypothesis")), [self.c3.reference_id])
+        self.assertEqual(self.ids(Query(technique="tipografia_cinetica", technique_level="temporal_sequence")), [])
+        self.assertEqual(self.ids(Query(evidence_tag="tool_name_visible", author="autor_x")), [self.c1.reference_id])
         self.assertEqual(self.ids(Query(subject="cinematográfico prompting")), [self.c1.reference_id])
 
     def test_review_state_filter(self):
@@ -85,9 +86,9 @@ class CatalogTest(unittest.TestCase):
         self.assertNotIn(self.c1.reference_id, self.ids(Query(category="tutorial", review_state="pending")))
 
     def test_time_range_filter(self):
-        hit = self.ids(Query(evidence_tag="ui_screen_visible", time_range=(19.0, 21.0)))
+        hit = self.ids(Query(evidence_tag="tool_name_visible", time_range=(19.0, 21.0)))
         self.assertIn(self.c1.reference_id, hit)
-        self.assertNotIn(self.c1.reference_id, self.ids(Query(evidence_tag="ui_screen_visible", time_range=(30.0, 40.0))))
+        self.assertNotIn(self.c1.reference_id, self.ids(Query(evidence_tag="tool_name_visible", time_range=(30.0, 40.0))))
 
     def test_only_current_analysis_is_searched(self):
         doc = controlled(4, "tutorial de motion design")

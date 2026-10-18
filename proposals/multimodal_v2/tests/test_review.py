@@ -16,8 +16,8 @@ def analysed_doc(extra_speech=None):
                    origin_url="https://www.instagram.com/reel/SYNTHrev01/")
     n.add_frames(A.frames_from_manifest({"frames": [{"pacote_id": "P01", "t_s": 5, "sha256": sha("p1")}]}))
     n.add_transcript(A.transcript_from_segments([{"start": 0, "end": 3, "text": "tutorial passo a passo no capcut"}] + (extra_speech or [])))
-    n.add_observations(A.observations_from_json([{"frame_refs": ["P01"], "t_s": 5, "tag": "ui_screen_visible",
-                                                  "text": "interface do CapCut"}], "agent:t"))
+    n.add_observations(A.observations_from_json([{"frame_refs": ["P01"], "t_s": 5, "tag": "tool_name_visible",
+                                                  "text": "nome CapCut legível na interface"}], "agent:t"))
     return Classifier().classify(n.build())
 
 

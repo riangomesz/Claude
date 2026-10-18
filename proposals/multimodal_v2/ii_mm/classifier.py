@@ -97,8 +97,11 @@ class Classifier:
                 if spec.contradicts:
                     contra[spec.contradicts].setdefault(eid, link)
                 if e.get("tag") in ("ui_screen_visible", "tool_name_visible", "logo_visible"):
+                    # Só nome ou logotipo LEGÍVEL identifica a ferramenta; reconhecer a interface pela
+                    # aparência é conhecimento externo do observador (fica como inferida).
+                    legible = st == "observed_visual" and e["tag"] in ("tool_name_visible", "logo_visible")
                     for name in self._tool_names(e["claim"]):
-                        key = "visual_evidence_ids" if st == "observed_visual" else "inferred_evidence_ids"
+                        key = "visual_evidence_ids" if legible else "inferred_evidence_ids"
                         tools.setdefault(name, {}).setdefault(key, []).append(eid)
             elif st == "measured_signal":
                 cat = self.cfg.context_tags.get(e.get("tag"))
@@ -142,10 +145,16 @@ class Classifier:
                 pending.append({"pending_id": f"auto:contested:{cat}", "description": f"'{cat}' tem evidência contrária; revisar", "blocking": False})
             if not links:
                 pending.append({"pending_id": f"auto:insufficient:{cat}", "description": f"'{cat}' só tem sinais fracos ou contrários", "blocking": False})
-            if cat in prev_reviews:  # decisão humana anterior prevalece no estado, sem apagar a evidência nova
+            if cat in prev_reviews:
                 prev = prev_reviews[cat]
-                entry["review_state"] = prev["review_state"]
-                entry["review_ref"] = prev.get("review_ref")
+                if sorted(prev.get("evidence_ids", [])) == entry["evidence_ids"]:
+                    # mesma base de evidências: a decisão humana anterior continua válida
+                    entry["review_state"] = prev["review_state"]
+                    entry["review_ref"] = prev.get("review_ref")
+                else:
+                    # a revisão foi feita sobre outras evidências: não herda, mas fica rastreável
+                    entry["stale_review_ref"] = prev.get("review_ref")
+                    entry["notes"].append(f"revisão anterior ({prev['review_state']}) refere-se a outro conjunto de evidências")
             categories.append(entry)
 
         out["categories"] = categories

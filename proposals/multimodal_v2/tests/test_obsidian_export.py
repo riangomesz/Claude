@@ -9,6 +9,8 @@ from ii_mm.classifier import Classifier
 from ii_mm.narrative import suggest_blocks
 from ii_mm.normalize import Normalizer
 from ii_mm.obsidian_export import CUR_END, CUR_START, ExportError, assert_staging, export_reference, render, safe_name
+
+NAME = safe_name("ref_OBS1")
 from ii_mm.synthetic import sha
 from ii_mm.techniques import build_techniques
 
@@ -50,12 +52,12 @@ class ExportTest(unittest.TestCase):
         r2 = export_reference(d, self.stage)
         self.assertEqual((r1["markdown"], r1["json"]), ("created", "created"))
         self.assertEqual((r2["markdown"], r2["json"]), ("unchanged", "unchanged"))
-        self.assertEqual(json.loads((self.stage / "ref_OBS1.json").read_text(encoding="utf-8"))["reference"]["reference_id"], "ref_OBS1")
-        self.assertEqual(sorted(p.name for p in self.stage.iterdir()), ["ref_OBS1.json", "ref_OBS1.md"])
+        self.assertEqual(json.loads((self.stage / f"{NAME}.json").read_text(encoding="utf-8"))["reference"]["reference_id"], "ref_OBS1")
+        self.assertEqual(sorted(p.name for p in self.stage.iterdir()), [f"{NAME}.json", f"{NAME}.md"])
 
     def test_human_curation_preserved_across_updates(self):
         export_reference(doc(), self.stage)
-        md_path = self.stage / "ref_OBS1.md"
+        md_path = self.stage / f"{NAME}.md"
         text = md_path.read_text(encoding="utf-8")
         text = text.replace("---\n\n#", "curador_nota: 4/5\n---\n\n#", 1)
         text = text.replace(f"{CUR_START}\n", f"{CUR_START}\nMinha análise: ótima referência de split screen.\n", 1)
@@ -82,7 +84,9 @@ class ExportTest(unittest.TestCase):
             assert_staging(Path(self.tmp.name) / "Obsidian Vault" / "x")
 
     def test_safe_names(self):
-        self.assertEqual(safe_name("ref/../../etc"), "ref_.._.._etc")
+        self.assertTrue(safe_name("ref/../../etc").startswith("ref_.._.._etc_"))  # alterado => sufixo com hash
+        self.assertNotIn("/", safe_name("ref/../../etc"))
+        self.assertEqual(safe_name("ref_simples_1"), "ref_simples_1")
         with self.assertRaises(ExportError):
             safe_name("///")
 

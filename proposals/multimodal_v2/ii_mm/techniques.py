@@ -3,7 +3,7 @@
 Cinco níveis de prova, nunca confundidos:
 1. observed_in_frame       técnica visível num quadro (ex.: tela dividida)
 2. frame_pair_difference   diferença entre DOIS quadros (ex.: escala maior = possível punch-in)
-3. temporal_sequence       movimento comprovado por sequência de quadros ou trecho de vídeo
+3. temporal_sequence       movimento observado em trecho CONTÍNUO de vídeo (quadros amostrados não bastam)
 4. hypothesis              técnica suposta, sem prova suficiente
 5. reproduction_suggestion ideia criativa de como reproduzir (não é afirmação sobre o vídeo)
 
@@ -19,7 +19,8 @@ PAIR_TAGS = {"punch_in_scale", "jump_cut_pair", "cut_pair"}  # só fazem sentido
 LEVEL_PROVES = {
     "observed_in_frame": ("a técnica aparece no quadro", "como ela surge, quanto dura ou se é animada"),
     "frame_pair_difference": ("houve mudança entre dois instantes", "a trajetória, a curva de movimento ou se houve animação contínua"),
-    "temporal_sequence": ("o movimento aconteceu na sequência observada", "a ferramenta ou o preset exatos usados"),
+    "temporal_sequence": ("o movimento foi observado em trecho contínuo de vídeo",
+                          "qual efeito, transição, preset ou ferramenta produziu o movimento"),
     "hypothesis": ("nada; é uma suposição registrada", "a própria técnica"),
     "reproduction_suggestion": ("nada sobre o vídeo; é uma ideia de produção", "que o vídeo original foi feito assim"),
 }
@@ -36,7 +37,8 @@ def level_for(evidence: Dict[str, Any]) -> Optional[str]:
         return None
     basis = evidence.get("basis")
     if spec.motion:
-        return "temporal_sequence" if basis in ("frame_sequence", "video_clip") else "hypothesis"
+        # Quadros amostrados (mesmo 3 ou mais) mostram variação, não o mecanismo: só trecho contínuo vale.
+        return "temporal_sequence" if basis == "video_clip" else "hypothesis"
     if tag in PAIR_TAGS:
         return "frame_pair_difference" if basis in ("frame_pair", "frame_sequence", "video_clip") else "hypothesis"
     return "observed_in_frame"
