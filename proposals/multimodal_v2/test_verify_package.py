@@ -54,3 +54,45 @@ class VerifyPackageTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VerifyPackageMalformedTest(unittest.TestCase):
+    """Defeitos B1/B2 da BASELINE_ATUAL.md."""
+
+    def _pkg(self, d, manifest_text):
+        p = Path(d)
+        (p / "manifesto_pacote.json").write_text(manifest_text, encoding="utf-8")
+        for n_ in ("perguntas_de_verificacao.json", "segmentos_transcricao.json", "cortes_detectados.json"):
+            (p / n_).write_text("{}", encoding="utf-8")
+        return p
+
+    def test_invalid_json_is_reported_not_raised(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertTrue(any("ilegível" in x for x in verify(self._pkg(d, "["))))
+
+    def test_non_object_manifest(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertTrue(any("fora do formato" in x for x in verify(self._pkg(d, "[1,2]"))))
+
+    def test_frame_without_file_field(self):
+        with tempfile.TemporaryDirectory() as d:
+            probs = verify(self._pkg(d, json.dumps({"frames": [{"pacote_id": "P01"}]})))
+            self.assertTrue(any("sem campo 'file'" in x for x in probs))
+            self.assertFalse(any("fora do pacote" in x for x in probs))
+
+    def test_duplicate_frame_entry(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = self._pkg(d, "{}")
+            (p / "frames").mkdir()
+            (p / "frames" / "a.jpg").write_bytes(b"a")
+            h = hashlib.sha256(b"a").hexdigest()
+            entry = {"pacote_id": "P01", "file": "frames/a.jpg", "sha256": h}
+            (p / "manifesto_pacote.json").write_text(json.dumps({"frames": [entry, dict(entry, pacote_id="P02")]}))
+            self.assertTrue(any("duplicidade" in x for x in verify(p)))
+
+    def test_missing_frame_and_empty_manifest(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertIn("manifesto sem frames", verify(self._pkg(d, json.dumps({"frames": []}))))
+        with tempfile.TemporaryDirectory() as d:
+            probs = verify(self._pkg(d, json.dumps({"frames": [{"pacote_id": "P01", "file": "frames/x.jpg", "sha256": "0"}]})))
+            self.assertTrue(any("frame ausente" in x for x in probs))

@@ -32,7 +32,12 @@ def verify(pkg: Path) -> List[str]:
             problems.append(f"ausente: {name}")
     if problems and "ausente: manifesto_pacote.json" in problems:
         return problems
-    manifest = json.loads((pkg / "manifesto_pacote.json").read_text(encoding="utf-8"))
+    try:
+        manifest = json.loads((pkg / "manifesto_pacote.json").read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        return problems + [f"manifesto_pacote.json ilegível: {exc.__class__.__name__}"]
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("frames", []), list):
+        return problems + ["manifesto_pacote.json fora do formato esperado (objeto com lista 'frames')"]
     frames = manifest.get("frames", [])
     if not frames:
         problems.append("manifesto sem frames")
@@ -41,8 +46,15 @@ def verify(pkg: Path) -> List[str]:
     root = pkg.resolve()
     listed = set()
     for fr in frames:
-        rel = fr.get("file", "")
+        rel = fr.get("file") if isinstance(fr, dict) else None
+        if not isinstance(rel, str) or not rel.strip():
+            pid = fr.get("pacote_id") if isinstance(fr, dict) else None
+            problems.append(f"{pid}: entrada de frame sem campo 'file'")
+            continue
         target = (pkg / rel).resolve()
+        if target in listed:
+            problems.append(f"{fr.get('pacote_id')}: frame listado em duplicidade: {rel}")
+            continue
         if root not in target.parents:
             problems.append(f"{fr.get('pacote_id')}: caminho fora do pacote: {rel}")
             continue

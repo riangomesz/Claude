@@ -140,3 +140,31 @@ class ClassifierRulesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MalformedInputTest(unittest.TestCase):
+    """Defeitos B3/B4 da BASELINE_ATUAL.md: entradas ruins viram SignalError ou problema relatado."""
+
+    def test_bad_duration(self):
+        for d in (-1, 0, "abc", None):
+            with self.assertRaises(SignalError, msg=repr(d)):
+                validate_signals(base(duration_s=d))
+
+    def test_incomplete_segment(self):
+        with self.assertRaises(SignalError):
+            validate_signals(base(transcript_segments=[{"id": 1, "text": "x"}]))
+
+    def test_observation_without_time(self):
+        o = obs("ui_screen_visible"); del o["t_s"]
+        with self.assertRaises(SignalError):
+            validate_signals(base(visual_observations=[o]))
+
+    def test_non_dict_signals(self):
+        with self.assertRaises(SignalError):
+            validate_signals(["x"])
+
+    def test_validate_analysis_tolerates_missing_keys(self):
+        doc = {"schema_version": "ii.multimodal_analysis.v1", "status": "concluida", "categories": [{"category": "tutorial"}]}
+        probs = validate_analysis(doc)
+        self.assertTrue(any("sem nenhuma observação visual" in p for p in probs))
+        self.assertTrue(any("sem evidência" in p for p in probs))

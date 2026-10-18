@@ -81,11 +81,20 @@ class SignalError(ValueError):
 
 def validate_signals(signals: Dict[str, Any]) -> None:
     """Rejeita entradas que permitiriam afirmar mais do que a evidência sustenta."""
+    if not isinstance(signals, dict):
+        raise SignalError("signals deve ser um objeto")
     for key in ("video_id", "duration_s"):
         if key not in signals:
             raise SignalError(f"campo obrigatório ausente: {key}")
-    dur = float(signals["duration_s"])
+    try:
+        dur = float(signals["duration_s"])
+    except (TypeError, ValueError):
+        raise SignalError("duration_s não numérica") from None
+    if not dur > 0:
+        raise SignalError("duration_s deve ser positiva")
     for seg in signals.get("transcript_segments", []):
+        if not isinstance(seg, dict) or not all(k in seg for k in ("id", "start", "end", "text")):
+            raise SignalError("segmento de transcrição incompleto (exige id, start, end, text)")
         if not (0 <= seg["start"] <= seg["end"] <= dur + 0.5):
             raise SignalError(f"segmento fora da duração: {seg.get('id')}")
     for ob in signals.get("visual_observations", []):
@@ -94,7 +103,7 @@ def validate_signals(signals: Dict[str, Any]) -> None:
             raise SignalError(f"tag visual desconhecida: {tag}")
         if ob.get("evidence_basis") not in EVIDENCE_BASES:
             raise SignalError(f"evidence_basis inválida em {ob.get('id')}")
-        if not (0 <= float(ob["t_s"]) <= dur + 0.5):
+        if "t_s" not in ob or not (0 <= float(ob["t_s"]) <= dur + 0.5):
             raise SignalError(f"t_s fora da duração: {ob.get('id')}")
         if tag.startswith("motion_") and ob["evidence_basis"] != "video_clip" and ob.get("kind") != "hypothesis":
             raise SignalError(f"{tag} exige evidence_basis=video_clip; quadro estático não prova movimento ({ob.get('id')})")
@@ -181,17 +190,17 @@ def validate_analysis(doc: Dict[str, Any]) -> List[str]:
     if doc.get("schema_version") != SCHEMA_VERSION:
         problems.append("schema_version inesperado")
     if doc.get("status") in ("concluida", "completed"):
-        visual = [e for c in doc.get("categories", []) for e in c["evidence"] if e["modality"] == "visual_review"]
+        visual = [e for c in doc.get("categories", []) for e in c.get("evidence", []) if e.get("modality") == "visual_review"]
         if not visual:
             problems.append("status concluída sem nenhuma observação visual")
     for c in doc.get("categories", []):
-        if c["category"] not in CATEGORIES:
-            problems.append(f"categoria desconhecida: {c['category']}")
+        if c.get("category") not in CATEGORIES:
+            problems.append(f"categoria desconhecida: {c.get('category')}")
         if any(k in c for k in ("confidence", "probability", "accuracy", "percent")):
             problems.append(f"{c['category']}: campo numérico de confiança não permitido")
         if not c.get("evidence"):
             problems.append(f"{c['category']}: sem evidência")
-        if c.get("support") == "verified_visual" and not any(e["modality"] == "visual_review" and e["status"] == "verified_visual" for e in c["evidence"]):
+        if c.get("support") == "verified_visual" and not any(e.get("modality") == "visual_review" and e.get("status") == "verified_visual" for e in c.get("evidence", [])):
             problems.append(f"{c['category']}: verified_visual sem evidência visual")
         for e in c.get("evidence", []):
             if not e.get("provenance"):
