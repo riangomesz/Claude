@@ -1,0 +1,142 @@
+{
+  "schema_version": "ii.reference_analysis.v2",
+  "reference": {
+    "reference_id": "ref_SYNTH000003",
+    "platform": "instagram",
+    "origin_url": "https://example.invalid/reel/SYNTH000003/",
+    "author_handle": "autor_26",
+    "author_handle_status": "metadata_claim",
+    "subject": "edicao"
+  },
+  "video": {
+    "video_id": "SYNTH000003",
+    "content_sha256": "f9b2334b85847dbbad1be62cc2e8dec8d38f79fb377999465d4ed65baabb3ea1",
+    "duration_s": 81.081
+  },
+  "segments": [],
+  "transcript": [
+    {
+      "segment_id": "s1",
+      "t_start_s": 0.0,
+      "t_end_s": 2.787,
+      "text": "link na bio com desconto para os primeiros clientes",
+      "source": "whisper"
+    },
+    {
+      "segment_id": "s2",
+      "t_start_s": 2.787,
+      "t_end_s": 5.215,
+      "text": "esse workflow no n8n automatiza tudo com um webhook",
+      "source": "whisper"
+    }
+  ],
+  "frames": [
+    {
+      "frame_id": "F01",
+      "t_s": 1.959,
+      "sha256": "fbfccc7273bcef694e85ea78f9238352c9cb515c767d983fa6e0a9b2fd36e56d",
+      "width": 1080,
+      "height": 1920
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev_ee27eb9fa0336e29c795",
+      "status": "transcript_claim",
+      "source_type": "whisper",
+      "claim": "link na bio com desconto para os primeiros clientes",
+      "t_start_s": 0.0,
+      "t_end_s": 2.787,
+      "ref": "s1",
+      "tag": null,
+      "basis": null,
+      "provenance": {
+        "source": "synthetic",
+        "extractor": "whisper-synth"
+      }
+    },
+    {
+      "evidence_id": "ev_94a810d692bcdd83a7c8",
+      "status": "transcript_claim",
+      "source_type": "whisper",
+      "claim": "esse workflow no n8n automatiza tudo com um webhook",
+      "t_start_s": 2.787,
+      "t_end_s": 5.215,
+      "ref": "s2",
+      "tag": null,
+      "basis": null,
+      "provenance": {
+        "source": "synthetic",
+        "extractor": "whisper-synth"
+      }
+    },
+    {
+      "evidence_id": "ev_2e6bd8216e2a0f872923",
+      "status": "observed_visual",
+      "source_type": "agent_observation",
+      "claim": "tela da ToolAlpha visível",
+      "t_start_s": 1.959,
+      "t_end_s": 1.959,
+      "ref": "F01",
+      "tag": "ui_screen_visible",
+      "basis": "static_frame",
+      "provenance": {
+        "source": "synthetic",
+        "artifact_sha256": "fbfccc7273bcef694e85ea78f9238352c9cb515c767d983fa6e0a9b2fd36e56d"
+      }
+    }
+  ],
+  "metrics": [],
+  "categories": [
+    {
+      "category": "automacao",
+      "support": "mentioned_speech",
+      "evidence_ids": [
+        "ev_94a810d692bcdd83a7c8"
+      ],
+      "contradicting_evidence_ids": [],
+      "review_state": "pending"
+    },
+    {
+      "category": "demonstracao_ferramenta",
+      "support": "supported_visual",
+      "evidence_ids": [
+        "ev_2e6bd8216e2a0f872923"
+      ],
+      "contradicting_evidence_ids": [],
+      "review_state": "pending"
+    },
+    {
+      "category": "marketing_vendas",
+      "support": "mentioned_speech",
+      "evidence_ids": [
+        "ev_ee27eb9fa0336e29c795"
+      ],
+      "contradicting_evidence_ids": [],
+      "review_state": "pending"
+    }
+  ],
+  "tools": [
+    {
+      "name": "ToolAlpha",
+      "status": "visually_identified",
+      "visual_evidence_ids": [
+        "ev_2e6bd8216e2a0f872923"
+      ],
+      "mention_evidence_ids": []
+    }
+  ],
+  "techniques": [
+    {
+      "technique": "split_screen",
+      "level": "observed_in_frame",
+      "evidence_ids": [
+        "ev_2e6bd8216e2a0f872923"
+      ]
+    }
+  ],
+  "narrative_blocks": [],
+  "hypotheses": [],
+  "pending": [],
+  "review_history": []
+}

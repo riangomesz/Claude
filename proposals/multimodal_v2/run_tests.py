@@ -11,17 +11,18 @@ HERE = Path(__file__).resolve().parent
 sys.dont_write_bytecode = True
 sys.path[:0] = [str(HERE), str(HERE.parent / "classification")]
 
-TEST_MODULES = [
+LEGACY_TEST_MODULES = [
     "test_text_matcher",
     "test_multimodal_classifier",
     "test_regression_current",
     "test_verify_package",
 ]
+TEST_MODULES = LEGACY_TEST_MODULES + sorted(f"tests.{p.stem}" for p in (HERE / "tests").glob("test_*.py"))
 SOURCE_MODULES = [
     "../classification/text_matcher.py",
     "multimodal_classifier.py",
     "verify_package.py",
-]
+] + sorted(f"ii_mm/{p.name}" for p in (HERE / "ii_mm").glob("*.py") if p.name != "__init__.py")
 
 if __name__ == "__main__":
     os.chdir(HERE)
