@@ -55,3 +55,13 @@ Pasta `Projeto-MVP/review_notes/ii_cobertura_visual/DQV5dm6gCvH/pacote_analise_2
 3. Rodar `multimodal_classifier.classify()` e gravar o resultado em `analise_multimodal_v2.json`.
 4. Escrever `RELATORIO_AUDIOVISUAL_V2.md` a partir desse JSON, separando observação verificada, afirmação de fala e hipótese.
 5. Limites já conhecidos: pares de quadros mostram diferença entre dois instantes, não movimento. Mudanças só na metade superior da tela pontuam pouco na detecção global de cortes (limitação documentada em `fase5.js`).
+
+## Reverificação (2ª tentativa, sessão de 2026-10-18)
+
+Pacote **ainda inacessível**. Verificado de novo, em leitura:
+
+- `riangomesz/Projeto-MVP`: continua só `main` em `c6845a4`, sem pacote, sem mídia.
+- `riangomesz/Claude`: branches `main`, `claude/magnific-mcp-http-llrptl` (só `.mcp.json`, outro trabalho, não tocado) e esta. Nenhuma contém JPEG, JSON de pacote ou ficha v2.
+- Sistema de arquivos da sessão: `/mnt/user-data/{uploads,outputs,working}` e `/mnt/attach` existem e estão **vazios**; nenhum `p*_ms.jpg`, `manifesto_pacote.json`, `perguntas_de_verificacao.json`, `segmentos_transcricao.json`, `cortes_detectados.json` ou `ficha_inteligencia_v2.json` em lugar algum.
+
+Os 16 arquivos obrigatórios continuam ausentes (12 JPEG e 4 JSONs), assim como a ficha v2. Nenhum hash pôde ser verificado e nenhuma análise visual foi feita.
