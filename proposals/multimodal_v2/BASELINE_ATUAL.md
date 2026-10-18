@@ -60,3 +60,11 @@ B1 a B4 são corrigidos nesta missão com testes. B5 e B6 são resolvidos pelo p
 - Código novo vai em `proposals/multimodal_v2/ii_mm/` (pacote) e os testes em `proposals/multimodal_v2/tests/`.
 - Arquivos v1 ficam intactos, exceto pelas correções B1 a B4.
 - `run_tests.py` agrega as duas suítes.
+
+## Achados novos sobre o Projeto-MVP (relevantes para integração)
+
+| # | Achado | Evidência |
+|---|---|---|
+| L1 | `with sqlite3.connect(...) as conn:` faz commit mas **não fecha** a conexão (comportamento do `sqlite3`). São 25 ocorrências em `core/` (`account_connection` 7, `curation` 6, `trash_manager` 6, `audiovisual_pilot` 3, `instagram_importer` 2, `cost_tracker` 1). No Windows, o handle aberto trava o arquivo, o que é coerente com o `ignore_cleanup_errors=True` nos testes legados. | `ResourceWarning` reproduzido em `tests/test_migrations.py` (reprodução legada) |
+| L2 | `instagram_items` só é criada em `init_instagram_db`, num módulo que importa `cv2`. Os outros módulos só fazem `ALTER TABLE` e falham com `no such table` se rodarem antes. | Reproduzido e corrigido em `ii_mm/db/legacy_fixture.py` + `LegacyNoSuchTableReproductionTest` |
+| L3 | Nomes de arquivo em `storage/orchestrator_queue/` e `storage/projects/` usam o shortcode em minúsculas (`dqv5dm6gcvh`). Shortcodes do Instagram diferenciam maiúsculas de minúsculas, então dois itens distintos podem colidir. | `git ls-files storage/` |

@@ -11,8 +11,13 @@ Não repita a auditoria inicial: ela está em `BASELINE_ATUAL.md`.
 | 02 | Contrato multimodal versionado | IMPLEMENTADO / TESTADO | `ii_mm/contract.py`, `ii_mm/evidence_rules.py`, `ii_mm/synthetic.py`, `fixtures/synthetic_reference_v2.json`, `tests/test_contract.py` |
 | 03 | Normalização de evidências | IMPLEMENTADO / TESTADO | `ii_mm/normalize.py`, `tests/test_normalize.py` |
 | 04 | Classificador textual v2 | IMPLEMENTADO / TESTADO | `ii_mm/text_classifier.py`, `ii_mm/_matcher.py`, `tests/test_text_classifier.py`; correção em `classification/text_matcher.py` |
+| 05 | Classificador multimodal v2 | IMPLEMENTADO / TESTADO | `ii_mm/classifier.py`, `ii_mm/vocabulary.py`, `tests/test_classifier.py` |
+| 06 | Migrações SQLite versionadas | IMPLEMENTADO / TESTADO | `ii_mm/db/migrations.py`, `ii_mm/db/legacy_fixture.py`, `tests/test_migrations.py` |
+| 07 | Repositório de persistência | IMPLEMENTADO / TESTADO | `ii_mm/db/repository.py`, `tests/test_repository.py` |
+| 08 | Deduplicação e proveniência | IMPLEMENTADO / TESTADO | `ii_mm/dedup.py`, `tests/test_dedup.py`, política em `repository.save_analysis` |
+| 09 | Processamento idempotente | IMPLEMENTADO / TESTADO | `ii_mm/pipeline.py`, `tests/test_pipeline.py` |
 | 10 | Adaptadores áudio/vídeo | IMPLEMENTADO / TESTADO | `ii_mm/adapters.py`, `tests/test_adapters.py` |
-| 05–09, 11–18 | (fila) | PENDENTE | |
+| 11–18 | (fila) | PENDENTE | |
 
 ## Bloqueio de mídia (registrado uma vez)
 
@@ -34,3 +39,11 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - Defeito novo corrigido em `text_matcher.normalize`: pontuação fora do ASCII (travessão, emoji, "…") colava palavras.
 - Suíte: 103 testes, 102 OK e 1 pulado (com `PROJETO_MVP_DIR`, todos passam).
 - Próxima: T05 (classificador multimodal v2).
+
+### C3: Tarefas 05 a 09
+- T05 (commit `977423c`): seis níveis de apoio, contradições, medição só por regra explícita, ferramentas mencionadas versus identificadas visualmente.
+- T06: quatro migrações sequenciais, checksum, recusa de esquema mais novo, rollback total, FK e CHECK, recusa de `catalog.sqlite`. Reprodução e correção do `no such table` legado (opt-in com `PROJETO_MVP_DIR`).
+- T07/T08: repositório transacional. Mesma entrada vira no-op, entrada nova cria versão (a anterior fica `superseded`), URLs alternativas viram aliases, mesmo conteúdo vira um vídeo só, mesma publicação com outro conteúdo vira conflito bloqueante.
+- T09: retomada após interrupção, tentativas limitadas, propagação por hash encadeado, `force`, espera por revisão.
+- Achados L1 a L3 sobre o Projeto-MVP registrados em `BASELINE_ATUAL.md`.
+- Próxima: T11 (narrativa), T12 (técnicas), T13 (catálogo), T14 (revisão).

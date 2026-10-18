@@ -26,15 +26,24 @@ def sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def synthetic_url(platform: str, i: int) -> str:
+    """URLs com formato de plataforma e IDs inequivocamente sintéticos (prefixo SYNTH / 9999...)."""
+    if platform == "youtube":
+        return f"https://youtu.be/SYNTH{i:06d}"
+    if platform == "tiktok":
+        return f"https://www.tiktok.com/@synth/video/9999{i:010d}"
+    return f"https://www.instagram.com/reel/SYNTH{i:06d}/"
+
+
 def make_reference(i: int, seed: int = 7) -> Dict[str, Any]:
     rnd = random.Random(seed * 1_000_003 + i)
     vid = f"SYNTH{i:06d}"
     dur = round(rnd.uniform(8.0, 90.0), 3)
     content = sha(f"content:{seed}:{i}")
+    platform = rnd.choice(("instagram", "instagram", "youtube", "tiktok"))
     doc = empty_document(
-        reference_id=f"ref_{vid}", platform=rnd.choice(("instagram", "instagram", "youtube", "tiktok")),
-        video_id=vid, duration_s=dur, content_sha256=content,
-        origin_url=f"https://example.invalid/reel/{vid}/", author_handle=f"autor_{rnd.randrange(40):02d}",
+        reference_id=f"ref_{vid}", platform=platform, video_id=vid, duration_s=dur, content_sha256=content,
+        origin_url=synthetic_url(platform, i), author_handle=f"autor_{rnd.randrange(40):02d}",
     )
     doc["reference"]["subject"] = rnd.choice(SUBJECTS)
     cats = rnd.sample(list(SPEECH), k=rnd.randint(1, 3))
