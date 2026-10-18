@@ -1,5 +1,7 @@
 # Classificação multimodal: arquitetura proposta
 
+> **Atualização (Missão Suprema 01):** o protótipo v1 (`multimodal_classifier.py`, contrato `ii.multimodal_analysis.v1`) foi preservado e corrigido (B3, B4), mas foi substituído pelo pacote `ii_mm/` (contrato `ii.reference_analysis.v2`). O esquema SQL da seção 3 foi implementado em `ii_mm/db/migrations.py` com ajustes. Ver `INTEGRACAO_ANTIGRAVITY.md` e `RELATORIO_MISSAO_SUPREMA_01.md`.
+
 Status: **proposta com protótipo testado em dados sintéticos**. Nada foi integrado ao `Projeto-MVP`, e nenhuma análise visual do vídeo piloto foi feita (ver `INVENTARIO_EVIDENCIAS_FALTANTES.md`).
 
 ## 1. Problema, a partir da auditoria anterior

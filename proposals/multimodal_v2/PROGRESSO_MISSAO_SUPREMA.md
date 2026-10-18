@@ -71,3 +71,9 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - Benchmark com 82, 1.000 e 10.000 registros executado. O próprio benchmark revelou um O(N²) na busca da análise corrente; corrigido com `CROSS JOIN`, plano travado em teste. Números em `BENCHMARK.md`.
 - Demonstração de ponta a ponta com formatos brutos (SRT, stdout do ffmpeg, ffprobe, manifesto de pacote, observações). Revelou o falso positivo "clica no link" virando demonstração; corrigido com exclusões nas pistas narrativas.
 - Próxima: documento de integração para o Antigravity e relatório final.
+
+### C7: Encerramento
+- Documentos finais: `INTEGRACAO_ANTIGRAVITY.md` e `RELATORIO_MISSAO_SUPREMA_01.md`; nota de atualização em `CLASSIFICACAO_MULTIMODAL.md`.
+- Suíte final: 220 testes (216 OK e 4 pulados sem `PROJETO_MVP_DIR`; 220 OK com o clone).
+- As 18 frentes estão implementadas. Bloqueado: segunda análise visual do DQV5dm6gCvH (falta o pacote de mídia).
+- Para retomar: ler `RELATORIO_MISSAO_SUPREMA_01.md`, seção 11 (próximas tarefas).
