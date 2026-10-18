@@ -1,5 +1,7 @@
 # Guia de integração: `ii_mm` → Projeto-MVP (para o Antigravity)
 
+> **Atualização (Missão Suprema 02):** a ordem de adoção foi substituída por `PLANO_INTEGRACAO_SEGURA.md` (três estágios; o terceiro exige decisão humana). Compatibilidade detalhada em `MATRIZ_COMPATIBILIDADE.md`, riscos em `RISCO_E_ROLLBACK.md`. Pacote verificável: `handoff/` (`python3 tools/build_handoff.py --check`). Os números de testes abaixo são da Missão 01.
+
 Status: **proposta isolada, testada com dados sintéticos**. Nada foi aplicado ao Projeto-MVP, ao banco de produção, ao n8n ou ao ambiente Windows. Cada passo abaixo é um patch revisável e reversível.
 
 ## 1. O que existe

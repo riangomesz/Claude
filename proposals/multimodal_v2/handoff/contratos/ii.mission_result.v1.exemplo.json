@@ -1,0 +1,15 @@
+{
+  "analysis_id": "an_1_exemplo",
+  "error": null,
+  "executed": [
+    "evidence_normalized",
+    "classified",
+    "awaiting_review"
+  ],
+  "mission_id": "ms_29411b40339c7dd7487599f7",
+  "next_action": "await_review",
+  "provenance": {},
+  "schema_version": "ii.mission_result.v1",
+  "skipped": [],
+  "state": "awaiting_review"
+}

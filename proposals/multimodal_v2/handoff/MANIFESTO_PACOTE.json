@@ -1,0 +1,433 @@
+{
+  "base": "proposals/",
+  "files": [
+    {
+      "bytes_lf": 249,
+      "path": "multimodal_v2/ii_mm/__init__.py",
+      "sha256_lf": "7290451825d16254e37ffa9c56841b4ebd4ed4375bc4e0c8f30b908750bca117"
+    },
+    {
+      "bytes_lf": 506,
+      "path": "multimodal_v2/ii_mm/_matcher.py",
+      "sha256_lf": "992739691aa9b600f9fb3e93e0d6c4ab9202d1bf2459cf2c8a85c6adc9b570fa"
+    },
+    {
+      "bytes_lf": 16910,
+      "path": "multimodal_v2/ii_mm/adapters.py",
+      "sha256_lf": "e54b219505277a882d31e0dd1be413a7ac99d919acdcdd521bac55a32d622b6d"
+    },
+    {
+      "bytes_lf": 9538,
+      "path": "multimodal_v2/ii_mm/catalog.py",
+      "sha256_lf": "216b12eb70d03b2f4b8ed7cdef42ef1bd69dd85ee0d807658aa76e584cc3b94e"
+    },
+    {
+      "bytes_lf": 10044,
+      "path": "multimodal_v2/ii_mm/classifier.py",
+      "sha256_lf": "7ffd17be0c44ad4debddc6bca33365be213294f9096791394b207b3676b1f553"
+    },
+    {
+      "bytes_lf": 17001,
+      "path": "multimodal_v2/ii_mm/contract.py",
+      "sha256_lf": "de8e44c71c142b551b3ede358a53d1f1f4203f075ef0e412994ae33977c07fc2"
+    },
+    {
+      "bytes_lf": 95,
+      "path": "multimodal_v2/ii_mm/db/__init__.py",
+      "sha256_lf": "f1dfbbd261a7aba8d13eb8f4f2235f196f864d20fa46e5ee3f6fe7329788d464"
+    },
+    {
+      "bytes_lf": 3602,
+      "path": "multimodal_v2/ii_mm/db/legacy_fixture.py",
+      "sha256_lf": "69510de3f5e4c1d1c3ca6cdf46e2a3cf66bbb419237a5778ecd12fc14523125a"
+    },
+    {
+      "bytes_lf": 13421,
+      "path": "multimodal_v2/ii_mm/db/migrations.py",
+      "sha256_lf": "27f6475240dcb97894a8b0870c0608a4f44cd7a19b2a7eab3b2209c73ed8c550"
+    },
+    {
+      "bytes_lf": 13753,
+      "path": "multimodal_v2/ii_mm/db/repository.py",
+      "sha256_lf": "6486ca9ba6fe96c874d6a44a62dd7bae825aa1eb68a9364142de7726c8839fd8"
+    },
+    {
+      "bytes_lf": 4157,
+      "path": "multimodal_v2/ii_mm/dedup.py",
+      "sha256_lf": "4702cf2a415d5d20c007020075f984a8e6c6c187be2c0fc6a9a1f9d5ab806d6b"
+    },
+    {
+      "bytes_lf": 8630,
+      "path": "multimodal_v2/ii_mm/demo.py",
+      "sha256_lf": "ddd99d2780677c2724b182d652d1a6f1fbbd727566b90beea4dc35cd5edab34d"
+    },
+    {
+      "bytes_lf": 1642,
+      "path": "multimodal_v2/ii_mm/evidence_rules.py",
+      "sha256_lf": "e0349dc08208fd3057888cd590fd4e1622d6576704787a92596b7c72b053e443"
+    },
+    {
+      "bytes_lf": 18941,
+      "path": "multimodal_v2/ii_mm/legacy.py",
+      "sha256_lf": "cb3daf3ecf905e2512662ab2528a721ff5d05a52ad841b3f9f8542b9d1794f02"
+    },
+    {
+      "bytes_lf": 11305,
+      "path": "multimodal_v2/ii_mm/n8n_contract.py",
+      "sha256_lf": "2e0a8797422e0cdafa88284bf0126e6bd07e74b4d31d063dca40a34d370f0510"
+    },
+    {
+      "bytes_lf": 7652,
+      "path": "multimodal_v2/ii_mm/narrative.py",
+      "sha256_lf": "364643eef53534526d57e40f0f521a3df93b6d130983ab68df2c527489b9b144"
+    },
+    {
+      "bytes_lf": 13310,
+      "path": "multimodal_v2/ii_mm/normalize.py",
+      "sha256_lf": "27fca11b3924033836a78df396ae316b46bc06cd9aa76def155469897ac2f120"
+    },
+    {
+      "bytes_lf": 10265,
+      "path": "multimodal_v2/ii_mm/obsidian_export.py",
+      "sha256_lf": "b107376b3a00e7cee0846394a64d9fa6cc948e22605f2ca1738bfa7399fa5cb6"
+    },
+    {
+      "bytes_lf": 8267,
+      "path": "multimodal_v2/ii_mm/pipeline.py",
+      "sha256_lf": "f4e85a3c4cb8765947b7cfd1a790bb98fc2fbe96ee5b9b6e1daf51f94cf63056"
+    },
+    {
+      "bytes_lf": 5243,
+      "path": "multimodal_v2/ii_mm/quality.py",
+      "sha256_lf": "f8f901bbef96aab285011c97b4334e5d952a2b3dcb0e3a35f9e6628ced552871"
+    },
+    {
+      "bytes_lf": 11548,
+      "path": "multimodal_v2/ii_mm/review.py",
+      "sha256_lf": "0e3aba8ef4823a5fb54fa4a8607458a8e660bafb7630a9f6b4f81b6fbd13ce1f"
+    },
+    {
+      "bytes_lf": 8289,
+      "path": "multimodal_v2/ii_mm/shadow.py",
+      "sha256_lf": "e2ce587f96dc319547bc945215144b4aa9ce7681ae5748167c48e75817c279c1"
+    },
+    {
+      "bytes_lf": 4334,
+      "path": "multimodal_v2/ii_mm/synthetic.py",
+      "sha256_lf": "40e7284a3f23a63e185d1853d791658a4ada35e247329b6ec46924dd5488bc34"
+    },
+    {
+      "bytes_lf": 7846,
+      "path": "multimodal_v2/ii_mm/technique_library.py",
+      "sha256_lf": "b87854998e725bb88b828c8e1a2de89f314a67b347ddafffa11ef94f3ac47235"
+    },
+    {
+      "bytes_lf": 4314,
+      "path": "multimodal_v2/ii_mm/techniques.py",
+      "sha256_lf": "4a8a70f63784a16852fb3c58c3153441cb88574728897ff616ac15884e235b87"
+    },
+    {
+      "bytes_lf": 11026,
+      "path": "multimodal_v2/ii_mm/text_classifier.py",
+      "sha256_lf": "75944edab1d566b4195f5da6cc1c424ff8596a515f99beea393a2728625d75bb"
+    },
+    {
+      "bytes_lf": 5966,
+      "path": "multimodal_v2/ii_mm/vocabulary.py",
+      "sha256_lf": "f2eeaae162a68892c475115a7768e87194f7fb128ce0890a4a4aced730df9b8b"
+    },
+    {
+      "bytes_lf": 2639,
+      "path": "classification/text_matcher.py",
+      "sha256_lf": "885092fc6bd1b900039ee77334992b1c32b88a34871d4e4c64d07cfff6d09e41"
+    },
+    {
+      "bytes_lf": 0,
+      "path": "multimodal_v2/tests/__init__.py",
+      "sha256_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes_lf": 175,
+      "path": "multimodal_v2/tests/_helpers.py",
+      "sha256_lf": "8afc862c52add7decb6bdac83270f249959bbf1134f7b0c0e6d9d0b43f013e26"
+    },
+    {
+      "bytes_lf": 6549,
+      "path": "multimodal_v2/tests/test_adapters.py",
+      "sha256_lf": "fea2a37dc2bce72e0a2f5ea608c31cc8a71a69961a933808b7275134f5407091"
+    },
+    {
+      "bytes_lf": 7738,
+      "path": "multimodal_v2/tests/test_catalog.py",
+      "sha256_lf": "dfa99628af30478e7cfc9324d9d8cb8c2ea4ef4deb6a4af80a7e0913151ec53b"
+    },
+    {
+      "bytes_lf": 8876,
+      "path": "multimodal_v2/tests/test_classifier.py",
+      "sha256_lf": "1db474f9e98c7392bd02a144fc26785fde40e620de336055f7539dede6103b43"
+    },
+    {
+      "bytes_lf": 7403,
+      "path": "multimodal_v2/tests/test_contract.py",
+      "sha256_lf": "6fdd79bc4405a8eeb4c419c18531d50c65a009235855b95abe0515958b715ec1"
+    },
+    {
+      "bytes_lf": 2988,
+      "path": "multimodal_v2/tests/test_dedup.py",
+      "sha256_lf": "7b4c384cee097191f5db8383a2ba18fa44c5a7ff730ce5032fc00516cd2324b7"
+    },
+    {
+      "bytes_lf": 3039,
+      "path": "multimodal_v2/tests/test_demo_end_to_end.py",
+      "sha256_lf": "80b9c73949b36a51a22145fa2d38ca3439fbe227f08051111bef7ec499a97551"
+    },
+    {
+      "bytes_lf": 3319,
+      "path": "multimodal_v2/tests/test_handoff.py",
+      "sha256_lf": "41bb3aab885643738d20216b6f55fdc6642a7a4e2208b3fd1fc37fd3942c06db"
+    },
+    {
+      "bytes_lf": 8757,
+      "path": "multimodal_v2/tests/test_legacy_adapters.py",
+      "sha256_lf": "5532e43a041730b91040500de3e300eb3788d0b5196dc660c121d449982ffbe5"
+    },
+    {
+      "bytes_lf": 6410,
+      "path": "multimodal_v2/tests/test_migrations.py",
+      "sha256_lf": "84f2bc8cf50cd281020f6059c0a5b0e92baaaf87f8c3395b7d85febc7fa06429"
+    },
+    {
+      "bytes_lf": 15969,
+      "path": "multimodal_v2/tests/test_ms02_adversarial.py",
+      "sha256_lf": "2390e0e1d1df462863a116163aedfb2ec4f2bd62fe9f6028523fdb7ab5460d6a"
+    },
+    {
+      "bytes_lf": 7535,
+      "path": "multimodal_v2/tests/test_ms02_e2e.py",
+      "sha256_lf": "6507a4fe9caed4e333614fceb2171f8aff625168b759798d3fcfd7c3a2ad7a61"
+    },
+    {
+      "bytes_lf": 7294,
+      "path": "multimodal_v2/tests/test_ms02_recovery.py",
+      "sha256_lf": "a214bd098de825c1093753b13abac6d7b3f69b8e534d3957ff288762e0f245ed"
+    },
+    {
+      "bytes_lf": 6003,
+      "path": "multimodal_v2/tests/test_ms02_scenarios.py",
+      "sha256_lf": "2610b3f519e4d1572a9fa6fb222c514003bd975f4780e422937e985229d7af70"
+    },
+    {
+      "bytes_lf": 6094,
+      "path": "multimodal_v2/tests/test_ms02_sqlite.py",
+      "sha256_lf": "73931efaa128adc1c3f650a2b0904de8aa290f03b959d5fc076494cd8200a24e"
+    },
+    {
+      "bytes_lf": 7682,
+      "path": "multimodal_v2/tests/test_n8n_contract.py",
+      "sha256_lf": "13113db67330faab59b12b36d141220609addfbef52083113db6295b1e007c82"
+    },
+    {
+      "bytes_lf": 7712,
+      "path": "multimodal_v2/tests/test_narrative_techniques.py",
+      "sha256_lf": "b1d525048245d03c7f9c2b4c62e0c840b7b10511e9c8d370f52a9e24635d22a2"
+    },
+    {
+      "bytes_lf": 7888,
+      "path": "multimodal_v2/tests/test_normalize.py",
+      "sha256_lf": "9be8038f5c71be0297d699c86c7d6557b1bb6f94bab151c549b2f6c290549adb"
+    },
+    {
+      "bytes_lf": 4817,
+      "path": "multimodal_v2/tests/test_obsidian_export.py",
+      "sha256_lf": "56a6a4efe3e6bddfb8a0b9ff71142c941362f1986f6c3989a7113bb66447183a"
+    },
+    {
+      "bytes_lf": 4966,
+      "path": "multimodal_v2/tests/test_pipeline.py",
+      "sha256_lf": "84623000666708c3b07897ac6ddb248a6b09e344ca523407c9141fd6aab397da"
+    },
+    {
+      "bytes_lf": 3469,
+      "path": "multimodal_v2/tests/test_quality.py",
+      "sha256_lf": "49bfcbf7f5b00e6b04998232019c2b78982adba7cd6661fdddaac343dc7f36ab"
+    },
+    {
+      "bytes_lf": 6624,
+      "path": "multimodal_v2/tests/test_repository.py",
+      "sha256_lf": "55bf527b1969bf3ddd0aefa387b514a9dc88e0bd9a4f9ee6d4c04d4f69614295"
+    },
+    {
+      "bytes_lf": 7240,
+      "path": "multimodal_v2/tests/test_review.py",
+      "sha256_lf": "3ae27b2b4f3f94a4ee5c10e36337bd7ab6bb0e1562af13a836db6ee779b19284"
+    },
+    {
+      "bytes_lf": 5044,
+      "path": "multimodal_v2/tests/test_shadow.py",
+      "sha256_lf": "d4654d5c43ed224575f5a0664a9c49f74401b86e631f9320b02629a61caea24e"
+    },
+    {
+      "bytes_lf": 5462,
+      "path": "multimodal_v2/tests/test_technique_library.py",
+      "sha256_lf": "8be6d195ed23eac3378b0a57789810cd15be2ec1bcb3babba85507fb4193fdc7"
+    },
+    {
+      "bytes_lf": 6267,
+      "path": "multimodal_v2/tests/test_text_classifier.py",
+      "sha256_lf": "f64760eb774a440adb65bbeab2deb284e0e02f63279086fb0a1fe69f83e74945"
+    },
+    {
+      "bytes_lf": 2512,
+      "path": "multimodal_v2/fixtures/legacy/instagram_item_row.json",
+      "sha256_lf": "67e8ee14f3764814231dab5807ee64e0ac3417ace6ccd9a97cda45e6b04da3bf"
+    },
+    {
+      "bytes_lf": 2259,
+      "path": "multimodal_v2/fixtures/legacy/intelligence_card_v2.json",
+      "sha256_lf": "aad4b9c8abb16bf5875231e3adbe3c79cb0781a334051de1f36d5e72d848a07d"
+    },
+    {
+      "bytes_lf": 1492,
+      "path": "multimodal_v2/fixtures/legacy/shadow_rows.json",
+      "sha256_lf": "8e0b5888cd13c6c16679c3cae168ff39d9569135515f4647e504b3e357c1a477"
+    },
+    {
+      "bytes_lf": 483,
+      "path": "multimodal_v2/fixtures/legacy/transition_candidates.json",
+      "sha256_lf": "c3a424c2ea07843b0d9922d3005157ff75e83733a8f87fd7cd2f6fd4eae5488d"
+    },
+    {
+      "bytes_lf": 540,
+      "path": "multimodal_v2/fixtures/legacy/vision_macro_observado.json",
+      "sha256_lf": "f5ebdc06517041d9fbc73ac93a1cb19661435cadbf89d3630a748b47df1f0c87"
+    },
+    {
+      "bytes_lf": 507,
+      "path": "multimodal_v2/fixtures/legacy/vision_macro_simulacao.json",
+      "sha256_lf": "6addaad6412bad6c9039505d3ee025c013d13c4caba9a0a24f352b257db2431d"
+    },
+    {
+      "bytes_lf": 799,
+      "path": "multimodal_v2/fixtures/n8n_mission_example.json",
+      "sha256_lf": "7f792fffc54346981be5a4bdda3bd418a7f06963e250810d88a6d5c33c7df546"
+    },
+    {
+      "bytes_lf": 422,
+      "path": "multimodal_v2/fixtures/n8n_result_example.json",
+      "sha256_lf": "fc2b2c8667f33a0a3ee654c89f3ade2d08f9c34271093951db6d53445425b882"
+    },
+    {
+      "bytes_lf": 3566,
+      "path": "multimodal_v2/fixtures/synthetic_reference_v2.json",
+      "sha256_lf": "76895ee2c6b09801d184d185570e6217175eae242459de08f739c9c55b263847"
+    },
+    {
+      "bytes_lf": 8526,
+      "path": "multimodal_v2/tools/benchmark.py",
+      "sha256_lf": "7b21dce9717f9466c4a866e3ee5247d52a37fdda887eb04aaf09b14b0813324c"
+    },
+    {
+      "bytes_lf": 7171,
+      "path": "multimodal_v2/tools/build_handoff.py",
+      "sha256_lf": "8122a92044b4d40da0b7658b0654267f47de4ce4492bd029ccbf10caf5e59eac"
+    },
+    {
+      "bytes_lf": 1919,
+      "path": "multimodal_v2/tools/compare_benchmarks.py",
+      "sha256_lf": "b8e2bec903c4bce11ba5720cfb067255c6eab7989f50471adc816afeb82e0756"
+    },
+    {
+      "bytes_lf": 2673,
+      "path": "multimodal_v2/tools/make_legacy_close_patch.py",
+      "sha256_lf": "f33d33ca4c2349cb26e117f70ca0d78a5d681e812ca2bdfc80a16373aa344bd7"
+    },
+    {
+      "bytes_lf": 2121,
+      "path": "multimodal_v2/tools/stdlib_coverage.py",
+      "sha256_lf": "997d1c4d07952e60e581d82477270cc09b4a6ca92f48145722ea7e6ec6ff7353"
+    },
+    {
+      "bytes_lf": 10381,
+      "path": "multimodal_v2/patches/legacy_close_sqlite_connections.diff",
+      "sha256_lf": "51083597833d747f0f34a8546cda27df93e50d4163161a2c2899e31e646d3d1a"
+    },
+    {
+      "bytes_lf": 811,
+      "path": "multimodal_v2/handoff/contratos/ii.mission.v1.exemplo.json",
+      "sha256_lf": "b00114c15febd89c22ec46f1b6cd7847929696e47ec6cf1cf7317660fca20fc6"
+    },
+    {
+      "bytes_lf": 332,
+      "path": "multimodal_v2/handoff/contratos/ii.mission_result.v1.exemplo.json",
+      "sha256_lf": "056338f243dedd648579cb42e7d7c500f5059438192cf265ff2aaf7ef1a3b2aa"
+    },
+    {
+      "bytes_lf": 21432,
+      "path": "multimodal_v2/handoff/contratos/ii.reference_analysis.v2.exemplo.json",
+      "sha256_lf": "b37282d59a625a81efb30909592a19334d077d47af6e0d098c2eee67d1fd3df4"
+    },
+    {
+      "bytes_lf": 12003,
+      "path": "multimodal_v2/handoff/contratos/ii.shadow_report.v1.exemplo.json",
+      "sha256_lf": "ecbc242301b0c05ad724731b4f39721edd7dc87f2facc26d43f46ee671c03c8d"
+    },
+    {
+      "bytes_lf": 661,
+      "path": "multimodal_v2/handoff/contratos/ii.temporal_quality.v1.exemplo.json",
+      "sha256_lf": "bca820cdc14db5ca12b2ea37859863146b569495b6f22ed18bbca91597d63b42"
+    },
+    {
+      "bytes_lf": 1368,
+      "path": "multimodal_v2/handoff/contratos/ii.visual_observation.v1.exemplo.json",
+      "sha256_lf": "cc83889aa22d24694d0e7f4e239a0c0a31d9aa486ca864adfebab212846ff12f"
+    },
+    {
+      "bytes_lf": 2031,
+      "path": "multimodal_v2/handoff/exemplo_uso.py",
+      "sha256_lf": "c8b5a5d52873b519da592647518b67f3e759550d0a9c0bdb63ffd2c8670bb002"
+    },
+    {
+      "bytes_lf": 1162,
+      "path": "multimodal_v2/run_tests.py",
+      "sha256_lf": "4f22327799b65bb46d441c43f45465e6b9b349495d8b4d3bdd0064826e5b23a8"
+    },
+    {
+      "bytes_lf": 3205,
+      "path": "multimodal_v2/verify_package.py",
+      "sha256_lf": "e65e738a38e94f5501f6561c2bdc33bbc5f88eab8e23ff1f0a674c4add563153"
+    },
+    {
+      "bytes_lf": 7048,
+      "path": "multimodal_v2/PLANO_INTEGRACAO_SEGURA.md",
+      "sha256_lf": "11cfd43780c8f3c5a79d58ca5d72fc93b52cc7ae99aa5298a4741fc9a48d61d8"
+    },
+    {
+      "bytes_lf": 8744,
+      "path": "multimodal_v2/MATRIZ_COMPATIBILIDADE.md",
+      "sha256_lf": "44f73f6363cefdbd04d6dd05d02fe7431802e57741295a71d1c412cbff363aab"
+    },
+    {
+      "bytes_lf": 5826,
+      "path": "multimodal_v2/RISCO_E_ROLLBACK.md",
+      "sha256_lf": "38760cf30892c2c6c46766bb815c95a67418f7dd2988c5a1a1f3c6409a71568f"
+    }
+  ],
+  "hash_note": "sha256_lf = SHA-256 com CRLF normalizado para LF (estável entre Linux e Windows)",
+  "roles": {
+    "../classification/text_matcher.py": "dependência do classificador textual",
+    "MATRIZ_COMPATIBILIDADE.md": "compatibilidade com o Projeto-MVP",
+    "PLANO_INTEGRACAO_SEGURA.md": "plano em três estágios",
+    "RISCO_E_ROLLBACK.md": "riscos e rollback",
+    "fixtures": "fixtures sintéticas (formatos reais, valores sintéticos)",
+    "handoff/contratos": "exemplos de contrato validados",
+    "handoff/exemplo_uso.py": "exemplo executável: modo sombra somente leitura + staging",
+    "ii_mm": "núcleo (somente stdlib)",
+    "patches/legacy_close_sqlite_connections.diff": "patch demonstrativo do legado (L1), não aplicado",
+    "run_tests.py": "executor da suíte",
+    "tests": "testes de aceitação",
+    "tools": "ferramentas (cobertura, benchmark, patch legado, pacote)",
+    "verify_package.py": "verificador de pacote de evidências"
+  },
+  "schema_version": "ii.handoff_manifest.v1",
+  "verify": "python3 tools/build_handoff.py --check"
+}

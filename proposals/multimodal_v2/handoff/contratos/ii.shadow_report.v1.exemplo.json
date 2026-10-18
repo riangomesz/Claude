@@ -1,0 +1,445 @@
+{
+  "blocked": [
+    {
+      "item_id": null,
+      "reason": "sem id nem canonical_shortcode",
+      "status": "blocked"
+    }
+  ],
+  "caveat": "Relatório descritivo. Sem rótulo humano não há como dizer qual classificador acerta; mesmo com rótulos, contagens de amostra pequena ou sintética não são taxa de acerto.",
+  "divergences": [
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh01",
+      "kind": "agree_plus_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": "metadados: palavras_chave (design)",
+        "label": "Design e Motion",
+        "mapped": "motion_design",
+        "origin": "editorial_category armazenada (sugestao_automatica)"
+      },
+      "new": {
+        "motion_design": {
+          "evidence": [
+            {
+              "claim": "#motiondesign",
+              "evidence_id": "ev_1039e5ebb56a54ec6bb5",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "motion design"
+              ]
+            },
+            {
+              "claim": "Tutorial de motion design no After Effects",
+              "evidence_id": "ev_67a22fa8234255ceacd0",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "after effects",
+                "motion design"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        },
+        "tutorial": {
+          "evidence": [
+            {
+              "claim": "Tutorial de motion design no After Effects",
+              "evidence_id": "ev_67a22fa8234255ceacd0",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "tutorial"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh02",
+      "kind": "only_legacy",
+      "legacy": {
+        "curation_category": "incerto",
+        "curation_rule": "metadados: termos_genericos_requer_revisao",
+        "label": "Automação",
+        "mapped": "automacao",
+        "origin": "editorial_category armazenada (sugestao_automatica)"
+      },
+      "new": {},
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "human": {
+        "label": "Marketing e Conteúdo",
+        "legacy_matches_human": null,
+        "mapped": "marketing_vendas",
+        "new_extra_vs_human": [
+          "edicao_audiovisual"
+        ],
+        "new_matches_human": true
+      },
+      "item_id": "SYNTHsh04",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (manual)"
+      },
+      "new": {
+        "edicao_audiovisual": {
+          "evidence": [
+            {
+              "claim": "link na bio com desconto no curso de edição no capcut",
+              "evidence_id": "ev_6e3470853a0fe1e6b15a",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "capcut",
+                "edicao"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        },
+        "marketing_vendas": {
+          "evidence": [
+            {
+              "claim": "link na bio com desconto no curso de edição no capcut",
+              "evidence_id": "ev_6e3470853a0fe1e6b15a",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "desconto",
+                "link na bio"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "human": {
+        "label": "Design e Motion",
+        "legacy_matches_human": null,
+        "mapped": "motion_design",
+        "new_extra_vs_human": [
+          "automacao"
+        ],
+        "new_matches_human": false
+      },
+      "item_id": "SYNTHsh05",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (manual)"
+      },
+      "new": {
+        "automacao": {
+          "evidence": [
+            {
+              "claim": "n8n workflow com webhook",
+              "evidence_id": "ev_9a12582493c34c1adfca",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "n8n",
+                "webhook",
+                "workflow"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh06",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "incerto",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (sem origem)"
+      },
+      "new": {
+        "tutorial": {
+          "evidence": [
+            {
+              "claim": "vou mostrar o passo a passo",
+              "evidence_id": "ev_d8f9702c1986bccf04df",
+              "status": "transcript_claim",
+              "tag": null,
+              "terms": [
+                "passo a passo"
+              ]
+            }
+          ],
+          "support": "mentioned_speech"
+        }
+      },
+      "status": "compared"
+    }
+  ],
+  "human_reference": {
+    "legacy_diverges_from_human": [],
+    "new_adds_beyond_human": [
+      "SYNTHsh04",
+      "SYNTHsh05"
+    ],
+    "new_misses_human_label": [
+      "SYNTHsh05"
+    ],
+    "rows_with_human_label": 2
+  },
+  "items": [
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh01",
+      "kind": "agree_plus_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": "metadados: palavras_chave (design)",
+        "label": "Design e Motion",
+        "mapped": "motion_design",
+        "origin": "editorial_category armazenada (sugestao_automatica)"
+      },
+      "new": {
+        "motion_design": {
+          "evidence": [
+            {
+              "claim": "#motiondesign",
+              "evidence_id": "ev_1039e5ebb56a54ec6bb5",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "motion design"
+              ]
+            },
+            {
+              "claim": "Tutorial de motion design no After Effects",
+              "evidence_id": "ev_67a22fa8234255ceacd0",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "after effects",
+                "motion design"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        },
+        "tutorial": {
+          "evidence": [
+            {
+              "claim": "Tutorial de motion design no After Effects",
+              "evidence_id": "ev_67a22fa8234255ceacd0",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "tutorial"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh02",
+      "kind": "only_legacy",
+      "legacy": {
+        "curation_category": "incerto",
+        "curation_rule": "metadados: termos_genericos_requer_revisao",
+        "label": "Automação",
+        "mapped": "automacao",
+        "origin": "editorial_category armazenada (sugestao_automatica)"
+      },
+      "new": {},
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh03",
+      "kind": "agree_none",
+      "legacy": {
+        "curation_category": "incerto",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (sem origem)"
+      },
+      "new": {},
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "human": {
+        "label": "Marketing e Conteúdo",
+        "legacy_matches_human": null,
+        "mapped": "marketing_vendas",
+        "new_extra_vs_human": [
+          "edicao_audiovisual"
+        ],
+        "new_matches_human": true
+      },
+      "item_id": "SYNTHsh04",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (manual)"
+      },
+      "new": {
+        "edicao_audiovisual": {
+          "evidence": [
+            {
+              "claim": "link na bio com desconto no curso de edição no capcut",
+              "evidence_id": "ev_6e3470853a0fe1e6b15a",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "capcut",
+                "edicao"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        },
+        "marketing_vendas": {
+          "evidence": [
+            {
+              "claim": "link na bio com desconto no curso de edição no capcut",
+              "evidence_id": "ev_6e3470853a0fe1e6b15a",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "desconto",
+                "link na bio"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "human": {
+        "label": "Design e Motion",
+        "legacy_matches_human": null,
+        "mapped": "motion_design",
+        "new_extra_vs_human": [
+          "automacao"
+        ],
+        "new_matches_human": false
+      },
+      "item_id": "SYNTHsh05",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "relevante",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (manual)"
+      },
+      "new": {
+        "automacao": {
+          "evidence": [
+            {
+              "claim": "n8n workflow com webhook",
+              "evidence_id": "ev_9a12582493c34c1adfca",
+              "status": "metadata_claim",
+              "tag": null,
+              "terms": [
+                "n8n",
+                "webhook",
+                "workflow"
+              ]
+            }
+          ],
+          "support": "suggested_metadata"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "adapter_warnings": [],
+      "ai_terms": [],
+      "item_id": "SYNTHsh06",
+      "kind": "only_new",
+      "legacy": {
+        "curation_category": "incerto",
+        "curation_rule": null,
+        "label": null,
+        "mapped": null,
+        "origin": "editorial_category armazenada (sem origem)"
+      },
+      "new": {
+        "tutorial": {
+          "evidence": [
+            {
+              "claim": "vou mostrar o passo a passo",
+              "evidence_id": "ev_d8f9702c1986bccf04df",
+              "status": "transcript_claim",
+              "tag": null,
+              "terms": [
+                "passo a passo"
+              ]
+            }
+          ],
+          "support": "mentioned_speech"
+        }
+      },
+      "status": "compared"
+    },
+    {
+      "item_id": null,
+      "reason": "sem id nem canonical_shortcode",
+      "status": "blocked"
+    }
+  ],
+  "schema_version": "ii.shadow_report.v1",
+  "totals": {
+    "agree_none": 1,
+    "agree_plus_new": 1,
+    "blocked": 1,
+    "only_legacy": 1,
+    "only_new": 3,
+    "rows": 7
+  },
+  "writes_performed": 0
+}

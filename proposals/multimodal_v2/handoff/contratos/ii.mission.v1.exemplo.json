@@ -1,0 +1,31 @@
+{
+  "artifacts": [
+    {
+      "kind": "srt",
+      "sha256": "9c34a642702ddee3f3c3c99e3506dbaefd3452bf6b5603ea73cd3abed332afc4",
+      "uri": "missions/SYNTHdemo01/transcricao.srt"
+    },
+    {
+      "kind": "frames_manifest",
+      "sha256": "856e0cd02f3352d6b5b2b641c9d7e2586482f528ce32358ac99e77f9a4b8012b",
+      "uri": "missions/SYNTHdemo01/manifesto_pacote.json"
+    }
+  ],
+  "budget": {
+    "allow_paid_models": false,
+    "max_usd": 0
+  },
+  "created_at": "2026-10-18T00:00:00Z",
+  "mission_id": "ms_29411b40339c7dd7487599f7",
+  "reference": {
+    "platform": "instagram",
+    "url": "https://www.instagram.com/reel/SYNTHdemo01/"
+  },
+  "requested_by": "n8n:exemplo",
+  "requested_stages": [
+    "evidence_normalized",
+    "classified",
+    "awaiting_review"
+  ],
+  "schema_version": "ii.mission.v1"
+}

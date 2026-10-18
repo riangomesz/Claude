@@ -128,3 +128,11 @@ Suíte: 244 testes (240 OK, 4 pulados).
 - T10: `tests/test_ms02_scenarios.py` com 10 cenários combinados (sem legenda com visual; ferramenta citada sem interface; interface sem nome legível; cinematográfico sem fala; tutorial sem ferramenta; publicidade com cara de tutorial; motion só sugerido; corte sem técnica; várias categorias; contradição). Todos passaram sem mudança de código: comportamento consistente com as regras.
 - T11: `ii_mm/quality.py`, relatório de integridade temporal com código, severidade e intervalo, sem porcentagens: lacuna de amostragem (reproduz o padrão 19–49 s do piloto com tempos sintéticos), duplicatas, sobreposição, ausência de transcrição, VFR, dessincronia A/V, grade de quadros. Adaptador do ffprobe passou a expor `r_frame_rate` e as durações por stream.
 - T12: `ii_mm/technique_library.py` com as 5 consultas pedidas. Atributos estruturados de observação com lista fechada (`size`, `position`, `case`, `words_per_caption`, `color`), indexados em `search_terms`. `AI_TOOLS` no vocabulário. O guia de reprodução sai rotulado como `proposta_criativa`.
+
+### M2-C5: Etapas E a G (T13 a T18), encerramento
+- T15: `tests/test_ms02_e2e.py`, ponta a ponta comandado pelo gateway n8n e pelo pipeline com lease: queda no meio da classificação, reenvio, URL alternativa, revisão, conclusão e reenvio final. Idempotência e integridade verificadas.
+- T14: pacote `handoff/` com 6 exemplos de contrato gerados e validados pelo próprio código, `exemplo_uso.py` (modo sombra `ro` + staging) e `MANIFESTO_PACOTE.json` (hash com LF normalizado; `proposals/.gitattributes` fixa LF). Verificação: `python3 tools/build_handoff.py --check`.
+- T13/T18: `PLANO_INTEGRACAO_SEGURA.md` (3 estágios; o 3º não autorizado), `MATRIZ_COMPATIBILIDADE.md`, `RISCO_E_ROLLBACK.md`, `RELATORIO_MISSAO_SUPREMA_02.md`.
+- T17: 307 testes (297 OK + 10 pulados sem clone; 307 OK com clone). Benchmark final sem regressão; filtro sem resultado de 24 ms para 0,006 ms com 10 mil registros.
+- T16: piloto segue `blocked_missing_evidence` (verificação única no início da missão).
+- Para retomar: `RELATORIO_MISSAO_SUPREMA_02.md`, seção 10.

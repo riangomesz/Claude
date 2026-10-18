@@ -1,0 +1,31 @@
+{
+  "counts": {
+    "warning": 2
+  },
+  "duration_s": 24.0,
+  "findings": [
+    {
+      "code": "large_sampling_gap",
+      "detail": "9.0 s sem quadro amostrado",
+      "interval_s": [
+        0.0,
+        9.0
+      ],
+      "severity": "warning"
+    },
+    {
+      "code": "large_sampling_gap",
+      "detail": "7.0 s sem quadro amostrado",
+      "interval_s": [
+        14.033,
+        21.0
+      ],
+      "severity": "warning"
+    }
+  ],
+  "frames": 4,
+  "note": "Relatório de integridade temporal. Não mede compreensão nem qualidade do conteúdo.",
+  "schema_version": "ii.temporal_quality.v1",
+  "transcript_segments": 5,
+  "video_id": "SYNTHdemo01"
+}

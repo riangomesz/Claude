@@ -1,0 +1,63 @@
+{
+  "_nota": "frame_refs apontam para pacote_id/frame_id do manifesto; attributes é opcional (lista fechada)",
+  "observations": [
+    {
+      "frame_refs": [
+        "P01"
+      ],
+      "t_s": 9.0,
+      "tag": "ui_screen_visible",
+      "text": "Interface de edição com timeline e botão de legendas"
+    },
+    {
+      "frame_refs": [
+        "P01"
+      ],
+      "t_s": 9.0,
+      "tag": "tool_name_visible",
+      "text": "Nome 'CapCut' legível no canto superior da interface"
+    },
+    {
+      "frame_refs": [
+        "P01"
+      ],
+      "t_s": 9.0,
+      "tag": "split_screen",
+      "text": "Apresentador embaixo, tela da ferramenta em cima"
+    },
+    {
+      "frame_refs": [
+        "P01"
+      ],
+      "t_s": 9.0,
+      "tag": "burned_caption",
+      "text": "Legenda branca com contorno sobre o apresentador"
+    },
+    {
+      "frame_refs": [
+        "P02",
+        "P03"
+      ],
+      "t_s": 14.0,
+      "tag": "punch_in_scale",
+      "text": "Rosto maior no segundo quadro do par"
+    },
+    {
+      "frame_refs": [
+        "P02",
+        "P03"
+      ],
+      "t_s": 14.0,
+      "tag": "animated_caption",
+      "text": "Legenda muda de palavra entre os quadros"
+    },
+    {
+      "frame_refs": [
+        "P04"
+      ],
+      "t_s": 21.0,
+      "tag": "price_or_discount_on_screen",
+      "text": "Selo de 50% de desconto na tela"
+    }
+  ]
+}

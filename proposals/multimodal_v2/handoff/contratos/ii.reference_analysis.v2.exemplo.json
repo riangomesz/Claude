@@ -1,0 +1,801 @@
+{
+  "categories": [
+    {
+      "basis": [
+        {
+          "evidence_id": "ev_36eb9ea74d80b21886ff",
+          "rule": "text_v2",
+          "terms": [
+            "passo a passo"
+          ]
+        }
+      ],
+      "category": "tutorial",
+      "classifier_version": "ii_mm.classifier/2.0.0",
+      "context_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "evidence_ids": [
+        "ev_36eb9ea74d80b21886ff"
+      ],
+      "notes": [],
+      "review_state": "pending",
+      "support": "mentioned_speech",
+      "weak_signals": [
+        {
+          "evidence_id": "ev_15c1deb430989cf2846c",
+          "rule": "text_v2",
+          "terms": [
+            "em seguida",
+            "primeiro"
+          ]
+        }
+      ]
+    },
+    {
+      "basis": [
+        {
+          "basis": "static_frame",
+          "evidence_id": "ev_36df0abc61d9456a744d",
+          "rule": "visual_tag",
+          "tag": "tool_name_visible"
+        },
+        {
+          "basis": "static_frame",
+          "evidence_id": "ev_78831525fd1b25ba7541",
+          "rule": "visual_tag",
+          "tag": "ui_screen_visible"
+        }
+      ],
+      "category": "demonstracao_ferramenta",
+      "classifier_version": "ii_mm.classifier/2.0.0",
+      "context_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "evidence_ids": [
+        "ev_36df0abc61d9456a744d",
+        "ev_78831525fd1b25ba7541"
+      ],
+      "notes": [],
+      "review_state": "pending",
+      "support": "supported_visual",
+      "weak_signals": []
+    },
+    {
+      "basis": [
+        {
+          "basis": "static_frame",
+          "evidence_id": "ev_12f6a17150fcd04a4bb3",
+          "rule": "visual_tag",
+          "tag": "burned_caption"
+        },
+        {
+          "basis": "static_frame",
+          "evidence_id": "ev_21358913b2a88a5ad9bf",
+          "rule": "visual_tag",
+          "tag": "split_screen"
+        },
+        {
+          "evidence_id": "ev_36eb9ea74d80b21886ff",
+          "rule": "text_v2",
+          "terms": [
+            "capcut"
+          ]
+        },
+        {
+          "basis": "frame_pair",
+          "evidence_id": "ev_647f86981fd3d779565b",
+          "rule": "visual_tag",
+          "tag": "punch_in_scale"
+        },
+        {
+          "basis": "frame_pair",
+          "evidence_id": "ev_d3375f0916e83b55a3fa",
+          "rule": "visual_tag",
+          "tag": "animated_caption"
+        }
+      ],
+      "category": "edicao_audiovisual",
+      "classifier_version": "ii_mm.classifier/2.0.0",
+      "context_evidence_ids": [
+        "ev_068a978e1a7767bf72ba",
+        "ev_1f5b7271a4e8856ddbf9",
+        "ev_e33518e97146afeef5b1"
+      ],
+      "contradicting_evidence_ids": [],
+      "evidence_ids": [
+        "ev_12f6a17150fcd04a4bb3",
+        "ev_21358913b2a88a5ad9bf",
+        "ev_36eb9ea74d80b21886ff",
+        "ev_647f86981fd3d779565b",
+        "ev_d3375f0916e83b55a3fa"
+      ],
+      "notes": [],
+      "review_state": "pending",
+      "support": "supported_visual",
+      "weak_signals": []
+    },
+    {
+      "basis": [
+        {
+          "evidence_id": "ev_2692be04f029b902e214",
+          "rule": "text_v2",
+          "terms": [
+            "desconto",
+            "link na bio"
+          ]
+        },
+        {
+          "basis": "static_frame",
+          "evidence_id": "ev_c42de5f916859a790142",
+          "rule": "visual_tag",
+          "tag": "price_or_discount_on_screen"
+        }
+      ],
+      "category": "marketing_vendas",
+      "classifier_version": "ii_mm.classifier/2.0.0",
+      "context_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "evidence_ids": [
+        "ev_2692be04f029b902e214",
+        "ev_c42de5f916859a790142"
+      ],
+      "notes": [],
+      "review_state": "pending",
+      "support": "supported_visual",
+      "weak_signals": []
+    }
+  ],
+  "evidence": [
+    {
+      "basis": null,
+      "claim": "1080x1920 @ 30.0 fps, 24.0 s",
+      "evidence_id": "ev_8d30ca30492fddda9bdb",
+      "provenance": {
+        "source": "ffprobe"
+      },
+      "ref": null,
+      "source_type": "ffprobe",
+      "status": "measured_signal",
+      "t_end_s": 24.0,
+      "t_start_s": 0.0,
+      "tag": "probe"
+    },
+    {
+      "basis": null,
+      "claim": "Para tudo e olha isso aqui",
+      "evidence_id": "ev_f4f6a65c654ce4b9b8ac",
+      "provenance": {
+        "extractor": "whisper",
+        "source": "srt_file",
+        "untrusted_text": true
+      },
+      "ref": "s1",
+      "source_type": "whisper",
+      "status": "transcript_claim",
+      "t_end_s": 2.4,
+      "t_start_s": 0.0,
+      "tag": null
+    },
+    {
+      "basis": null,
+      "claim": "Nesse vídeo vou mostrar o passo a passo no CapCut",
+      "evidence_id": "ev_36eb9ea74d80b21886ff",
+      "provenance": {
+        "extractor": "whisper",
+        "source": "srt_file",
+        "untrusted_text": true
+      },
+      "ref": "s2",
+      "source_type": "whisper",
+      "status": "transcript_claim",
+      "t_end_s": 7.8,
+      "t_start_s": 2.4,
+      "tag": null
+    },
+    {
+      "basis": null,
+      "claim": "Primeiro abre a timeline, em seguida clica em legendas automáticas",
+      "evidence_id": "ev_15c1deb430989cf2846c",
+      "provenance": {
+        "extractor": "whisper",
+        "source": "srt_file",
+        "untrusted_text": true
+      },
+      "ref": "s3",
+      "source_type": "whisper",
+      "status": "transcript_claim",
+      "t_end_s": 14.0,
+      "t_start_s": 7.8,
+      "tag": null
+    },
+    {
+      "basis": null,
+      "claim": "candidato a mudança de cena (score 0.41)",
+      "evidence_id": "ev_068a978e1a7767bf72ba",
+      "extra": {
+        "score": 0.41
+      },
+      "provenance": {
+        "source": "ffmpeg_metadata_print",
+        "threshold": 0.1
+      },
+      "ref": null,
+      "source_type": "scene_detection",
+      "status": "measured_signal",
+      "t_end_s": 7.9,
+      "t_start_s": 7.9,
+      "tag": "scene_candidate"
+    },
+    {
+      "basis": "static_frame",
+      "claim": "Legenda branca com contorno sobre o apresentador",
+      "evidence_id": "ev_12f6a17150fcd04a4bb3",
+      "provenance": {
+        "artifact_sha256": "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c",
+        "frame_refs": [
+          "P01"
+        ],
+        "frame_sha256s": [
+          "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P01",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 9.0,
+      "t_start_s": 9.0,
+      "tag": "burned_caption"
+    },
+    {
+      "basis": "static_frame",
+      "claim": "Apresentador embaixo, tela da ferramenta em cima",
+      "evidence_id": "ev_21358913b2a88a5ad9bf",
+      "provenance": {
+        "artifact_sha256": "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c",
+        "frame_refs": [
+          "P01"
+        ],
+        "frame_sha256s": [
+          "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P01",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 9.0,
+      "t_start_s": 9.0,
+      "tag": "split_screen"
+    },
+    {
+      "basis": "static_frame",
+      "claim": "Nome 'CapCut' legível no canto superior da interface",
+      "evidence_id": "ev_36df0abc61d9456a744d",
+      "provenance": {
+        "artifact_sha256": "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c",
+        "frame_refs": [
+          "P01"
+        ],
+        "frame_sha256s": [
+          "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P01",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 9.0,
+      "t_start_s": 9.0,
+      "tag": "tool_name_visible"
+    },
+    {
+      "basis": "static_frame",
+      "claim": "Interface de edição com timeline e botão de legendas",
+      "evidence_id": "ev_78831525fd1b25ba7541",
+      "provenance": {
+        "artifact_sha256": "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c",
+        "frame_refs": [
+          "P01"
+        ],
+        "frame_sha256s": [
+          "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P01",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 9.0,
+      "t_start_s": 9.0,
+      "tag": "ui_screen_visible"
+    },
+    {
+      "basis": null,
+      "claim": "Fica 100% automático e mais rápido",
+      "evidence_id": "ev_3040837a13f31c381fdc",
+      "provenance": {
+        "extractor": "whisper",
+        "source": "srt_file",
+        "untrusted_text": true
+      },
+      "ref": "s4",
+      "source_type": "whisper",
+      "status": "transcript_claim",
+      "t_end_s": 19.5,
+      "t_start_s": 14.0,
+      "tag": null
+    },
+    {
+      "basis": "frame_pair",
+      "claim": "Rosto maior no segundo quadro do par",
+      "evidence_id": "ev_647f86981fd3d779565b",
+      "provenance": {
+        "artifact_sha256": "dbc1d1818e318eb88331f4833f2e8241eacb05622f2396ce722cad0cd9549b1b",
+        "frame_refs": [
+          "P02",
+          "P03"
+        ],
+        "frame_sha256s": [
+          "dbc1d1818e318eb88331f4833f2e8241eacb05622f2396ce722cad0cd9549b1b",
+          "47322874ed8bcad0c8834eb70b9c3925d2a6fa8cb851c8d196391030ec930dba"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P02",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 14.033,
+      "t_start_s": 14.0,
+      "tag": "punch_in_scale"
+    },
+    {
+      "basis": "frame_pair",
+      "claim": "Legenda muda de palavra entre os quadros",
+      "evidence_id": "ev_d3375f0916e83b55a3fa",
+      "provenance": {
+        "artifact_sha256": "dbc1d1818e318eb88331f4833f2e8241eacb05622f2396ce722cad0cd9549b1b",
+        "frame_refs": [
+          "P02",
+          "P03"
+        ],
+        "frame_sha256s": [
+          "dbc1d1818e318eb88331f4833f2e8241eacb05622f2396ce722cad0cd9549b1b",
+          "47322874ed8bcad0c8834eb70b9c3925d2a6fa8cb851c8d196391030ec930dba"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P02",
+      "source_type": "agent_observation",
+      "status": "inference",
+      "t_end_s": 14.033,
+      "t_start_s": 14.0,
+      "tag": "animated_caption"
+    },
+    {
+      "basis": null,
+      "claim": "candidato a mudança de cena (score 0.37)",
+      "evidence_id": "ev_e33518e97146afeef5b1",
+      "extra": {
+        "score": 0.37
+      },
+      "provenance": {
+        "source": "ffmpeg_metadata_print",
+        "threshold": 0.1
+      },
+      "ref": null,
+      "source_type": "scene_detection",
+      "status": "measured_signal",
+      "t_end_s": 14.05,
+      "t_start_s": 14.05,
+      "tag": "scene_candidate"
+    },
+    {
+      "basis": null,
+      "claim": "Comenta e clica no link na bio com desconto",
+      "evidence_id": "ev_2692be04f029b902e214",
+      "provenance": {
+        "extractor": "whisper",
+        "source": "srt_file",
+        "untrusted_text": true
+      },
+      "ref": "s5",
+      "source_type": "whisper",
+      "status": "transcript_claim",
+      "t_end_s": 24.0,
+      "t_start_s": 19.5,
+      "tag": null
+    },
+    {
+      "basis": null,
+      "claim": "candidato a mudança de cena (score 0.12)",
+      "evidence_id": "ev_1f5b7271a4e8856ddbf9",
+      "extra": {
+        "score": 0.12
+      },
+      "provenance": {
+        "source": "ffmpeg_metadata_print",
+        "threshold": 0.1
+      },
+      "ref": null,
+      "source_type": "scene_detection",
+      "status": "measured_signal",
+      "t_end_s": 19.6,
+      "t_start_s": 19.6,
+      "tag": "scene_candidate"
+    },
+    {
+      "basis": "static_frame",
+      "claim": "Selo de 50% de desconto na tela",
+      "evidence_id": "ev_c42de5f916859a790142",
+      "provenance": {
+        "artifact_sha256": "5f867df41fa5a366635dfa1eb86211b1e423e102f2fe28188905b1d94bd6969a",
+        "frame_refs": [
+          "P04"
+        ],
+        "frame_sha256s": [
+          "5f867df41fa5a366635dfa1eb86211b1e423e102f2fe28188905b1d94bd6969a"
+        ],
+        "observer": "agent:demo",
+        "source": "ii.visual_observation.v1"
+      },
+      "ref": "P04",
+      "source_type": "agent_observation",
+      "status": "observed_visual",
+      "t_end_s": 21.0,
+      "t_start_s": 21.0,
+      "tag": "price_or_discount_on_screen"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frames/p01_interface_t009000ms.jpg",
+      "frame_id": "P01",
+      "role": "interface_ou_legenda",
+      "sha256": "5538b2f52ec4c070a6a14e142727f75972b8df0be6a637ede00af71c5c4d507c",
+      "t_s": 9.0
+    },
+    {
+      "file": "frames/p02_corte_antes_t014000ms.jpg",
+      "frame_id": "P02",
+      "pair_with": "P03",
+      "role": "corte_antes",
+      "sha256": "dbc1d1818e318eb88331f4833f2e8241eacb05622f2396ce722cad0cd9549b1b",
+      "t_s": 14.0
+    },
+    {
+      "file": "frames/p03_corte_depois_t014033ms.jpg",
+      "frame_id": "P03",
+      "pair_with": "P02",
+      "role": "corte_depois",
+      "sha256": "47322874ed8bcad0c8834eb70b9c3925d2a6fa8cb851c8d196391030ec930dba",
+      "t_s": 14.033
+    },
+    {
+      "file": "frames/p04_oferta_t021000ms.jpg",
+      "frame_id": "P04",
+      "role": "interface_ou_legenda",
+      "sha256": "5f867df41fa5a366635dfa1eb86211b1e423e102f2fe28188905b1d94bd6969a",
+      "t_s": 21.0
+    }
+  ],
+  "hypotheses": [],
+  "metrics": [
+    {
+      "name": "probe",
+      "provenance": {
+        "source": "ffprobe"
+      },
+      "value": {
+        "audio_stream_duration_s": null,
+        "codec": "h264",
+        "duration_s": 24.0,
+        "fps": 30.0,
+        "has_audio": true,
+        "height": 1920,
+        "r_frame_rate": null,
+        "vfr_suspected": false,
+        "video_stream_duration_s": null,
+        "width": 1080
+      }
+    }
+  ],
+  "narrative_blocks": [
+    {
+      "block_id": "nb_gancho_0.000-2.400_text_cue",
+      "cues": [
+        "olha isso",
+        "para tudo"
+      ],
+      "evidence_ids": [
+        "ev_f4f6a65c654ce4b9b8ac"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 2.4,
+      "t_start_s": 0.0,
+      "type": "gancho"
+    },
+    {
+      "block_id": "nb_contexto_2.400-7.800_text_cue",
+      "cues": [
+        "nesse video"
+      ],
+      "evidence_ids": [
+        "ev_36eb9ea74d80b21886ff"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 7.8,
+      "t_start_s": 2.4,
+      "type": "contexto"
+    },
+    {
+      "block_id": "nb_demonstracao_2.400-7.800_text_cue",
+      "cues": [
+        "vou mostrar"
+      ],
+      "evidence_ids": [
+        "ev_36eb9ea74d80b21886ff"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 7.8,
+      "t_start_s": 2.4,
+      "type": "demonstracao"
+    },
+    {
+      "block_id": "nb_demonstracao_7.800-14.000_text_cue",
+      "cues": [
+        "clica"
+      ],
+      "evidence_ids": [
+        "ev_15c1deb430989cf2846c"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 14.0,
+      "t_start_s": 7.8,
+      "type": "demonstracao"
+    },
+    {
+      "block_id": "nb_demonstracao_9.000-9.000_visual_cue",
+      "cues": [],
+      "evidence_ids": [
+        "ev_78831525fd1b25ba7541"
+      ],
+      "rule": "visual_cue",
+      "status": "suggested",
+      "support": "supported_visual",
+      "t_end_s": 9.0,
+      "t_start_s": 9.0,
+      "type": "demonstracao"
+    },
+    {
+      "block_id": "nb_beneficios_14.000-19.500_text_cue",
+      "cues": [
+        "automatico",
+        "mais rapido"
+      ],
+      "evidence_ids": [
+        "ev_3040837a13f31c381fdc"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 19.5,
+      "t_start_s": 14.0,
+      "type": "beneficios"
+    },
+    {
+      "block_id": "nb_cta_19.500-24.000_text_cue",
+      "cues": [
+        "clica no link",
+        "comenta",
+        "link na bio"
+      ],
+      "evidence_ids": [
+        "ev_2692be04f029b902e214"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 24.0,
+      "t_start_s": 19.5,
+      "type": "cta"
+    },
+    {
+      "block_id": "nb_oferta_19.500-24.000_text_cue",
+      "cues": [
+        "desconto"
+      ],
+      "evidence_ids": [
+        "ev_2692be04f029b902e214"
+      ],
+      "rule": "text_cue",
+      "status": "suggested",
+      "support": "mentioned_speech",
+      "t_end_s": 24.0,
+      "t_start_s": 19.5,
+      "type": "oferta"
+    },
+    {
+      "block_id": "nb_oferta_21.000-21.000_visual_cue",
+      "cues": [],
+      "evidence_ids": [
+        "ev_c42de5f916859a790142"
+      ],
+      "rule": "visual_cue",
+      "status": "suggested",
+      "support": "supported_visual",
+      "t_end_s": 21.0,
+      "t_start_s": 21.0,
+      "type": "oferta"
+    }
+  ],
+  "pending": [],
+  "reference": {
+    "author_handle": "autor_demo",
+    "author_handle_status": "metadata_claim",
+    "origin_url": "https://www.instagram.com/reel/SYNTHdemo01/",
+    "platform": "instagram",
+    "reference_id": "ref_DEMO01"
+  },
+  "review_history": [],
+  "schema_version": "ii.reference_analysis.v2",
+  "segments": [],
+  "techniques": [
+    {
+      "description": "Legenda com animação (por palavra, escala, cor).",
+      "does_not_prove": "a própria técnica",
+      "evidence_ids": [
+        "ev_d3375f0916e83b55a3fa"
+      ],
+      "level": "hypothesis",
+      "proves": "nada; é uma suposição registrada",
+      "technique": "legenda_animada",
+      "timestamps": [
+        [
+          14.0,
+          14.033
+        ]
+      ]
+    },
+    {
+      "description": "Legenda gravada sobre o vídeo.",
+      "does_not_prove": "como ela surge, quanto dura ou se é animada",
+      "evidence_ids": [
+        "ev_12f6a17150fcd04a4bb3"
+      ],
+      "level": "observed_in_frame",
+      "proves": "a técnica aparece no quadro",
+      "technique": "legenda_sobreposta",
+      "timestamps": [
+        [
+          9.0,
+          9.0
+        ]
+      ]
+    },
+    {
+      "description": "Aproximação por escala (digital ou de lente) do mesmo plano.",
+      "does_not_prove": "a trajetória, a curva de movimento ou se houve animação contínua",
+      "evidence_ids": [
+        "ev_647f86981fd3d779565b"
+      ],
+      "level": "frame_pair_difference",
+      "proves": "houve mudança entre dois instantes",
+      "technique": "punch_in",
+      "timestamps": [
+        [
+          14.0,
+          14.033
+        ]
+      ]
+    },
+    {
+      "description": "Tela dividida: dois ou mais quadros simultâneos.",
+      "does_not_prove": "como ela surge, quanto dura ou se é animada",
+      "evidence_ids": [
+        "ev_21358913b2a88a5ad9bf"
+      ],
+      "level": "observed_in_frame",
+      "proves": "a técnica aparece no quadro",
+      "technique": "split_screen",
+      "timestamps": [
+        [
+          9.0,
+          9.0
+        ]
+      ]
+    },
+    {
+      "description": "Tela dividida: dois ou mais quadros simultâneos.",
+      "does_not_prove": "que o vídeo original foi feito assim",
+      "evidence_ids": [],
+      "ideas": [
+        {
+          "author": "agent:demo",
+          "requires": [
+            "editor com camadas"
+          ],
+          "text": "gravar tela e rosto separados e compor 9:16"
+        }
+      ],
+      "level": "reproduction_suggestion",
+      "proves": "nada sobre o vídeo; é uma ideia de produção",
+      "technique": "split_screen",
+      "timestamps": []
+    }
+  ],
+  "tools": [
+    {
+      "mention_evidence_ids": [
+        "ev_36eb9ea74d80b21886ff"
+      ],
+      "name": "CapCut",
+      "status": "visually_identified",
+      "visual_evidence_ids": [
+        "ev_36df0abc61d9456a744d"
+      ]
+    }
+  ],
+  "topic_facets": {
+    "ai_terms": []
+  },
+  "transcript": [
+    {
+      "segment_id": "s1",
+      "source": "srt_file",
+      "t_end_s": 2.4,
+      "t_start_s": 0.0,
+      "text": "Para tudo e olha isso aqui"
+    },
+    {
+      "segment_id": "s2",
+      "source": "srt_file",
+      "t_end_s": 7.8,
+      "t_start_s": 2.4,
+      "text": "Nesse vídeo vou mostrar o passo a passo no CapCut"
+    },
+    {
+      "segment_id": "s3",
+      "source": "srt_file",
+      "t_end_s": 14.0,
+      "t_start_s": 7.8,
+      "text": "Primeiro abre a timeline, em seguida clica em legendas automáticas"
+    },
+    {
+      "segment_id": "s4",
+      "source": "srt_file",
+      "t_end_s": 19.5,
+      "t_start_s": 14.0,
+      "text": "Fica 100% automático e mais rápido"
+    },
+    {
+      "segment_id": "s5",
+      "source": "srt_file",
+      "t_end_s": 24.0,
+      "t_start_s": 19.5,
+      "text": "Comenta e clica no link na bio com desconto"
+    }
+  ],
+  "video": {
+    "content_sha256": "9f5edaf4906083fb54fd123c6332836824c492466577a8a96171fa8d53ab945c",
+    "duration_s": 24.0,
+    "fps": 30.0,
+    "has_audio": true,
+    "height": 1920,
+    "video_id": "SYNTHdemo01",
+    "width": 1080
+  }
+}

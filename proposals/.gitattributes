@@ -1,0 +1,5 @@
+# Pacote de integração (proposals/): conteúdo verificado por hash; manter LF em qualquer sistema.
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.diff text eol=lf
