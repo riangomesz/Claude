@@ -14,14 +14,16 @@ from typing import Any, Dict, List, Optional, Sequence
 
 from .adapters import AdapterResult
 from .contract import TIME_TOLERANCE_S, empty_document, make_evidence
+from .vocabulary import VISUAL_TAGS
 
 MOTION_TAG_PREFIXES = ("motion_", "animated_", "camera_move")
-MOTION_TAGS = {"kinetic_typography", "animated_caption", "transition", "zoom", "pan", "punch_in_motion", "scroll"}
 BASIS_ORDER = ("static_frame", "frame_pair", "frame_sequence", "video_clip")
 
 
 def is_motion_tag(tag: str) -> bool:
-    return tag in MOTION_TAGS or tag.startswith(MOTION_TAG_PREFIXES)
+    """Tags do vocabulário usam o flag `motion`; tags desconhecidas com prefixo de movimento também contam."""
+    spec = VISUAL_TAGS.get(tag)
+    return spec.motion if spec else tag.startswith(MOTION_TAG_PREFIXES)
 
 
 class Normalizer:
