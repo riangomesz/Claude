@@ -1,0 +1,23 @@
+{
+  "status": "simulacao_teste",
+  "art_direction": "editorial",
+  "dominant_palette": [
+    "#000000"
+  ],
+  "lighting_and_atmosphere": "luz suave",
+  "pacing_and_rhythm": "rápido",
+  "style_tags": [
+    "#ritmo/rapido"
+  ],
+  "verifiable_observations": [
+    "Dimensões do arquivo: 1080x1920"
+  ],
+  "inferred_hypotheses": [
+    "estilo de creator educacional"
+  ],
+  "limitations_or_ambiguities": [
+    "apenas 9 frames amostrados"
+  ],
+  "audio_visual_coherence": null,
+  "summary_text": "síntese"
+}

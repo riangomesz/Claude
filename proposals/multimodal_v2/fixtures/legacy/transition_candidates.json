@@ -1,0 +1,20 @@
+[
+  {
+    "janela": "janela_A",
+    "timestamp_evento_s": 3.033,
+    "frame_transicao_idx": 91,
+    "frame_anterior_idx": 90,
+    "tipo_candidato": "CANDIDATO_INSERCAO_OVERLAY_ISOLADO",
+    "classificacao_evento": "OBSERVADO_MUDANCA_REGIONAL_TOP",
+    "nivel_evidencia": "INFERIDO",
+    "duracao_estimada_frames": 1,
+    "limiares_utilizados": {
+      "diff_global_corte": 20.0
+    }
+  },
+  {
+    "janela": "janela_B",
+    "timestamp_evento_s": null,
+    "tipo_candidato": "X"
+  }
+]

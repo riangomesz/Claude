@@ -1,0 +1,97 @@
+{
+  "schema_version": "ii.intelligence.card.v2",
+  "video_id": "SYNTHleg01",
+  "assunto_principal": "legendas automáticas",
+  "categorias": [
+    {
+      "categoria": "demonstracao",
+      "status": "parcialmente_sustentada"
+    },
+    {
+      "categoria": "tutorial",
+      "status": "alegada"
+    }
+  ],
+  "ferramenta_mencionada": {
+    "nome_transcrito": "CapCut",
+    "verificada": false
+  },
+  "separacao_de_evidencias": {
+    "conteudo_falado": {
+      "natureza": "transcricao automatica",
+      "segmentos": [
+        {
+          "id": 1,
+          "inicio_s": 0.0,
+          "fim_s": 2.5,
+          "texto": "Primeiro abre a timeline."
+        }
+      ]
+    },
+    "elementos_visiveis": {
+      "natureza": "frames estaticos",
+      "fase5": [
+        {
+          "id": "O1",
+          "frame_id": "F07",
+          "arquivo": "frames/f07.jpg",
+          "sha256_frame": "58fd9ac06e780514560d79b1ba6aa4f71ffdcb5cbbe7ea5f2377acc08f71b76d",
+          "timestamp_s": 3.0,
+          "tipo": "interface",
+          "descricao": "tela com timeline",
+          "texto_literal": "Legendas"
+        },
+        {
+          "id": "O2",
+          "frame_id": "F08",
+          "arquivo": "frames/f08.jpg",
+          "sha256_frame": "1462e028161bd74656f80601e28d43002222845dd24d650794f63590419eabd7",
+          "timestamp_s": 4.0,
+          "tipo": "gesto_do_apresentador",
+          "descricao": "aponta para cima",
+          "texto_literal": null
+        }
+      ]
+    },
+    "movimento_confirmado": {
+      "itens": [],
+      "nota": "nenhum movimento confirmado"
+    },
+    "hipoteses": {
+      "fase5": [
+        "a legenda pode ser animada palavra a palavra"
+      ]
+    },
+    "conhecimento_externo": {
+      "utilizado": false,
+      "itens": []
+    }
+  },
+  "alegacoes_vs_evidencias": {
+    "itens": [
+      {
+        "id": "AL1",
+        "alegacao": "100% automático",
+        "frames": [
+          "F07"
+        ]
+      }
+    ]
+  },
+  "evidencias_pendentes": [
+    {
+      "id": "P1",
+      "descricao": "demonstração 19-49 s sem cobertura",
+      "intervalo_s": [
+        19,
+        49
+      ]
+    }
+  ],
+  "possibilidades_de_reproducao": [
+    {
+      "descricao": "legenda grande centralizada",
+      "status": "hipotese_nao_testada"
+    }
+  ]
+}

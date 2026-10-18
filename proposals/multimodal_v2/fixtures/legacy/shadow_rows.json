@@ -1,0 +1,52 @@
+[
+  {
+    "id": "SYNTHsh01",
+    "caption": "Tutorial de motion design no After Effects",
+    "hashtags_json": "[\"#motiondesign\"]",
+    "editorial_category": "Design e Motion",
+    "editorial_category_source": "sugestao_automatica",
+    "curation_category": "relevante",
+    "curation_rule": "metadados: palavras_chave (design)"
+  },
+  {
+    "id": "SYNTHsh02",
+    "caption": "robotics demo",
+    "hashtags_json": "[]",
+    "editorial_category": "Automação",
+    "editorial_category_source": "sugestao_automatica",
+    "curation_category": "incerto",
+    "curation_rule": "metadados: termos_genericos_requer_revisao"
+  },
+  {
+    "id": "SYNTHsh03",
+    "caption": "bom dia",
+    "hashtags_json": "[]",
+    "curation_category": "incerto"
+  },
+  {
+    "id": "SYNTHsh04",
+    "caption": "link na bio com desconto no curso de edição no capcut",
+    "hashtags_json": "[]",
+    "editorial_category": "Marketing e Conteúdo",
+    "editorial_category_source": "manual",
+    "curation_category": "relevante"
+  },
+  {
+    "id": "SYNTHsh05",
+    "caption": "n8n workflow com webhook",
+    "hashtags_json": "[]",
+    "editorial_category": "Design e Motion",
+    "editorial_category_source": "manual",
+    "curation_category": "relevante"
+  },
+  {
+    "id": "SYNTHsh06",
+    "caption": "",
+    "hashtags_json": "[]",
+    "audio_transcript_segments_json": "[{\"start\":0,\"end\":3,\"text\":\"vou mostrar o passo a passo\"}]",
+    "curation_category": "incerto"
+  },
+  {
+    "caption": "sem id"
+  }
+]

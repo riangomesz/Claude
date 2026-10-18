@@ -108,3 +108,10 @@ Método: script de sondagem → teste que falha no código atual → correção 
 Testes antigos que codificavam as regras revistas (A2, A7, A8, A13) foram ajustados explicitamente, com comentário apontando a regra.
 Guardas sem defeito (já protegidos, agora travados em teste): escrita através de symlink, staging-symlink para cofre, SQL malicioso nos filtros, hosts sósias (IDN, homóglifo, subdomínio), instrução embutida em transcrição.
 Suíte: 244 testes (240 OK, 4 pulados).
+
+### M2-C2: Etapa B (T04 a T06), compatibilidade, adaptadores legados e modo sombra
+- T04: `MATRIZ_COMPATIBILIDADE.md` com assinaturas extraídas por AST do clone `c6845a4`. O DDL real de `instagram_items` tem **65 colunas** (a estimativa por regex da Missão 01, de 49, estava errada), descoberto pelo teste opt-in contra o esquema real.
+- T05: `ii_mm/legacy.py` com 4 adaptadores (linha `instagram_items`/`InstagramItem`, `VisualMacroAnalysis`, candidatos do `temporal_intelligence`, ficha `ii.intelligence.card.v1/v2`). Aceitam entrada parcial, preservam IDs, listam campos sem destino, não reclassificam (decisões humanas vão para `human_decisions`), têm reverso parcial (`to_legacy_fields`). Simulação do `vision_client` é recusada. `media_sha256` vira identidade de conteúdo.
+- T06: `ii_mm/shadow.py`. Leitura `mode=ro` (escrita falha no próprio SQLite), zero gravações, divergências com evidências responsáveis, inspeção de possíveis falsos positivos e negativos contra rótulo humano, sem taxa de acerto. Opt-in com a função legada real reproduz o defeito "robotics → Automação".
+- Fixtures: `fixtures/legacy/*.json` (estrutura real, valores sintéticos).
+- Suíte: 266 testes (260 OK, 6 pulados sem `PROJETO_MVP_DIR`; 266 OK com o clone).

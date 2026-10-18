@@ -1,0 +1,24 @@
+{
+  "status": "observado",
+  "art_direction": "editorial",
+  "dominant_palette": [
+    "#000000"
+  ],
+  "lighting_and_atmosphere": "luz suave",
+  "pacing_and_rhythm": "rápido",
+  "style_tags": [
+    "#ritmo/rapido"
+  ],
+  "verifiable_observations": [
+    "legenda branca no centro inferior",
+    "interface de edição visível"
+  ],
+  "inferred_hypotheses": [
+    "estilo de creator educacional"
+  ],
+  "limitations_or_ambiguities": [
+    "apenas 9 frames amostrados"
+  ],
+  "audio_visual_coherence": null,
+  "summary_text": "síntese"
+}
