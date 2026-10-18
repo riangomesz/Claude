@@ -1,0 +1,177 @@
+{
+  "source_commit": "c6845a4",
+  "cases": [
+    {
+      "caption": "Como usar o ChatGPT para automatizar vendas",
+      "hashtags": [
+        "#ia"
+      ],
+      "known_defect": false,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (chatgpt, ia)"
+      ],
+      "suggested_category": "Ferramentas de IA"
+    },
+    {
+      "caption": "Motion design com keyframes no After Effects",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (design, keyframes, motion)"
+      ],
+      "suggested_category": "Design e Motion"
+    },
+    {
+      "caption": "Tutorial de color grading no DaVinci",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (davinci)"
+      ],
+      "suggested_category": "Engenharia Reversa Audiovisual"
+    },
+    {
+      "caption": "n8n workflow com webhook",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (n8n, workflow)"
+      ],
+      "suggested_category": "Automação"
+    },
+    {
+      "caption": "Prospecção de leads no Google Maps",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": "Ideias de Negócio"
+    },
+    {
+      "caption": "Copywriting e storytelling para viral",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (storytelling)"
+      ],
+      "suggested_category": "Marketing e Conteúdo"
+    },
+    {
+      "caption": "Moodboard de estética retrô",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": "Referências Visuais"
+    },
+    {
+      "caption": "",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "incerto",
+        "metadados: sem_legenda_ou_tags"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "bom dia",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "Edit do gol do Flamengo",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "incerto",
+        "metadados: conflito_tematico (rel=['edit'], irrel=['flamengo', 'gol'])"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "Debate político sobre o governo",
+      "hashtags": [],
+      "known_defect": false,
+      "curation": [
+        "irrelevante",
+        "metadados: politica_ou_fora_de_escopo (governo)"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "robotics demo",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": "Automação"
+    },
+    {
+      "caption": "both teams won the game",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": "Automação"
+    },
+    {
+      "caption": "how to make a cake at home",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (make)"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "pizza do dev da esquina",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (dev)"
+      ],
+      "suggested_category": null
+    },
+    {
+      "caption": "copy of my receipt",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "incerto",
+        "metadados: termos_genericos_requer_revisao"
+      ],
+      "suggested_category": "Marketing e Conteúdo"
+    },
+    {
+      "caption": "motion design e keyframes, uma ia ajuda",
+      "hashtags": [],
+      "known_defect": true,
+      "curation": [
+        "relevante",
+        "metadados: palavras_chave (design, ia, keyframes)"
+      ],
+      "suggested_category": "Ferramentas de IA"
+    }
+  ]
+}

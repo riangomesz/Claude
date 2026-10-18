@@ -1,0 +1,13 @@
+{
+  "schema_version": "ii.multimodal_analysis.v1",
+  "video_id": "DQV5dm6gCvH",
+  "duration_s": 57.167528,
+  "status": "blocked_missing_evidence",
+  "visual_analysis": "NAO_REALIZADA",
+  "categories": [],
+  "blocked_reason": "Frames, manifesto_pacote.json e demais artefatos de pacote_analise_2 não estão acessíveis na nuvem. Nenhuma observação visual foi produzida ou inferida. Ver INVENTARIO_EVIDENCIAS_FALTANTES.md.",
+  "limitations": [
+    "Este arquivo é apenas um marcador de estado, não uma análise.",
+    "Será substituído pela saída de multimodal_classifier.classify() quando as evidências forem fornecidas."
+  ]
+}
