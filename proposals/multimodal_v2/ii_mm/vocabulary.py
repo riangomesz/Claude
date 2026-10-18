@@ -104,3 +104,7 @@ TOOL_LEXICON: Dict[str, tuple] = {
     "Blender": ("blender",),
     "Figma": ("figma",),
 }
+
+# Ferramentas do léxico que são de IA generativa ou agentes (para "interfaces de ferramentas de IA").
+AI_TOOLS = frozenset({"ChatGPT", "Claude", "Gemini", "Midjourney", "ComfyUI", "Runway", "Kling", "Sora", "ElevenLabs",
+                      "HeyGen", "Higgsfield", "Magnific"})

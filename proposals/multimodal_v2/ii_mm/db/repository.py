@@ -170,6 +170,8 @@ class Repository:
         terms |= {f"tool:{normalize(t['name'])}" for t in doc["tools"]}
         terms |= {f"tech:{t['technique']}" for t in doc["techniques"]}
         terms |= {f"tag:{e['tag']}" for e in doc["evidence"] if e.get("tag")}
+        terms |= {f"attr:{e['tag']}:{k}={v}" for e in doc["evidence"] if e.get("tag") and e["status"] == "observed_visual"
+                  for k, v in ((e.get("extra") or {}).get("attributes") or {}).items()}
         return terms
 
     # ------------------------------------------------------------------ leitura

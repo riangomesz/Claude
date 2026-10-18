@@ -115,3 +115,16 @@ Suíte: 244 testes (240 OK, 4 pulados).
 - T06: `ii_mm/shadow.py`. Leitura `mode=ro` (escrita falha no próprio SQLite), zero gravações, divergências com evidências responsáveis, inspeção de possíveis falsos positivos e negativos contra rótulo humano, sem taxa de acerto. Opt-in com a função legada real reproduz o defeito "robotics → Automação".
 - Fixtures: `fixtures/legacy/*.json` (estrutura real, valores sintéticos).
 - Suíte: 266 testes (260 OK, 6 pulados sem `PROJETO_MVP_DIR`; 266 OK com o clone).
+
+### M2-C3: Etapa C (T07 a T09), commit `1b14434`
+- **L1 confirmado com medição** (`tests/test_ms02_sqlite.py`): no Python 3.13, `with sqlite3.connect() as c` deixa a conexão viva após o retorno até o GC de ciclos (até o caso mais simples). Funções legadas medidas deixam 1 ou 2 conexões vivas; `closing()` zera. As 25 ocorrências precisam de correção (risco: arquivo travado no Windows por tempo indeterminado). Hipótese de deadlock por conexão aninhada (`undo_triage_decision` → `restore_item_from_trash`) **refutada** com o código real (0,01 s).
+- Patch demonstrativo `patches/legacy_close_sqlite_connections.diff` (25 trocas + 6 imports), gerado por `tools/make_legacy_close_patch.py` numa cópia temporária e validado (0 conexões vivas). O teste garante que o patch versionado corresponde ao clone.
+- **Defeito meu corrigido:** a fixture legada criava `storage/imports/{processed,failed}` dentro do clone (efeito colateral de `ensure_connection_schema`). Pastas vazias removidas com `rmdir`; fixture redireciona para o diretório temporário; teste de isolamento roda sobre uma cópia, em subprocesso.
+- C1: dois executores rodavam a mesma etapa (6 etapas duplicadas reproduzidas). Correção: posse e lease em `processing_state` (M008); estado `busy`; lease vencido libera; o mesmo dono retoma. Contrato n8n aceita `busy` → `retry_later`.
+- T08: filtro sem valor existente fazia varredura completa. Correção: checagem de existência por índice antes da consulta (não decide inclusão de itens, só existência global).
+- Guardas (já corretas): `KeyboardInterrupt` durante a gravação faz rollback, exportação interrompida não deixa temporários e se recupera, 4 threads gravando no mesmo arquivo (160 análises, `integrity_check` ok).
+
+### M2-C4: Etapa D (T10 a T12)
+- T10: `tests/test_ms02_scenarios.py` com 10 cenários combinados (sem legenda com visual; ferramenta citada sem interface; interface sem nome legível; cinematográfico sem fala; tutorial sem ferramenta; publicidade com cara de tutorial; motion só sugerido; corte sem técnica; várias categorias; contradição). Todos passaram sem mudança de código: comportamento consistente com as regras.
+- T11: `ii_mm/quality.py`, relatório de integridade temporal com código, severidade e intervalo, sem porcentagens: lacuna de amostragem (reproduz o padrão 19–49 s do piloto com tempos sintéticos), duplicatas, sobreposição, ausência de transcrição, VFR, dessincronia A/V, grade de quadros. Adaptador do ffprobe passou a expor `r_frame_rate` e as durações por stream.
+- T12: `ii_mm/technique_library.py` com as 5 consultas pedidas. Atributos estruturados de observação com lista fechada (`size`, `position`, `case`, `words_per_caption`, `color`), indexados em `search_terms`. `AI_TOOLS` no vocabulário. O guia de reprodução sai rotulado como `proposta_criativa`.

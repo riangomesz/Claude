@@ -195,7 +195,8 @@ class Normalizer:
                 else:
                     self.report["downgraded"].append(f"'{o['tag']}': movimento não se prova com {basis}; registrado como inference")
             ev = self._add(make_evidence(self.video_key, status=status, source_type=source_type, claim=o["text"],
-                                         tag=o["tag"], provenance=prov, **common))
+                                         tag=o["tag"], provenance=prov, extra={"attributes": o["attributes"]} if o.get("attributes") else None,
+                                         **common))
             ids.append(ev["evidence_id"])
         return ids
 

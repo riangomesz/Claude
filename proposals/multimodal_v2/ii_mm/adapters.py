@@ -223,13 +223,20 @@ def probe_from_ffprobe_json(payload: Any) -> AdapterResult:
         res.errors.append("nenhum stream de vídeo")
     if not dur or dur <= 0:
         res.errors.append("duração ausente ou inválida")
-    fps = None
-    if video and isinstance(video.get("avg_frame_rate"), str) and "/" in video["avg_frame_rate"]:
-        a, b = video["avg_frame_rate"].split("/", 1)
-        fps = round(float(a) / float(b), 3) if _num(a) and _num(b) else None
+    def _rate(value):
+        if isinstance(value, str) and "/" in value:
+            a, b = value.split("/", 1)
+            return round(float(a) / float(b), 3) if _num(a) and _num(b) else None
+        return None
+    fps = _rate(video.get("avg_frame_rate")) if video else None
+    r_fps = _rate(video.get("r_frame_rate")) if video else None
+    audio_stream = next((s for s in data.get("streams", []) if isinstance(s, dict) and s.get("codec_type") == "audio"), None)
     if video and not res.errors:
         res.records.append({"duration_s": round(dur, 6), "width": video.get("width"), "height": video.get("height"),
-                            "fps": fps, "codec": video.get("codec_name"), "has_audio": audio})
+                            "fps": fps, "r_frame_rate": r_fps, "vfr_suspected": bool(fps and r_fps and abs(fps - r_fps) > 0.01),
+                            "codec": video.get("codec_name"), "has_audio": audio,
+                            "video_stream_duration_s": _num(video.get("duration")),
+                            "audio_stream_duration_s": _num(audio_stream.get("duration")) if audio_stream else None})
     return res
 
 
@@ -305,6 +312,37 @@ def frames_from_manifest(payload: Any) -> AdapterResult:
 
 
 OBSERVATION_KINDS = ("observation", "hypothesis")
+# Atributos estruturados opcionais (lista fechada): permitem consultas como "legenda grande, uma palavra por vez".
+ATTRIBUTE_SPEC = {
+    "size": {"small", "medium", "large"},
+    "position": {"top", "center", "bottom", "left", "right"},
+    "case": {"upper", "lower", "mixed"},
+    "words_per_caption": range(1, 21),
+    "color": None,  # texto curto livre
+}
+
+
+def _attributes(res: "AdapterResult", raw: Any, where: str) -> Dict[str, Any]:
+    if raw in (None, {}):
+        return {}
+    if not isinstance(raw, dict):
+        res.errors.append(f"{where}: attributes deve ser objeto; ignorado")
+        return {}
+    out = {}
+    for k, v in raw.items():
+        spec = ATTRIBUTE_SPEC.get(k, "desconhecido")
+        if spec == "desconhecido":
+            res.errors.append(f"{where}: atributo desconhecido '{k}' ignorado")
+        elif spec is None:
+            if isinstance(v, str) and 0 < len(v) <= 20:
+                out[k] = _clean(v).lower()
+            else:
+                res.errors.append(f"{where}: atributo '{k}' inválido")
+        elif v in spec and not isinstance(v, bool):
+            out[k] = v
+        else:
+            res.errors.append(f"{where}: valor inválido para '{k}': {v!r}")
+    return out
 
 
 def observations_from_json(payload: Any, observer: str) -> AdapterResult:
@@ -331,7 +369,8 @@ def observations_from_json(payload: Any, observer: str) -> AdapterResult:
         if not refs or t is None or not o.get("tag") or not str(o.get("text", "")).strip() or kind not in OBSERVATION_KINDS:
             res.errors.append(f"observação {n}: exige frame_refs, t_s, tag, text e kind válido")
             continue
-        res.records.append({"frame_refs": [str(r) for r in refs], "t_s": round(t, 3), "tag": str(o["tag"]),
+        attrs = _attributes(res, o.get("attributes"), f"observação {n}")
+        res.records.append({"attributes": attrs, "frame_refs": [str(r) for r in refs], "t_s": round(t, 3), "tag": str(o["tag"]),
                             "text": _bounded_text(res, o["text"], f"observação {n}"), "kind": kind, "basis": o.get("basis"),
                             "observer": observer})
     return res
