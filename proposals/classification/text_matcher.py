@@ -13,10 +13,17 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 
 
 def normalize(text: str) -> str:
-    """Minúsculas, sem acentos, '#' e pontuação viram espaço."""
+    """Minúsculas, sem acentos, '#' e pontuação viram espaço.
+
+    Acentos (marcas combinantes) são removidos; qualquer outro caractere fora do ASCII
+    (travessão, aspas curvas, emoji, reticências) vira espaço para não colar palavras vizinhas.
+    """
     t = unicodedata.normalize("NFKD", str(text or "").lower())
-    t = t.encode("ascii", "ignore").decode("ascii")
-    return re.sub(r"[^a-z0-9.+]+", " ", t).strip()
+    t = "".join("" if unicodedata.combining(ch) else (ch if ch.isascii() else " ") for ch in t)
+    t = re.sub(r"[^a-z0-9.+]+", " ", t)
+    # ponto só é preservado dentro de um token ("make.com", "1.5"); reticências e ponto final viram espaço
+    t = re.sub(r"(?<![a-z0-9])\.+|\.+(?![a-z0-9])", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
 
 
 def _compile(keyword: str) -> re.Pattern[str]:
