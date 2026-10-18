@@ -178,7 +178,25 @@ M004 = Migration(4, "indices_de_consulta", (
     "CREATE INDEX idx_reviews_ref ON reviews(reference_id, seq)",
 ))
 
-MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004)
+M005 = Migration(5, "estado_corrente_de_revisao", (
+    """CREATE TABLE review_state (
+        reference_id TEXT NOT NULL REFERENCES refs(reference_id) ON DELETE CASCADE,
+        target TEXT NOT NULL,
+        state TEXT NOT NULL,
+        value_json TEXT,
+        review_id TEXT NOT NULL REFERENCES reviews(review_id),
+        updated_at TEXT NOT NULL,
+        PRIMARY KEY (reference_id, target)
+    )""",
+    "CREATE INDEX idx_review_state_target ON review_state(target, state)",
+))
+
+# M006 surgiu do EXPLAIN do catálogo: sem este índice cada página ordenava o conjunto inteiro (TEMP B-TREE).
+M006 = Migration(6, "indice_de_paginacao_do_catalogo", (
+    "CREATE INDEX idx_refs_created ON refs(created_at, reference_id)",
+))
+
+MIGRATIONS: Tuple[Migration, ...] = (M001, M002, M003, M004, M005, M006)
 LATEST_VERSION = MIGRATIONS[-1].version
 
 

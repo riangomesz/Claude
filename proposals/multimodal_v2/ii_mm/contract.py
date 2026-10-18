@@ -305,6 +305,9 @@ def validate_document(doc: Any) -> List[str]:
         for k in ("review_id", "at", "reviewer", "action", "target"):
             if not r.get(k):
                 p.append(f"review_history:{r.get('review_id')}: '{k}' obrigatório")
+
+    from .narrative import validate_blocks  # import tardio, sem ciclo
+    p.extend(validate_blocks(doc))
     return p
 
 

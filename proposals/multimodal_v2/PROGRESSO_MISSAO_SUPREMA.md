@@ -17,7 +17,11 @@ Não repita a auditoria inicial: ela está em `BASELINE_ATUAL.md`.
 | 08 | Deduplicação e proveniência | IMPLEMENTADO / TESTADO | `ii_mm/dedup.py`, `tests/test_dedup.py`, política em `repository.save_analysis` |
 | 09 | Processamento idempotente | IMPLEMENTADO / TESTADO | `ii_mm/pipeline.py`, `tests/test_pipeline.py` |
 | 10 | Adaptadores áudio/vídeo | IMPLEMENTADO / TESTADO | `ii_mm/adapters.py`, `tests/test_adapters.py` |
-| 11–18 | (fila) | PENDENTE | |
+| 11 | Estrutura narrativa | IMPLEMENTADO / TESTADO | `ii_mm/narrative.py`, `tests/test_narrative_techniques.py` |
+| 12 | Engenharia reversa audiovisual | IMPLEMENTADO / TESTADO | `ii_mm/techniques.py`, `ii_mm/vocabulary.py`, `tests/test_narrative_techniques.py` |
+| 13 | Catálogo pesquisável | IMPLEMENTADO / TESTADO | `ii_mm/catalog.py`, migração M006, `tests/test_catalog.py` |
+| 14 | Revisão humana | IMPLEMENTADO / TESTADO | `ii_mm/review.py`, migração M005, `tests/test_review.py` |
+| 15–18 | (fila) | PENDENTE | |
 
 ## Bloqueio de mídia (registrado uma vez)
 
@@ -47,3 +51,10 @@ Pacote `pacote_analise_2` do DQV5dm6gCvH ausente (`/mnt/user-data/uploads` e `/m
 - T09: retomada após interrupção, tentativas limitadas, propagação por hash encadeado, `force`, espera por revisão.
 - Achados L1 a L3 sobre o Projeto-MVP registrados em `BASELINE_ATUAL.md`.
 - Próxima: T11 (narrativa), T12 (técnicas), T13 (catálogo), T14 (revisão).
+
+### C4: Tarefas 11 a 14
+- T11: blocos sugeridos (nunca confirmados) com apoio próprio. Gancho só por posição vira `hypothesis`. Mostra lacunas, sobreposições e tipos ausentes.
+- T12: cinco níveis de prova, cada um com "prova" e "não prova". Par de quadros nunca vira `temporal_sequence`.
+- T13: cursor keyset. O EXPLAIN mostrou `TEMP B-TREE` (ordenação do conjunto inteiro a cada página) na primeira versão; corrigido com a migração M006 (`idx_refs_created`), percurso por índice e `MAX()` no lugar de `ORDER BY` na subconsulta. O teste trava o plano.
+- T14: histórico imutável, estado corrente materializado (M005), concorrência otimista, sobreposição válida pelo contrato. O contrato pegou um caso real (ferramenta "visual" após rebaixar a observação) e o status passou a ser recalculado.
+- Próxima: T15 (Obsidian), T16 (n8n), T17 (benchmark), T18 (demonstração e relatório).
