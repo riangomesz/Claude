@@ -1,0 +1,95 @@
+{
+  "$id": "ii.visual_observation.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "observations": {
+      "items": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": false,
+            "properties": {
+              "case": {
+                "enum": [
+                  "lower",
+                  "mixed",
+                  "upper"
+                ]
+              },
+              "color": {
+                "maxLength": 20,
+                "type": "string"
+              },
+              "position": {
+                "enum": [
+                  "bottom",
+                  "center",
+                  "left",
+                  "right",
+                  "top"
+                ]
+              },
+              "size": {
+                "enum": [
+                  "large",
+                  "medium",
+                  "small"
+                ]
+              },
+              "words_per_caption": {
+                "maximum": 20,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "basis": {
+            "enum": [
+              "static_frame",
+              "frame_pair",
+              "frame_sequence",
+              "video_clip"
+            ]
+          },
+          "frame_refs": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "kind": {
+            "enum": [
+              "observation",
+              "hypothesis"
+            ]
+          },
+          "t_s": {
+            "type": "number"
+          },
+          "tag": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "text": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "frame_refs",
+          "t_s",
+          "tag",
+          "text"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "observations"
+  ],
+  "title": "ii.visual_observation.v1",
+  "type": "object"
+}

@@ -94,3 +94,52 @@ class LabelsAndAgreementTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationCliTest(unittest.TestCase):
+    """tools/avaliacao.py sobre um modo sombra real (snapshot de catálogo sintético): amostra → planilha → concordância."""
+
+    def test_end_to_end_from_shadow_snapshot(self):
+        import io
+        import json
+        import sqlite3
+        from contextlib import redirect_stdout
+        from handoff import exemplo_uso
+        from tools import avaliacao
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            cat = t / "catalogo.sqlite"
+            c = sqlite3.connect(str(cat))
+            try:
+                c.execute("CREATE TABLE instagram_items (id TEXT PRIMARY KEY, url TEXT, caption TEXT)")
+                c.executemany("INSERT INTO instagram_items VALUES (?, ?, ?)", [(r["id"], r["url"], r["caption"]) for r in synthetic_rows(60)])
+                c.commit()
+            finally:
+                c.close()
+            sombra = t / "trabalho" / "sombra"
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(exemplo_uso.main(["--legacy-db", str(cat), "--out", str(sombra), "--limit", "60"]), 0)
+                planilha = t / "trabalho" / "planilha.csv"
+                self.assertEqual(avaliacao.main(["amostra", "--sombra", str(sombra), "--out", str(planilha), "--n", "30"]), 0)
+                with self.assertRaises(SystemExit):  # nunca sobrescreve
+                    avaliacao.main(["amostra", "--sombra", str(sombra), "--out", str(planilha), "--n", "30"])
+            with open(planilha, encoding="utf-8-sig", newline="") as f:
+                rows = list(csv.DictReader(f))
+            self.assertEqual(len(rows), 30)
+            self.assertTrue(all(r["url"].startswith("https://") and r["legenda"] for r in rows))  # veio do snapshot
+            self.assertNotIn("sugestao_nova", rows[0])  # cega
+            for r in rows:  # rótulo SINTÉTICO, só para exercitar o caminho
+                for cat_name in CATEGORIES:
+                    r[cat_name] = "1" if cat_name == CATEGORIES[0] else "0"
+                r["revisor"] = "revisor_sintetico"
+            with open(planilha, "w", encoding="utf-8-sig", newline="") as f:
+                w = csv.DictWriter(f, fieldnames=list(rows[0]))
+                w.writeheader()
+                w.writerows(rows)
+            out = t / "trabalho" / "concordancia.json"
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(avaliacao.main(["concordancia", "--sombra", str(sombra), "--rotulos", str(planilha), "--out", str(out)]), 0)
+            rep = json.loads(out.read_text(encoding="utf-8"))
+            self.assertEqual(rep["n_labeled"], 30)
+            self.assertEqual(set(rep["per_classifier"]), {"atual", "novo"})
+            self.assertTrue((t / "trabalho" / "planilha.amostra.json").is_file())

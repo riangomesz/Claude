@@ -23,12 +23,15 @@ import hashlib
 import importlib.util
 import json
 import re
-import sqlite3
 import sys
 from pathlib import Path, PurePosixPath
 
 SUPPORTED_MANIFESTS = {"ii.handoff_manifest.v2"}
-REQUIRED_STDLIB = ("sqlite3", "json", "hashlib", "unittest", "tempfile", "zipfile", "dataclasses", "urllib.parse", "importlib")
+# Módulos usados pelo ii_mm, pelos testes e pelas ferramentas (inventário: tools/inventory.py). `_sqlite3` é a
+# extensão nativa: distribuições "embeddable" ou compiladas sem SQLite têm o pacote `sqlite3` mas não a DLL.
+REQUIRED_STDLIB = ("_sqlite3", "sqlite3", "json", "hashlib", "hmac", "unittest", "tempfile", "zipfile", "dataclasses",
+                   "urllib", "importlib", "csv", "uuid", "unicodedata", "random", "base64", "argparse", "ast", "shutil",
+                   "subprocess", "contextlib", "copy", "datetime", "math", "re", "time", "typing")
 WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in range(1, 10)} | {f"LPT{i}" for i in range(1, 10)}
 MAX_REL_PATH = 200  # folga para a pasta de instalação dentro do limite clássico de 260 caracteres
 IGNORED_EXTRA = ("__pycache__", ".pyc")
@@ -61,8 +64,26 @@ def path_problems(rel: str):
     return p
 
 
+def _check_sqlite(sqlite3, minimum: str, report: dict) -> None:
+    report["sqlite"] = sqlite3.sqlite_version
+    if _version_tuple(sqlite3.sqlite_version) < _version_tuple(minimum):
+        report["environment"].append(f"SQLite {sqlite3.sqlite_version} < mínimo {minimum}")
+        return
+    try:  # UPSERT e comparação de tuplas, só em memória
+        c = sqlite3.connect(":memory:")
+        try:
+            c.execute("CREATE TABLE t (a INTEGER PRIMARY KEY, b INTEGER)")
+            c.execute("INSERT INTO t VALUES (1, 1) ON CONFLICT(a) DO UPDATE SET b = excluded.b")
+            c.execute("SELECT * FROM t WHERE (a, b) > (0, 0)").fetchall()
+        finally:
+            c.close()
+    except sqlite3.Error as exc:
+        report["environment"].append(f"SQLite sem recurso necessário: {exc}")
+
+
 def check(proposals_root: Path, manifest_sha256: str = None) -> dict:
-    report = {"integrity": [], "environment": [], "warnings": [], "files_checked": 0, "rc_id": None, "manifest_sha256": None}
+    report = {"integrity": [], "environment": [], "warnings": [], "files_checked": 0, "rc_id": None, "manifest_sha256": None,
+              "python": sys.version.split()[0], "platform": sys.platform, "sqlite": None}
     man_path = proposals_root / "multimodal_v2" / "handoff" / "MANIFESTO_PACOTE.json"
     try:
         raw = man_path.read_bytes()
@@ -84,21 +105,14 @@ def check(proposals_root: Path, manifest_sha256: str = None) -> dict:
     if sys.version_info[:3] < _version_tuple(req.get("python_min", "3.11")):
         report["environment"].append(f"Python {sys.version.split()[0]} < mínimo {req.get('python_min')}")
     for mod in REQUIRED_STDLIB:
-        if importlib.util.find_spec(mod.split(".")[0]) is None:
+        if importlib.util.find_spec(mod) is None:
             report["environment"].append(f"módulo obrigatório ausente: {mod}")
-    if _version_tuple(sqlite3.sqlite_version) < _version_tuple(req.get("sqlite_min", "3.24.0")):
-        report["environment"].append(f"SQLite {sqlite3.sqlite_version} < mínimo {req.get('sqlite_min')}")
+    try:
+        import sqlite3
+    except ImportError as exc:
+        report["environment"].append(f"sqlite3 indisponível: {exc}")
     else:
-        try:  # UPSERT e comparação de tuplas, só em memória
-            c = sqlite3.connect(":memory:")
-            try:
-                c.execute("CREATE TABLE t (a INTEGER PRIMARY KEY, b INTEGER)")
-                c.execute("INSERT INTO t VALUES (1, 1) ON CONFLICT(a) DO UPDATE SET b = excluded.b")
-                c.execute("SELECT * FROM t WHERE (a, b) > (0, 0)").fetchall()
-            finally:
-                c.close()
-        except sqlite3.Error as exc:
-            report["environment"].append(f"SQLite sem recurso necessário: {exc}")
+        _check_sqlite(sqlite3, req.get("sqlite_min", "3.24.0"), report)
 
     files = man.get("files")
     if not isinstance(files, list) or not files:
@@ -132,6 +146,10 @@ def check(proposals_root: Path, manifest_sha256: str = None) -> dict:
         report["files_checked"] += 1
 
     for d in man.get("managed_dirs", []):
+        probs = path_problems(d) if isinstance(d, str) else ["entrada inválida"]
+        if probs:  # nunca varrer fora do pacote por causa de um manifesto malformado
+            report["integrity"].append(f"pasta gerenciada recusada: {d!r}: {', '.join(probs)}")
+            continue
         base = proposals_root / d
         if not base.is_dir():
             report["integrity"].append(f"pasta gerenciada ausente: {d}")
@@ -161,6 +179,7 @@ def main(argv=None) -> int:
         print(json.dumps(rep, ensure_ascii=False, indent=2))
     else:
         print(f"RC: {rep.get('rc_id')} | manifesto sha256(LF): {rep.get('manifest_sha256')} | arquivos conferidos: {rep['files_checked']}")
+        print(f"Python {rep['python']} ({rep['platform']}) | SQLite {rep.get('sqlite')}")
         for k in ("fatal", ):
             if rep.get(k):
                 print(f"FATAL: {rep[k]}")

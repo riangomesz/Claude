@@ -13,6 +13,7 @@ from __future__ import annotations
 import csv
 import json
 import sqlite3
+import time
 from contextlib import closing
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional
@@ -44,12 +45,16 @@ def read_legacy_rows_readonly(db_path: Path, limit: int = 500, offset_id: Option
         conn.close()
 
 
-def snapshot_readonly(src: Path, dst: Path) -> Dict[str, Any]:
+def snapshot_readonly(src: Path, dst: Path, pages: int = 256, max_seconds: float = 120.0,
+                      on_step: Optional[Callable[[int, int], None]] = None) -> Dict[str, Any]:
     """Cópia consistente do catálogo pela API de backup do SQLite, abrindo a ORIGEM só para leitura.
 
-    A origem nunca é aberta para escrita (`mode=ro`); a leitura vê só transações confirmadas e não espera
-    escritores em andamento. O destino precisa ser um caminho novo. Recomendado para o modo sombra: o banco
-    vivo fica exposto apenas durante a cópia, e a comparação roda sobre o snapshot.
+    A origem nunca é aberta para escrita (`mode=ro`); a leitura vê só transações confirmadas. O destino
+    precisa ser um caminho novo. A cópia anda em blocos de `pages` páginas e solta o bloqueio compartilhado
+    entre um bloco e outro, então um escritor do legado não espera a cópia inteira (no journal padrão, um
+    escritor esperando o backup em passo único falharia com `database is locked`). Se a origem muda no meio,
+    o SQLite recomeça a cópia. Passado `max_seconds` (origem travada ou escrita contínua), desiste com
+    `TimeoutError` e apaga o destino parcial, em vez de competir com o projeto.
     """
     src, dst = Path(src).resolve(), Path(dst).resolve()
     if not src.is_file():
@@ -59,10 +64,24 @@ def snapshot_readonly(src: Path, dst: Path) -> Dict[str, Any]:
     if dst.exists():
         raise FileExistsError(f"destino já existe (não sobrescrevo): {dst}")
     dst.parent.mkdir(parents=True, exist_ok=True)
-    with closing(sqlite3.connect(f"{src.as_uri()}?mode=ro", uri=True)) as s, closing(sqlite3.connect(str(dst))) as d:
-        s.backup(d)
-        n = d.execute("SELECT COUNT(*) FROM instagram_items").fetchone()[0] if d.execute(
-            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='instagram_items'").fetchone() else None
+    deadline = time.monotonic() + max_seconds
+
+    def progress(status, remaining, total):
+        if time.monotonic() > deadline:
+            raise TimeoutError(f"snapshot desistiu após {max_seconds} s (origem travada ou em escrita contínua)")
+        if on_step is not None:
+            on_step(remaining, total)
+
+    try:
+        with closing(sqlite3.connect(f"{src.as_uri()}?mode=ro", uri=True, timeout=0)) as s, closing(sqlite3.connect(str(dst))) as d:
+            s.backup(d, pages=max(1, int(pages)), progress=progress, sleep=0.05)
+            n = d.execute("SELECT COUNT(*) FROM instagram_items").fetchone()[0] if d.execute(
+                "SELECT 1 FROM sqlite_master WHERE type='table' AND name='instagram_items'").fetchone() else None
+    except BaseException:
+        for leftover in (dst, dst.with_name(dst.name + "-journal")):
+            if leftover.exists():
+                leftover.unlink()
+        raise
     return {"snapshot": str(dst), "rows_instagram_items": n}
 
 

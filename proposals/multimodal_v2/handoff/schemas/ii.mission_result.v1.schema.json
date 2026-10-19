@@ -1,0 +1,76 @@
+{
+  "$id": "ii.mission_result.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "error": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "properties": {
+            "code": {
+              "enum": [
+                "BUDGET_DENIED",
+                "CONFLICT",
+                "MISSING_EVIDENCE",
+                "TRANSIENT",
+                "VALIDATION_ERROR"
+              ]
+            },
+            "retryable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "code",
+            "retryable"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "mission_id": {
+      "type": "string"
+    },
+    "next_action": {
+      "enum": [
+        "retry",
+        "human",
+        "provide_evidence",
+        "fix_message",
+        "await_review",
+        "retry_later",
+        "none"
+      ]
+    },
+    "schema_version": {
+      "const": "ii.mission_result.v1"
+    },
+    "state": {
+      "enum": [
+        "discovered",
+        "media_available",
+        "metadata_extracted",
+        "audio_processed",
+        "visual_processed",
+        "evidence_normalized",
+        "classified",
+        "awaiting_review",
+        "completed",
+        "failed",
+        "rejected",
+        "busy"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "mission_id",
+    "state",
+    "error",
+    "next_action"
+  ],
+  "title": "ii.mission_result.v1",
+  "type": "object"
+}

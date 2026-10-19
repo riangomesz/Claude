@@ -1,0 +1,336 @@
+{
+  "$id": "ii.reference_analysis.v2.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x_": {}
+  },
+  "properties": {
+    "categories": {
+      "items": {
+        "properties": {
+          "category": {
+            "enum": [
+              "conhecimento",
+              "tutorial",
+              "demonstracao_ferramenta",
+              "automacao",
+              "motion_design",
+              "edicao_audiovisual",
+              "marketing_vendas",
+              "cinematografia",
+              "referencia_estetica"
+            ]
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "review_state": {
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected",
+              "edited"
+            ]
+          },
+          "support": {
+            "enum": [
+              "supported_visual",
+              "supported_measured",
+              "mentioned_speech",
+              "suggested_metadata",
+              "hypothesis",
+              "insufficient"
+            ]
+          }
+        },
+        "required": [
+          "category",
+          "support",
+          "evidence_ids"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "classification_runs": {},
+    "evidence": {
+      "items": {
+        "properties": {
+          "basis": {
+            "enum": [
+              "static_frame",
+              "frame_pair",
+              "frame_sequence",
+              "video_clip",
+              null
+            ]
+          },
+          "claim": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "extra": {
+            "type": "object"
+          },
+          "provenance": {
+            "required": [
+              "source"
+            ],
+            "type": "object"
+          },
+          "ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_type": {
+            "enum": [
+              "agent_observation",
+              "human_observation",
+              "whisper",
+              "ffprobe",
+              "scene_detection",
+              "frame_extraction",
+              "visual_metric",
+              "instagram_metadata",
+              "text_classifier",
+              "derived",
+              "external_knowledge"
+            ]
+          },
+          "status": {
+            "enum": [
+              "observed_visual",
+              "measured_signal",
+              "transcript_claim",
+              "metadata_claim",
+              "inference",
+              "unverified"
+            ]
+          },
+          "t_end_s": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "t_start_s": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "tag": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "evidence_id",
+          "status",
+          "source_type",
+          "claim",
+          "provenance"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "frames": {
+      "items": {
+        "properties": {
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "frame_id",
+          "t_s",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "hypotheses": {},
+    "metrics": {},
+    "narrative_blocks": {
+      "items": {
+        "properties": {
+          "status": {
+            "enum": [
+              "suggested",
+              "confirmed",
+              "rejected",
+              "pending"
+            ]
+          },
+          "type": {
+            "enum": [
+              "gancho",
+              "contexto",
+              "problema",
+              "revelacao",
+              "demonstracao",
+              "beneficios",
+              "oferta",
+              "cta"
+            ]
+          }
+        },
+        "required": [
+          "block_id",
+          "type",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "orphan_decisions": {},
+    "pending": {},
+    "reference": {
+      "properties": {
+        "author_handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "origin_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platform": {
+          "enum": [
+            "instagram",
+            "youtube",
+            "tiktok",
+            "x",
+            "vimeo",
+            "local",
+            "other"
+          ]
+        },
+        "reference_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference_id",
+        "platform"
+      ],
+      "type": "object"
+    },
+    "review_history": {},
+    "schema_version": {
+      "const": "ii.reference_analysis.v2"
+    },
+    "segments": {},
+    "techniques": {
+      "items": {
+        "properties": {
+          "level": {
+            "enum": [
+              "observed_in_frame",
+              "frame_pair_difference",
+              "temporal_sequence",
+              "hypothesis",
+              "reproduction_suggestion"
+            ]
+          }
+        },
+        "required": [
+          "technique",
+          "level"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "tools": {
+      "items": {
+        "properties": {
+          "status": {
+            "enum": [
+              "visually_identified",
+              "mentioned_only",
+              "metadata_only",
+              "inferred",
+              "unverified"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "topic_facets": {},
+    "transcript": {
+      "items": {
+        "required": [
+          "segment_id",
+          "t_start_s",
+          "t_end_s",
+          "text"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "video": {
+      "properties": {
+        "content_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "video_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "video_id",
+        "duration_s"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "reference",
+    "video"
+  ],
+  "title": "ii.reference_analysis.v2",
+  "type": "object"
+}

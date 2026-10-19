@@ -71,6 +71,50 @@ class SnapshotReadOnlyTest(unittest.TestCase):
             finally:
                 writer.close()
 
+    def test_writer_can_commit_while_snapshot_is_in_progress(self):
+        """D-RC5: a cópia em passo único segurava o bloqueio compartilhado durante todo o backup (1,7 s para
+        139 MB medidos); no journal padrão do legado, um escritor com timeout de 5 s falharia num catálogo grande."""
+        with tempfile.TemporaryDirectory() as t:
+            src, dst = Path(t) / "vivo.sqlite", Path(t) / "snap.sqlite"
+            c = sqlite3.connect(str(src))
+            try:
+                c.execute("CREATE TABLE instagram_items (id TEXT PRIMARY KEY, caption TEXT)")
+                c.executemany("INSERT INTO instagram_items VALUES (?, ?)", [(f"SYNTHbig{i:04d}", "x" * 2000) for i in range(200)])
+                c.commit()
+            finally:
+                c.close()
+            commits = []
+
+            def during(remaining, total):
+                if remaining > 0 and not commits:
+                    w = sqlite3.connect(str(src), timeout=0, isolation_level=None)  # timeout 0: falha se houver bloqueio
+                    try:
+                        w.execute("BEGIN IMMEDIATE")
+                        w.execute("INSERT INTO instagram_items (id) VALUES ('SYNTHdurante')")
+                        w.execute("COMMIT")
+                        commits.append(remaining)
+                    finally:
+                        w.close()
+
+            info = snapshot_readonly(src, dst, pages=8, on_step=during)
+            self.assertEqual(len(commits), 1, "o escritor não conseguiu gravar no meio da cópia")
+            self.assertEqual(info["rows_instagram_items"], 201)  # a cópia recomeça e termina consistente
+
+    def test_snapshot_gives_up_instead_of_waiting_forever_on_exclusive_lock(self):
+        with tempfile.TemporaryDirectory() as t:
+            src, dst = Path(t) / "vivo.sqlite", Path(t) / "snap.sqlite"
+            make_catalog(src, rows=2)
+            writer = sqlite3.connect(str(src), isolation_level=None)
+            try:
+                writer.execute("BEGIN EXCLUSIVE")
+                with self.assertRaises(TimeoutError):
+                    snapshot_readonly(src, dst, max_seconds=0.3)
+                self.assertFalse(dst.exists(), "snapshot parcial deixado para trás")
+                writer.execute("INSERT INTO instagram_items (id) VALUES ('SYNTHdepois')")
+                writer.execute("COMMIT")
+            finally:
+                writer.close()
+
     def test_snapshot_refuses_bad_paths(self):
         with tempfile.TemporaryDirectory() as t:
             src = Path(t) / "a.sqlite"

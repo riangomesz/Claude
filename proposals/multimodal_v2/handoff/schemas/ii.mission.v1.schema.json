@@ -1,0 +1,131 @@
+{
+  "$id": "ii.mission.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "kind": {
+            "enum": [
+              "transcript",
+              "srt",
+              "scene_candidates",
+              "ffmpeg_scene_stdout",
+              "ffprobe",
+              "frames_manifest",
+              "observations",
+              "visual_metrics",
+              "metadata"
+            ]
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "uri": {
+            "maxLength": 512,
+            "minLength": 1,
+            "pattern": "^[^:\\\\/][^:]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "sha256",
+          "uri"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    },
+    "budget": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_paid_models": {
+          "type": "boolean"
+        },
+        "approved_by": {
+          "type": "string"
+        },
+        "max_usd": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "created_at": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "type": "string"
+    },
+    "mission_id": {
+      "pattern": "^ms_[0-9a-f]{24}$",
+      "type": "string"
+    },
+    "reference": {
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "enum": [
+            "instagram",
+            "youtube",
+            "tiktok",
+            "x",
+            "vimeo",
+            "local",
+            "other"
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "video_id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "requested_by": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_stages": {
+      "items": {
+        "enum": [
+          "discovered",
+          "media_available",
+          "metadata_extracted",
+          "audio_processed",
+          "visual_processed",
+          "evidence_normalized",
+          "classified",
+          "awaiting_review",
+          "completed"
+        ]
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "ii.mission.v1"
+    }
+  },
+  "required": [
+    "schema_version",
+    "mission_id",
+    "reference",
+    "requested_stages",
+    "requested_by",
+    "created_at"
+  ],
+  "title": "ii.mission.v1",
+  "type": "object"
+}

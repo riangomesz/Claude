@@ -2,9 +2,9 @@
   "base": "proposals/",
   "files": [
     {
-      "bytes_lf": 249,
+      "bytes_lf": 371,
       "path": "multimodal_v2/ii_mm/__init__.py",
-      "sha256_lf": "7290451825d16254e37ffa9c56841b4ebd4ed4375bc4e0c8f30b908750bca117"
+      "sha256_lf": "388f7d8f90a85afd41531124d929d9e01f67d032dbf11ed1947ca9c2dd7603ac"
     },
     {
       "bytes_lf": 506,
@@ -62,19 +62,24 @@
       "sha256_lf": "ddd99d2780677c2724b182d652d1a6f1fbbd727566b90beea4dc35cd5edab34d"
     },
     {
+      "bytes_lf": 7062,
+      "path": "multimodal_v2/ii_mm/evaluation.py",
+      "sha256_lf": "eabb4c9ad33fef0c3488cd70d6e0f96aca5833226242f179ba98e5b883d96604"
+    },
+    {
       "bytes_lf": 1642,
       "path": "multimodal_v2/ii_mm/evidence_rules.py",
       "sha256_lf": "e0349dc08208fd3057888cd590fd4e1622d6576704787a92596b7c72b053e443"
     },
     {
-      "bytes_lf": 18941,
+      "bytes_lf": 19676,
       "path": "multimodal_v2/ii_mm/legacy.py",
-      "sha256_lf": "cb3daf3ecf905e2512662ab2528a721ff5d05a52ad841b3f9f8542b9d1794f02"
+      "sha256_lf": "076c7d0269a8b08d94d3b1d854ba4645055bbb933cb49087a09e3ee61b9bc5b8"
     },
     {
-      "bytes_lf": 11305,
+      "bytes_lf": 12013,
       "path": "multimodal_v2/ii_mm/n8n_contract.py",
-      "sha256_lf": "2e0a8797422e0cdafa88284bf0126e6bd07e74b4d31d063dca40a34d370f0510"
+      "sha256_lf": "97b74cf252fc1d1dcd418319211d7879e74b9770b3703d4bed967fca2ee9aad7"
     },
     {
       "bytes_lf": 7652,
@@ -92,9 +97,9 @@
       "sha256_lf": "b107376b3a00e7cee0846394a64d9fa6cc948e22605f2ca1738bfa7399fa5cb6"
     },
     {
-      "bytes_lf": 8267,
+      "bytes_lf": 10672,
       "path": "multimodal_v2/ii_mm/pipeline.py",
-      "sha256_lf": "f4e85a3c4cb8765947b7cfd1a790bb98fc2fbe96ee5b9b6e1daf51f94cf63056"
+      "sha256_lf": "c368f98abe9015b82973b3211a1818cce18dda89d24323563dae02bea191ed62"
     },
     {
       "bytes_lf": 5243,
@@ -107,9 +112,9 @@
       "sha256_lf": "0e3aba8ef4823a5fb54fa4a8607458a8e660bafb7630a9f6b4f81b6fbd13ce1f"
     },
     {
-      "bytes_lf": 8289,
+      "bytes_lf": 12182,
       "path": "multimodal_v2/ii_mm/shadow.py",
-      "sha256_lf": "e2ce587f96dc319547bc945215144b4aa9ce7681ae5748167c48e75817c279c1"
+      "sha256_lf": "672f8acb19e33ee5151d2b31e8cfa21e1420873a580419f4f503864ae5f88e7b"
     },
     {
       "bytes_lf": 4334,
@@ -147,9 +152,9 @@
       "sha256_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "bytes_lf": 175,
+      "bytes_lf": 1503,
       "path": "multimodal_v2/tests/_helpers.py",
-      "sha256_lf": "8afc862c52add7decb6bdac83270f249959bbf1134f7b0c0e6d9d0b43f013e26"
+      "sha256_lf": "618bfa49b1e1bd72626927df3942b4d1aa99e86c6d22169abe5fe1592c19d8d2"
     },
     {
       "bytes_lf": 6549,
@@ -167,6 +172,11 @@
       "sha256_lf": "1db474f9e98c7392bd02a144fc26785fde40e620de336055f7539dede6103b43"
     },
     {
+      "bytes_lf": 2651,
+      "path": "multimodal_v2/tests/test_compat_report.py",
+      "sha256_lf": "cf3f0bbc36fdacac1f3878357d445dbac2907a4b3115e98458429efadf623534"
+    },
+    {
       "bytes_lf": 7403,
       "path": "multimodal_v2/tests/test_contract.py",
       "sha256_lf": "6fdd79bc4405a8eeb4c419c18531d50c65a009235855b95abe0515958b715ec1"
@@ -182,24 +192,29 @@
       "sha256_lf": "80b9c73949b36a51a22145fa2d38ca3439fbe227f08051111bef7ec499a97551"
     },
     {
-      "bytes_lf": 3319,
+      "bytes_lf": 7500,
+      "path": "multimodal_v2/tests/test_evaluation.py",
+      "sha256_lf": "4d5fe76c8a2a2b0d9b9261cd79dcbf15e4bb88571c6d08ab6a8ef7a567d0a948"
+    },
+    {
+      "bytes_lf": 3435,
       "path": "multimodal_v2/tests/test_handoff.py",
-      "sha256_lf": "41bb3aab885643738d20216b6f55fdc6642a7a4e2208b3fd1fc37fd3942c06db"
+      "sha256_lf": "3d7632fd438181fe6c44854a12f716e02c3085e26983789c702f09b35551ffbf"
     },
     {
-      "bytes_lf": 8757,
+      "bytes_lf": 10258,
       "path": "multimodal_v2/tests/test_legacy_adapters.py",
-      "sha256_lf": "5532e43a041730b91040500de3e300eb3788d0b5196dc660c121d449982ffbe5"
+      "sha256_lf": "52aa47e3d66a704f4a01e84ddba577685922ad886c15088c8ca7a4fea300ad63"
     },
     {
-      "bytes_lf": 6410,
+      "bytes_lf": 6373,
       "path": "multimodal_v2/tests/test_migrations.py",
-      "sha256_lf": "84f2bc8cf50cd281020f6059c0a5b0e92baaaf87f8c3395b7d85febc7fa06429"
+      "sha256_lf": "bdf6b6e1fa1d1642376ae6d283d294d5fc668496b0a899096b60ccd8363de1af"
     },
     {
-      "bytes_lf": 15969,
+      "bytes_lf": 16148,
       "path": "multimodal_v2/tests/test_ms02_adversarial.py",
-      "sha256_lf": "2390e0e1d1df462863a116163aedfb2ec4f2bd62fe9f6028523fdb7ab5460d6a"
+      "sha256_lf": "cdae287ef768912397d9e42258024ad5b73975ea2b64114f1398aff4faf78438"
     },
     {
       "bytes_lf": 7535,
@@ -217,9 +232,54 @@
       "sha256_lf": "2610b3f519e4d1572a9fa6fb222c514003bd975f4780e422937e985229d7af70"
     },
     {
-      "bytes_lf": 6094,
+      "bytes_lf": 6187,
       "path": "multimodal_v2/tests/test_ms02_sqlite.py",
-      "sha256_lf": "73931efaa128adc1c3f650a2b0904de8aa290f03b959d5fc076494cd8200a24e"
+      "sha256_lf": "9727abb059b0d9579ad878023b566bd8814f44b7848f4c4d4dda3e599077fbe4"
+    },
+    {
+      "bytes_lf": 2578,
+      "path": "multimodal_v2/tests/test_ms03_docs.py",
+      "sha256_lf": "d834119d44b4b9f14e1c4867935c4c3ff08c47d9b34bd852d109b1a2ca2bf0e7"
+    },
+    {
+      "bytes_lf": 5432,
+      "path": "multimodal_v2/tests/test_ms03_export_security.py",
+      "sha256_lf": "3610f0b84b205e367f7fd613d98ec2b26183da772468db7c0bc0f69a23a703f8"
+    },
+    {
+      "bytes_lf": 8166,
+      "path": "multimodal_v2/tests/test_ms03_generalization.py",
+      "sha256_lf": "c94f0940888f976b784cd315b1d23353f68f291bb5958cebf4443de67864ff7a"
+    },
+    {
+      "bytes_lf": 3603,
+      "path": "multimodal_v2/tests/test_ms03_lease.py",
+      "sha256_lf": "8a58631b0a99a122ec05fe514f5cb6931e44c632fdfb0ef15d3831d7153076d4"
+    },
+    {
+      "bytes_lf": 4579,
+      "path": "multimodal_v2/tests/test_ms03_portability.py",
+      "sha256_lf": "9dc39178e9cb6fb3c1b47f02226b820db808331e6509793058dd8779017c874a"
+    },
+    {
+      "bytes_lf": 3822,
+      "path": "multimodal_v2/tests/test_ms03_queries.py",
+      "sha256_lf": "14883f17f02c69f2a4b12b1d3f10604cbf7dce238125ef83054374d1e99b5492"
+    },
+    {
+      "bytes_lf": 8513,
+      "path": "multimodal_v2/tests/test_ms03_receiver.py",
+      "sha256_lf": "25762fd17039c4e843a3198f410d460f9367a21c77d29ebc549b3331c6d17915"
+    },
+    {
+      "bytes_lf": 3003,
+      "path": "multimodal_v2/tests/test_ms03_schemas.py",
+      "sha256_lf": "1f96e1d5b311c20da10293a1f9d556334c1a81a7da315360bd8a63b18ed3dd3d"
+    },
+    {
+      "bytes_lf": 7275,
+      "path": "multimodal_v2/tests/test_ms03_shadow.py",
+      "sha256_lf": "da3d9786f3fa806d84d99c9008e116b3034da480163c5b65003600bf18df4f02"
     },
     {
       "bytes_lf": 7682,
@@ -262,9 +322,9 @@
       "sha256_lf": "3ae27b2b4f3f94a4ee5c10e36337bd7ab6bb0e1562af13a836db6ee779b19284"
     },
     {
-      "bytes_lf": 5044,
+      "bytes_lf": 5007,
       "path": "multimodal_v2/tests/test_shadow.py",
-      "sha256_lf": "d4654d5c43ed224575f5a0664a9c49f74401b86e631f9320b02629a61caea24e"
+      "sha256_lf": "9c146960a14cbc41af85e4ad2edb2eb3ec2b201858985bacc20291117c65f53a"
     },
     {
       "bytes_lf": 5462,
@@ -322,14 +382,19 @@
       "sha256_lf": "76895ee2c6b09801d184d185570e6217175eae242459de08f739c9c55b263847"
     },
     {
-      "bytes_lf": 8526,
-      "path": "multimodal_v2/tools/benchmark.py",
-      "sha256_lf": "7b21dce9717f9466c4a866e3ee5247d52a37fdda887eb04aaf09b14b0813324c"
+      "bytes_lf": 4052,
+      "path": "multimodal_v2/tools/avaliacao.py",
+      "sha256_lf": "a5a381f955528daf0dfb7ebd5d6934cad0f5ed8a70a429a3bb2cf6268f3fd245"
     },
     {
-      "bytes_lf": 7171,
+      "bytes_lf": 8878,
+      "path": "multimodal_v2/tools/benchmark.py",
+      "sha256_lf": "ac70ee0e45259b01e753940aa7c3fb3ccf472bd019fdf38b038bd950dd43f976"
+    },
+    {
+      "bytes_lf": 11302,
       "path": "multimodal_v2/tools/build_handoff.py",
-      "sha256_lf": "8122a92044b4d40da0b7658b0654267f47de4ce4492bd029ccbf10caf5e59eac"
+      "sha256_lf": "e168fd788bbcee574f05e3b821cb846afef7aceb5d4fcc9eacdd362ea5aece9b"
     },
     {
       "bytes_lf": 1919,
@@ -337,9 +402,24 @@
       "sha256_lf": "b8e2bec903c4bce11ba5720cfb067255c6eab7989f50471adc816afeb82e0756"
     },
     {
+      "bytes_lf": 7941,
+      "path": "multimodal_v2/tools/compat_report.py",
+      "sha256_lf": "247436977d861d623fd084365c37174925fa3b4d77aef2a3486df322c8ddd25b"
+    },
+    {
+      "bytes_lf": 3629,
+      "path": "multimodal_v2/tools/inventory.py",
+      "sha256_lf": "b31bf11ce1f16ca645cd64f62bb6b517bb8e44ff9968f284508c9bb9935d7f1b"
+    },
+    {
       "bytes_lf": 2673,
       "path": "multimodal_v2/tools/make_legacy_close_patch.py",
       "sha256_lf": "f33d33ca4c2349cb26e117f70ca0d78a5d681e812ca2bdfc80a16373aa344bd7"
+    },
+    {
+      "bytes_lf": 11754,
+      "path": "multimodal_v2/tools/schemas.py",
+      "sha256_lf": "f43f597c2f9b0bec50aa901268ed6ad592f5d2c49ae3b489d7ab401e69668926"
     },
     {
       "bytes_lf": 2121,
@@ -382,9 +462,44 @@
       "sha256_lf": "cc83889aa22d24694d0e7f4e239a0c0a31d9aa486ca864adfebab212846ff12f"
     },
     {
-      "bytes_lf": 2031,
+      "bytes_lf": 2794,
+      "path": "multimodal_v2/handoff/schemas/ii.mission.v1.schema.json",
+      "sha256_lf": "6927c0ccc2336402291b678ee98c9c9e4f1a1d0b9f41b8231a8e443e966045ae"
+    },
+    {
+      "bytes_lf": 1514,
+      "path": "multimodal_v2/handoff/schemas/ii.mission_result.v1.schema.json",
+      "sha256_lf": "38961ce51392c64f382402e093592b7543ae381d7c8b8a0acc7f6968ebc3a6a8"
+    },
+    {
+      "bytes_lf": 7134,
+      "path": "multimodal_v2/handoff/schemas/ii.reference_analysis.v2.schema.json",
+      "sha256_lf": "7ec4f6da8d07a0bfe11760df4e3de51bf05296ae3282ef89ae4f2db790ad0817"
+    },
+    {
+      "bytes_lf": 2156,
+      "path": "multimodal_v2/handoff/schemas/ii.visual_observation.v1.schema.json",
+      "sha256_lf": "1631521d97137761cc21ea3380251fd2a3710f48e96e1d1ad4afa4a2c86a9db2"
+    },
+    {
+      "bytes_lf": 2912,
       "path": "multimodal_v2/handoff/exemplo_uso.py",
-      "sha256_lf": "c8b5a5d52873b519da592647518b67f3e759550d0a9c0bdb63ffd2c8670bb002"
+      "sha256_lf": "62a515fdca07b6fa61c8ac45cb4f73354d03504214c2df1cc2683e9b891b398a"
+    },
+    {
+      "bytes_lf": 9606,
+      "path": "multimodal_v2/handoff/verificar_recebimento.py",
+      "sha256_lf": "379d2a9eb7b0c9b0c0bcad9c6ebcd24dd5ceb4f20bce62950bc9341008a63f54"
+    },
+    {
+      "bytes_lf": 9078,
+      "path": "multimodal_v2/handoff/windows/ii_rc.ps1",
+      "sha256_lf": "a80cd30eac007a8528b6ec02af83d5349cd87ea98ddbc940804f8a60020c8fea"
+    },
+    {
+      "bytes_lf": 17799,
+      "path": "multimodal_v2/handoff/baseline_contratos_c6845a4.json",
+      "sha256_lf": "4e1da422a1def13f75be9d761ee2a31e00082e938da6323a64650a50ef3aebed"
     },
     {
       "bytes_lf": 1162,
@@ -395,6 +510,76 @@
       "bytes_lf": 3205,
       "path": "multimodal_v2/verify_package.py",
       "sha256_lf": "e65e738a38e94f5501f6561c2bdc33bbc5f88eab8e23ff1f0a674c4add563153"
+    },
+    {
+      "bytes_lf": 8725,
+      "path": "multimodal_v2/test_multimodal_classifier.py",
+      "sha256_lf": "79358955ca08152ee27d661c4ac0f286373a2880b93760076066123849e17098"
+    },
+    {
+      "bytes_lf": 2616,
+      "path": "multimodal_v2/test_regression_current.py",
+      "sha256_lf": "fb61773302e107984b0bab4ed796a48ec77d968c43f38dcefde0fee958b19295"
+    },
+    {
+      "bytes_lf": 4095,
+      "path": "multimodal_v2/test_verify_package.py",
+      "sha256_lf": "a9db17129c15f25f1025027e6c848a0d3261519b69c089f815975253a4f5e1aa"
+    },
+    {
+      "bytes_lf": 10389,
+      "path": "multimodal_v2/multimodal_classifier.py",
+      "sha256_lf": "a7b5cf477d769815d48aea64111b3336c1ff640d6211c0896173ab3d21832eff"
+    },
+    {
+      "bytes_lf": 4436,
+      "path": "multimodal_v2/regression_golden.json",
+      "sha256_lf": "c2b8b1bbaa1f4d8b4b6529bb752cf60cc03a88d5f4a90d6184d730ecdfa7f7e0"
+    },
+    {
+      "bytes_lf": 636,
+      "path": "multimodal_v2/analise_multimodal_v2.json",
+      "sha256_lf": "cc61a6ed1e2329b16880653cb16fdfc5b3e86fdb2fa1c4fc13369c86cf004ac2"
+    },
+    {
+      "bytes_lf": 1898,
+      "path": "multimodal_v2/make_golden.py",
+      "sha256_lf": "5bfb3da0530ef9db52694064e8e94fe6fcf81bfd9afefa8f14148275c50b07ed"
+    },
+    {
+      "bytes_lf": 2767,
+      "path": "classification/test_text_matcher.py",
+      "sha256_lf": "aeda1081187dc1060259e524970f1e7d301cff629d0ff8c933b4b9219ae6fce1"
+    },
+    {
+      "bytes_lf": 13848,
+      "path": "multimodal_v2/INVENTARIO_COMPONENTES.md",
+      "sha256_lf": "d3fbae8648744b8848e4f418886444e2a5a8980772c644278fec155c9945327e"
+    },
+    {
+      "bytes_lf": 7119,
+      "path": "multimodal_v2/DEPENDENCIAS_WINDOWS.md",
+      "sha256_lf": "487c3685212aa309b5a2b06d17346255a489b4201d0b67fa900e127231d87c54"
+    },
+    {
+      "bytes_lf": 11700,
+      "path": "multimodal_v2/GUIA_WINDOWS_POWERSHELL.md",
+      "sha256_lf": "7083277f31cf7e66f44d46339154683dfe7abd0395c32143c64119f237635a79"
+    },
+    {
+      "bytes_lf": 5086,
+      "path": "multimodal_v2/CRITERIOS_ADOCAO.md",
+      "sha256_lf": "2adc55c79187c04de4b0401ee249e068d357dbc722527474ef2c48aa1e2a0db5"
+    },
+    {
+      "bytes_lf": 3954,
+      "path": "multimodal_v2/CHECKLIST_ACEITE_RC.md",
+      "sha256_lf": "4625241d9347b0f49b4ffc29dae3ce0789c88959dedcad08f2ed8beec35509c9"
+    },
+    {
+      "bytes_lf": 5871,
+      "path": "multimodal_v2/AVALIACAO_HUMANA.md",
+      "sha256_lf": "0ca642e1e35149e29697a0671130634cde1b1a996f22afb806314c54f2282aea"
     },
     {
       "bytes_lf": 7048,
@@ -413,21 +598,64 @@
     }
   ],
   "hash_note": "sha256_lf = SHA-256 com CRLF normalizado para LF (estável entre Linux e Windows)",
+  "managed_dirs": [
+    "multimodal_v2/ii_mm",
+    "multimodal_v2/tests",
+    "multimodal_v2/fixtures",
+    "multimodal_v2/tools",
+    "multimodal_v2/handoff"
+  ],
+  "rc_id": "ii_mm-1.0.0-rc1",
+  "requirements": {
+    "external_packages": [],
+    "os_not_tested": [
+      "Windows"
+    ],
+    "os_tested": [
+      "Linux x86_64 (container de nuvem)"
+    ],
+    "python_min": "3.11",
+    "python_tested": [
+      "3.11.15",
+      "3.12",
+      "3.13.16"
+    ],
+    "sqlite_min": "3.24.0"
+  },
   "roles": {
+    "../classification/test_text_matcher.py": "testes do matcher",
     "../classification/text_matcher.py": "dependência do classificador textual",
+    "AVALIACAO_HUMANA.md": "fluxo de avaliação humana",
+    "CHECKLIST_ACEITE_RC.md": "checklist de aceite por estágio",
+    "CRITERIOS_ADOCAO.md": "critérios de adoção",
+    "DEPENDENCIAS_WINDOWS.md": "auditoria de dependências para Windows",
+    "GUIA_WINDOWS_POWERSHELL.md": "guia operacional PowerShell",
+    "INVENTARIO_COMPONENTES.md": "inventário dos componentes",
     "MATRIZ_COMPATIBILIDADE.md": "compatibilidade com o Projeto-MVP",
     "PLANO_INTEGRACAO_SEGURA.md": "plano em três estágios",
     "RISCO_E_ROLLBACK.md": "riscos e rollback",
+    "analise_multimodal_v2.json": "marcador do piloto (blocked_missing_evidence), usado por teste",
     "fixtures": "fixtures sintéticas (formatos reais, valores sintéticos)",
+    "handoff/baseline_contratos_c6845a4.json": "baseline dos contratos do Projeto-MVP (c6845a4) usada por tools/compat_report.py",
     "handoff/contratos": "exemplos de contrato validados",
     "handoff/exemplo_uso.py": "exemplo executável: modo sombra somente leitura + staging",
+    "handoff/schemas": "JSON Schemas estruturais dos contratos públicos",
+    "handoff/verificar_recebimento.py": "validador do receptor (stdlib, não executa o pacote, não grava)",
+    "handoff/windows": "scripts PowerShell do guia operacional",
     "ii_mm": "núcleo (somente stdlib)",
+    "make_golden.py": "gerador do golden",
+    "multimodal_classifier.py": "protótipo v1 (preservado)",
     "patches/legacy_close_sqlite_connections.diff": "patch demonstrativo do legado (L1), não aplicado",
+    "regression_golden.json": "golden da classificação legada",
     "run_tests.py": "executor da suíte",
+    "test_multimodal_classifier.py": "testes do protótipo v1",
+    "test_regression_current.py": "regressão do legado (golden)",
+    "test_verify_package.py": "testes do verificador de pacote",
     "tests": "testes de aceitação",
-    "tools": "ferramentas (cobertura, benchmark, patch legado, pacote)",
+    "tools": "ferramentas (cobertura, benchmark, patch legado, pacote, schemas)",
     "verify_package.py": "verificador de pacote de evidências"
   },
-  "schema_version": "ii.handoff_manifest.v1",
-  "verify": "python3 tools/build_handoff.py --check"
+  "schema_version": "ii.handoff_manifest.v2",
+  "verify": "python handoff/verificar_recebimento.py",
+  "version": "1.0.0rc1"
 }

@@ -30,6 +30,7 @@ PACKAGE = {
     "handoff/exemplo_uso.py": "exemplo executável: modo sombra somente leitura + staging",
     "handoff/verificar_recebimento.py": "validador do receptor (stdlib, não executa o pacote, não grava)",
     "handoff/windows": "scripts PowerShell do guia operacional",
+    "handoff/baseline_contratos_c6845a4.json": "baseline dos contratos do Projeto-MVP (c6845a4) usada por tools/compat_report.py",
     "run_tests.py": "executor da suíte",
     "verify_package.py": "verificador de pacote de evidências",
     "test_multimodal_classifier.py": "testes do protótipo v1",
@@ -57,6 +58,8 @@ REQUIREMENTS = {"python_min": "3.11", "python_tested": ["3.11.15", "3.12", "3.13
                 "external_packages": [], "os_tested": ["Linux x86_64 (container de nuvem)"], "os_not_tested": ["Windows"]}
 FORBIDDEN_SUFFIXES = (".sqlite", ".sqlite3", ".db", ".mp4", ".mov", ".jpg", ".jpeg", ".png", ".webp", ".wav", ".mp3", ".env", ".pem", ".key")
 MANIFEST_NAME = "MANIFESTO_PACOTE.json"
+INVENTORY_START = "## 1. Tabela gerada\n\n"
+INVENTORY_END = "\n\n\"Testes que o exercitam\""
 
 
 def contract_examples() -> dict:
@@ -160,7 +163,17 @@ def main(check: bool, zip_path: str = None) -> int:
     if str(HERE / "tools") not in sys.path:
         sys.path.insert(0, str(HERE / "tools"))
     from schemas import schemas as all_schemas
+    import inventory
     stale = []
+    inv_path = HERE / "INVENTARIO_COMPONENTES.md"  # seção 1 é gerada (tools/inventory.py)
+    inv_old = inv_path.read_text(encoding="utf-8")
+    head, rest = inv_old.split(INVENTORY_START, 1)
+    inv_new = head + INVENTORY_START + inventory.markdown(inventory.collect()) + INVENTORY_END + rest.split(INVENTORY_END, 1)[1]
+    if inv_new != inv_old:
+        if check:
+            stale.append(inv_path.name)
+        else:
+            inv_path.write_text(inv_new, encoding="utf-8")
     generated = [(HERE / "handoff" / "contratos" / n, o) for n, o in contract_examples().items()]
     generated += [(HERE / "handoff" / "schemas" / n, o) for n, o in all_schemas().items()]
     for path, obj in generated:
