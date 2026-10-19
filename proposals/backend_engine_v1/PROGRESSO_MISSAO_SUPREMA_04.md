@@ -29,4 +29,15 @@ de recebimento continua OK após cada checkpoint.
   - parâmetro de compartilhamento `?igsh=` (identifica quem compartilhou) seria gravado em `refs`/aliases → `clean_url`;
   - `safe_relpath` aceitava `media//x` e `./x` (PurePosixPath colapsava os componentes) → validação por componente cru;
   - adaptador `record_from_url` vazava `IdentityError` em vez de `InvalidInput`.
-- Próximo passo: serviço de classificação (facetas), gateway simulado, curadoria, busca, API/HTTP local, segurança.
+
+### C2: P1 (classificação, curadoria, busca, gateway, API/HTTP, observabilidade, segurança)
+- Módulos: `classification` (10 facetas), `curation` (soberania humana, etag), `search` (catálogo do ii_mm + filtros do
+  backend), `gateway` (somente mock; aprovação humana obrigatória quando aplicável), `api` (contratos `ii.be.api.v1`),
+  `http_local` (loopback + Host + JSON obrigatório), `observability` (redação de segredos e conteúdo).
+- Testes: 80 no total, todos OK (`-W error::ResourceWarning`). Novos: serviços 10, gateway 8, API/HTTP/observabilidade 7,
+  segurança 4.
+- Defeitos encontrados e corrigidos durante o C2:
+  - URL com credenciais embutidas (`usuario:senha@host`) seria gravada → `clean_url` usa só o hostname;
+  - `author_handle`/hashtags/legenda aceitavam caracteres de controle (NUL, escape ANSI) → recusados na validação;
+  - API: o motor por thread vazaria conexões no servidor HTTP com várias threads → motor por chamada, fechado ao final.
+- Próximo passo: demonstração ponta a ponta reproduzível, benchmark 82/1.000/10.000, documentação e handoff.

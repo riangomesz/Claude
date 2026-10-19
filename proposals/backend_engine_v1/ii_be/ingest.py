@@ -58,6 +58,11 @@ def _is_iso(value: Any) -> bool:
         return False
 
 
+def _has_control(text: str, allow_newlines: bool = False) -> bool:
+    allowed = {"\n", "\r", "\t"} if allow_newlines else set()
+    return any((ord(c) < 32 or ord(c) == 127) and c not in allowed for c in text)
+
+
 def validate_record(rec: Any) -> List[str]:
     p: List[str] = []
     if not isinstance(rec, dict):
@@ -86,16 +91,17 @@ def validate_record(rec: Any) -> List[str]:
             if extra:
                 p.append(f"metadata com campos desconhecidos: {sorted(extra)}")
             for k in ("caption", "title"):
-                if meta.get(k) is not None and (not isinstance(meta[k], str) or len(meta[k]) > MAX_TEXT):
-                    p.append(f"metadata.{k} inválido ou maior que {MAX_TEXT} caracteres")
+                if meta.get(k) is not None and (not isinstance(meta[k], str) or len(meta[k]) > MAX_TEXT
+                                                or _has_control(meta[k], allow_newlines=True)):
+                    p.append(f"metadata.{k} inválido, com caractere de controle ou maior que {MAX_TEXT} caracteres")
             for k in ("author_handle", "author_name", "language", "media_type", "published_at"):
-                if meta.get(k) is not None and (not isinstance(meta[k], str) or len(meta[k]) > MAX_SHORT):
+                if meta.get(k) is not None and (not isinstance(meta[k], str) or len(meta[k]) > MAX_SHORT or _has_control(meta[k])):
                     p.append(f"metadata.{k} inválido")
             if meta.get("published_at") is not None and not _is_iso(meta["published_at"]):
                 p.append("metadata.published_at não é ISO-8601")
             tags = meta.get("hashtags")
             if tags is not None and (not isinstance(tags, list) or len(tags) > MAX_HASHTAGS
-                                     or not all(isinstance(t, str) and len(t) <= 100 for t in tags)):
+                                     or not all(isinstance(t, str) and len(t) <= 100 and not _has_control(t) for t in tags)):
                 p.append("metadata.hashtags inválido")
             d = meta.get("duration_s")
             if d is not None and (isinstance(d, bool) or not isinstance(d, (int, float)) or not 0 < d < 86400):

@@ -44,16 +44,18 @@ def clean_url(url: Optional[str]) -> Optional[str]:
     """Remove parâmetros de rastreio/compartilhamento (ex.: `igsh`, `utm_*`, `si`) e fragmento antes de gravar.
 
     Links compartilhados carregam identificadores de quem compartilhou: não são necessários para a identidade
-    e não devem ser persistidos. No YouTube, só `v` (id do vídeo) e `t` são mantidos."""
+    e não devem ser persistidos. No YouTube, só `v` (id do vídeo) e `t` são mantidos. Credenciais embutidas
+    (`usuario:senha@host`) e porta são descartadas."""
     if not url:
         return url
     parts = urlsplit(url if "://" in url else "https://" + url)
-    host = parts.netloc.lower()
+    host = (parts.hostname or "").lower()   # descarta usuário:senha@ e porta embutidos na URL
     query = ""
-    if "youtube.com" in host:
+    if host.endswith("youtube.com"):
         q = parse_qs(parts.query)
         query = urlencode([(k, q[k][0]) for k in ("v", "t") if k in q])
-    return urlunsplit((parts.scheme or "https", parts.netloc, parts.path, query, ""))
+    scheme = parts.scheme.lower() if parts.scheme.lower() in ("http", "https") else "https"
+    return urlunsplit((scheme, host, parts.path, query, ""))
 
 
 def resolve_key(platform: Optional[str], url: Optional[str], native_id: Optional[str]) -> Tuple[str, str, str]:
