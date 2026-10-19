@@ -155,3 +155,12 @@ Baseline independente: 307/307 OK em Python 3.11, 3.12 e 3.13 contra uma **cópi
 - Etapas 10/11: 12 formatos e distinções de categorização; nenhuma constante do piloto no núcleo.
 - Etapa 12: `ii_mm/evaluation.py` (amostra estratificada de 30 a 50, planilha cega, validação de rótulos, concordância em contagens; taxa só com n ≥ 30).
 - Etapa 07: `tools/compat_report.py` + `handoff/baseline_contratos_c6845a4.json` (13 módulos, 65 colunas, valores reais).
+
+### M3-C2 (commits `58253ab`, `78f42cd` e o congelamento da RC)
+- Etapas 01, 03, 06, 09, 12 e 19 documentadas: `INVENTARIO_COMPONENTES.md` (tabela gerada por `tools/inventory.py` e mantida por `build_handoff.py`), `DEPENDENCIAS_WINDOWS.md`, `GUIA_WINDOWS_POWERSHELL.md`, `CRITERIOS_ADOCAO.md`, `AVALIACAO_HUMANA.md` (com `tools/avaliacao.py`), `CHECKLIST_ACEITE_RC.md`.
+- `ii_rc.ps1` executado com pwsh 7.4.6 (Linux) em todas as etapas e recusas. PS1: script em ASCII (o 5.1 lê sem BOM como ANSI). PS2: `Invoke-Py` misturava saída e código, e um executável único virava string.
+- D-RC5: o snapshot em passo único bloqueava escritores do legado durante a cópia (1,7 s para 139 MB). Agora em blocos com prazo; espera máxima medida de 0,18 s.
+- Validador: `sqlite3` importado com proteção; `managed_dirs` fora do pacote recusadas; versões no relatório. Ele mesmo achou a baseline de contratos fora do pacote (corrigido).
+- Testes novos: receptor adversarial e autoteste do zip extraído, schemas, plano das 66 consultas de um fluxo real, segurança de exportação, coerência dos documentos. Total: 384 (371 + 13 pulados sem clone; 384 com cópia) em 3.11.17, 3.12.3 e 3.13.16.
+- Versões testadas registradas errado desde a Missão 02 (3.11.15) corrigidas; documentos antigos do pacote atualizados (contagens, comandos, D-RC2).
+- RC `ii_mm-1.0.0-rc1`, manifesto `10f0e9d88afaa435f5ad1e4899bcb6b942fff812f9831554c34671898e75e209`. Para retomar: `RELATORIO_MISSAO_SUPREMA_03.md`.
