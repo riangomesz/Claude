@@ -10,13 +10,16 @@ Garantias:
 """
 from __future__ import annotations
 
+import csv
 import json
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional
 
 from .classifier import Classifier
-from .legacy import HUMAN_EDITORIAL_SOURCES, from_instagram_item
+from .legacy import AUTOMATIC_EDITORIAL_SOURCES, from_instagram_item
+from .obsidian_export import _esc
 from .text_classifier import LEGACY_AS_FACET, LEGACY_TO_V2
 
 USABLE_SUPPORT = {"supported_visual", "supported_measured", "mentioned_speech", "suggested_metadata"}
@@ -39,6 +42,54 @@ def read_legacy_rows_readonly(db_path: Path, limit: int = 500, offset_id: Option
         return [dict(r) for r in rows]
     finally:
         conn.close()
+
+
+def snapshot_readonly(src: Path, dst: Path) -> Dict[str, Any]:
+    """Cópia consistente do catálogo pela API de backup do SQLite, abrindo a ORIGEM só para leitura.
+
+    A origem nunca é aberta para escrita (`mode=ro`); a leitura vê só transações confirmadas e não espera
+    escritores em andamento. O destino precisa ser um caminho novo. Recomendado para o modo sombra: o banco
+    vivo fica exposto apenas durante a cópia, e a comparação roda sobre o snapshot.
+    """
+    src, dst = Path(src).resolve(), Path(dst).resolve()
+    if not src.is_file():
+        raise FileNotFoundError(f"banco de origem não encontrado (não será criado): {src}")
+    if src == dst:
+        raise ValueError("destino do snapshot não pode ser a origem")
+    if dst.exists():
+        raise FileExistsError(f"destino já existe (não sobrescrevo): {dst}")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    with closing(sqlite3.connect(f"{src.as_uri()}?mode=ro", uri=True)) as s, closing(sqlite3.connect(str(dst))) as d:
+        s.backup(d)
+        n = d.execute("SELECT COUNT(*) FROM instagram_items").fetchone()[0] if d.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='instagram_items'").fetchone() else None
+    return {"snapshot": str(dst), "rows_instagram_items": n}
+
+
+_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+
+
+def _cell(value: Any) -> str:
+    """Célula de planilha segura: texto externo começando com = + - @ não vira fórmula no Excel/LibreOffice."""
+    text = "" if value is None else " ".join(str(value).split())
+    return "'" + text if text[:1] in _FORMULA_PREFIXES else text
+
+
+def export_review_csv(report: Dict[str, Any], path: Path) -> int:
+    """Planilha de revisão das divergências (UTF-8 com BOM, para abrir certo no Excel). Colunas do revisor vazias."""
+    cols = ["item_id", "tipo_divergencia", "legado_rotulo", "legado_origem", "novo_categorias", "novo_evidencias",
+            "rotulo_humano_existente", "decisao_revisor", "comentario_revisor"]
+    rows = 0
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(cols)
+        for d in report.get("divergences", []):
+            new = "; ".join(f"{c} ({info['support']})" for c, info in d["new"].items()) or "nenhuma"
+            ev = " | ".join(f"[{e['status']}] {e['claim'][:80]}" for info in d["new"].values() for e in info["evidence"][:2])
+            w.writerow([_cell(x) for x in (d["item_id"], d["kind"], d["legacy"]["label"], d["legacy"]["origin"], new, ev,
+                                           (d.get("human") or {}).get("label"), "", "")])
+            rows += 1
+    return rows
 
 
 def _new_side(doc: Dict[str, Any]) -> Dict[str, Any]:
@@ -70,11 +121,11 @@ def compare_row(row: Dict[str, Any], duration_s: Optional[float] = None, clf: Op
         legacy_label = (sug or {}).get("suggested_category")
         legacy_origin = f"suggest_editorial_category: {(sug or {}).get('reason')}"
     else:
-        src = (row.get("editorial_category_source") or "").lower()
-        legacy_label = row.get("editorial_category") if src not in HUMAN_EDITORIAL_SOURCES else None
+        src = (row.get("editorial_category_source") or "").strip().lower()
+        legacy_label = row.get("editorial_category") if src in AUTOMATIC_EDITORIAL_SOURCES else None
         legacy_origin = f"editorial_category armazenada ({src or 'sem origem'})"
-    human_src = (row.get("editorial_category_source") or "").lower()
-    human_label = row.get("editorial_category") if human_src in HUMAN_EDITORIAL_SOURCES else None
+    human_src = (row.get("editorial_category_source") or "").strip().lower()
+    human_label = row.get("editorial_category") if human_src not in AUTOMATIC_EDITORIAL_SOURCES else None
 
     mapped = LEGACY_TO_V2.get(legacy_label) if legacy_label else None
     ai_terms = doc.get("topic_facets", {}).get("ai_terms", [])
@@ -137,17 +188,17 @@ def render_markdown(report: Dict[str, Any], max_items: int = 50) -> str:
     lines += [f"- {k}: {v}" for k, v in t.items()]
     lines += ["", "## Divergências (com evidências)", ""]
     for d in report["divergences"][:max_items]:
-        lines.append(f"### {d['item_id']} — {d['kind']}")
-        lines.append(f"- Atual: {d['legacy']['label'] or '—'} ({d['legacy']['origin']})")
+        lines.append(f"### {_esc(d['item_id'])} — {d['kind']}")
+        lines.append(f"- Atual: {_esc(d['legacy']['label'] or '—')} ({_esc(d['legacy']['origin'])})")
         for cat, info in d["new"].items():
-            ev = "; ".join(f"[{e['status']}] {e['claim'][:80]}" + (f" (termos: {', '.join(e['terms'])})" if e.get("terms") else "") for e in info["evidence"][:3])
+            ev = "; ".join(f"[{e['status']}] {_esc(e['claim'][:80])}" + (f" (termos: {_esc(', '.join(e['terms']))})" if e.get("terms") else "") for e in info["evidence"][:3])
             lines.append(f"- Novo: {cat} ({info['support']}): {ev}")
         if not d["new"]:
             lines.append("- Novo: nenhuma categoria sustentada")
         lines.append("")
     h = report["human_reference"]
     lines += ["## Inspeção contra rótulo humano", "", f"- Linhas com rótulo humano: {h['rows_with_human_label']}",
-              f"- Atual diverge do humano: {', '.join(h['legacy_diverges_from_human']) or 'nenhuma'}",
-              f"- Novo não contém o rótulo humano (possível falso negativo): {', '.join(h['new_misses_human_label']) or 'nenhuma'}",
-              f"- Novo adiciona categorias além do humano (possível falso positivo ou multi-rótulo): {', '.join(h['new_adds_beyond_human']) or 'nenhuma'}", ""]
+              f"- Atual diverge do humano: {_esc(', '.join(map(str, h['legacy_diverges_from_human']))) or 'nenhuma'}",
+              f"- Novo não contém o rótulo humano (possível falso negativo): {_esc(', '.join(map(str, h['new_misses_human_label']))) or 'nenhuma'}",
+              f"- Novo adiciona categorias além do humano (possível falso positivo ou multi-rótulo): {_esc(', '.join(map(str, h['new_adds_beyond_human']))) or 'nenhuma'}", ""]
     return "\n".join(lines)

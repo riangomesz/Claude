@@ -60,6 +60,11 @@ LEGACY_PRESERVED = (
     "media_vcodec", "media_acodec", "media_size_bytes", "media_thumbnail_path", "media_provenance_json",
 )
 HUMAN_EDITORIAL_SOURCES = {"manual", "manual_do_usuario", "usuario", "user", "human", "curador"}
+# Revalidado na Missão Suprema 03 contra c6845a4: editorial_category só é GRAVADA por fluxo humano
+# (review_server: payload.get("source", "human"); painel: source 'manual'). A sugestão automática é calculada
+# na hora e não é gravada. Por isso só origens explicitamente automáticas viram rótulo de classificador;
+# origem nula ou desconhecida é tratada como decisão humana (sem reclassificar).
+AUTOMATIC_EDITORIAL_SOURCES = {"sugestao_automatica", "suggestion", "suggested", "auto", "automatic", "classifier", "ii_mm"}
 PLATFORM_MAP = {"instagram": "instagram", "youtube": "youtube", "tiktok": "tiktok", "x": "x", "twitter": "x", "vimeo": "vimeo"}
 
 
@@ -156,13 +161,14 @@ def from_instagram_item(row: Dict[str, Any], duration_s: Optional[float] = None,
         n.add_legacy_label(row["curation_category"], row.get("curation_rule") or "sem regra", source="core.curation.curation_category")
         rep.mapped += [k for k in ("curation_category", "curation_rule") if row.get(k)]
     if row.get("editorial_category"):
-        src = (row.get("editorial_category_source") or "").lower()
-        if src in HUMAN_EDITORIAL_SOURCES:
-            rep.human_decisions.append({"field": "editorial_category", "value": row["editorial_category"], "source": src,
-                                        "note": "decisão humana legada: importar via ReviewService, não como evidência"})
+        src = (row.get("editorial_category_source") or "").strip().lower()
+        if src in AUTOMATIC_EDITORIAL_SOURCES:
+            n.add_legacy_label(row["editorial_category"], f"editorial_category ({src})", source="core.curation.editorial_category")
         else:
-            n.add_legacy_label(row["editorial_category"], f"editorial_category ({src or 'origem desconhecida'})",
-                               source="core.curation.editorial_category")
+            note = ("decisão humana legada: importar via ReviewService, não como evidência" if src in HUMAN_EDITORIAL_SOURCES else
+                    f"origem {'não registrada' if not src else repr(src) + ' desconhecida'}: tratada como decisão humana, "
+                    "pois o Projeto-MVP só grava editorial_category por fluxo humano")
+            rep.human_decisions.append({"field": "editorial_category", "value": row["editorial_category"], "source": src or None, "note": note})
         rep.mapped += [k for k in ("editorial_category", "editorial_category_source") if row.get(k)]
     if row.get("triage_decision"):
         rep.human_decisions.append({"field": "triage_decision", "value": row["triage_decision"], "source": "triagem",

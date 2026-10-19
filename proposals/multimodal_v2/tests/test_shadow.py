@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests import _helpers  # noqa: F401
+from tests import _helpers
 from ii_mm.shadow import compare_row, read_legacy_rows_readonly, render_markdown, run_shadow
 
 ROWS = json.loads((Path(__file__).resolve().parents[1] / "fixtures" / "legacy" / "shadow_rows.json").read_text(encoding="utf-8"))
@@ -90,7 +90,7 @@ class ReadOnlyTest(unittest.TestCase):
 class RealLegacyFunctionShadowTest(unittest.TestCase):
     def test_shadow_with_real_suggest_editorial_category(self):
         import sys
-        sys.path.insert(0, str(Path(os.environ["PROJETO_MVP_DIR"]).resolve()))
+        sys.path.insert(0, str(_helpers.projeto_dir()))
         from core.curation import suggest_editorial_category
         rep = run_shadow(ROWS, legacy_suggest=suggest_editorial_category)
         by = {i.get("item_id"): i for i in rep["items"]}

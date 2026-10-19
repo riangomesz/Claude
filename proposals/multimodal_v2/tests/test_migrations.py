@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests import _helpers  # noqa: F401
+from tests import _helpers
 from ii_mm.db.migrations import (
     LATEST_VERSION, MIGRATIONS, IncompatibleSchemaError, Migration, MigrationError, applied, connect,
     current_version, migrate, open_database,
@@ -113,7 +113,7 @@ class LegacyNoSuchTableReproductionTest(unittest.TestCase):
     """Reproduz e corrige, em banco temporário, o 'no such table: instagram_items' da auditoria."""
 
     def setUp(self):
-        self.projeto = Path(os.environ["PROJETO_MVP_DIR"]).resolve()
+        self.projeto = _helpers.projeto_dir()
         self.tmp = tempfile.TemporaryDirectory()
         self.db = Path(self.tmp.name) / "legacy_test.sqlite"
 

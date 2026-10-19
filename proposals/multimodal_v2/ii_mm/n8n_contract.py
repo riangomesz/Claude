@@ -44,6 +44,9 @@ _ART_KEYS = {"kind", "sha256", "uri", "bytes"}
 _BUDGET_KEYS = {"allow_paid_models", "max_usd", "approved_by"}
 
 
+_WINDOWS_DEVICES = {"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in range(1, 10)} | {f"LPT{i}" for i in range(1, 10)}
+
+
 def _bad_uri(uri: str) -> Optional[str]:
     if not isinstance(uri, str) or not uri or len(uri) > 512:
         return "uri ausente ou longa demais"
@@ -56,6 +59,15 @@ def _bad_uri(uri: str) -> Optional[str]:
         return "uri com '..'"
     if any(ord(ch) < 32 for ch in uri):
         return "uri com caractere de controle"
+    # Particularidades do NTFS (Missão Suprema 03): ':' abre alternate data stream; nomes de dispositivo
+    # (CON, NUL, COM1…) viram o dispositivo em qualquer pasta; ponto/espaço final é aparado (cria apelidos).
+    if ":" in uri:
+        return "uri com ':' (alternate data stream no NTFS)"
+    for part in parts:
+        if part.split(".")[0].upper() in _WINDOWS_DEVICES:
+            return f"uri com nome de dispositivo do Windows: {part}"
+        if part and part != "." and part.endswith((".", " ")):
+            return f"componente terminado em ponto ou espaço: {part!r}"
     return None
 
 

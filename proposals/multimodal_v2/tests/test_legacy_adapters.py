@@ -3,7 +3,7 @@ import json
 import unittest
 from pathlib import Path
 
-from tests import _helpers  # noqa: F401
+from tests import _helpers
 from ii_mm.classifier import Classifier
 from ii_mm.contract import validate_document
 from ii_mm.legacy import (from_instagram_item, from_intelligence_card, from_transition_candidates, from_vision_macro,
@@ -149,7 +149,7 @@ class RealSchemaCompatibilityTest(unittest.TestCase):
         from ii_mm.legacy import INSTAGRAM_ITEM_MAPPING, LEGACY_PRESERVED
         with tempfile.TemporaryDirectory() as t:
             db = Path(t) / "legacy_compat.sqlite"
-            build_legacy_catalog(db, Path(os.environ["PROJETO_MVP_DIR"]))
+            build_legacy_catalog(db, _helpers.projeto_dir())
             conn = sqlite3.connect(str(db))
             try:
                 conn.row_factory = sqlite3.Row
@@ -164,3 +164,25 @@ class RealSchemaCompatibilityTest(unittest.TestCase):
         n, rep = from_instagram_item(stored, duration_s=30.0)
         self.assertEqual(validate_document(Classifier().classify(n.build())), [])
         self.assertEqual(rep.unmapped, [], f"colunas reais sem destino: {rep.unmapped}")
+
+
+class EditorialSourceRevalidationTest(unittest.TestCase):
+    """MS03 / D-RC2: no código real, editorial_category só é gravada por fluxos humanos (padrão 'human' no
+    review_server, 'manual' no painel); a sugestão automática é calculada na hora e nunca gravada."""
+
+    def test_real_source_values_are_human(self):
+        for src in ("human", "manual"):
+            _, rep = from_instagram_item({"id": "SYNTHed1", "editorial_category": "Criativo", "editorial_category_source": src}, duration_s=5)
+            self.assertEqual([d["field"] for d in rep.human_decisions], ["editorial_category"], src)
+
+    def test_null_or_unknown_source_is_not_treated_as_classifier_output(self):
+        for src in (None, "", "valor_novo"):
+            n, rep = from_instagram_item({"id": "SYNTHed2", "editorial_category": "Criativo", "editorial_category_source": src}, duration_s=5)
+            self.assertEqual([d["field"] for d in rep.human_decisions], ["editorial_category"], src)
+            self.assertEqual([e for e in n.build()["evidence"] if e.get("tag") == "legacy_label"], [], src)
+            self.assertIn("origem", rep.human_decisions[0]["note"])
+
+    def test_explicit_automatic_source_stays_inference(self):
+        n, rep = from_instagram_item({"id": "SYNTHed3", "editorial_category": "Criativo", "editorial_category_source": "sugestao_automatica"}, duration_s=5)
+        self.assertEqual(rep.human_decisions, [])
+        self.assertEqual(len([e for e in n.build()["evidence"] if e.get("tag") == "legacy_label"]), 1)

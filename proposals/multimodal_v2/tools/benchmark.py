@@ -14,7 +14,6 @@ import argparse
 import json
 import os
 import platform
-import resource
 import sqlite3
 import statistics
 import sys
@@ -48,12 +47,21 @@ def timed(fn, repeat=5):
     return {"median_ms": round(statistics.median(vals), 3), "min_ms": round(min(vals), 3), "max_ms": round(max(vals), 3), "n": repeat}
 
 
+def _max_rss_mb():
+    """Pico de memória do processo; o módulo `resource` não existe no Windows (devolve None lá)."""
+    try:
+        import resource  # optional: só POSIX
+    except ImportError:
+        return None
+    return round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024, 1)
+
+
 def environment():
     mem_kb = None
+    meminfo = Path(os.sep, "proc", "meminfo")  # só Linux; em outros sistemas fica None
     try:
-        with open("/proc/meminfo") as f:
-            mem_kb = int(next(l for l in f if l.startswith("MemTotal")).split()[1])
-    except Exception:
+        mem_kb = int(next(l for l in meminfo.read_text(encoding="utf-8").splitlines() if l.startswith("MemTotal")).split()[1])
+    except (OSError, StopIteration, ValueError):
         pass
     return {"python": sys.version.split()[0], "sqlite": sqlite3.sqlite_version, "platform": platform.platform(),
             "machine": platform.machine(), "cpu_count": os.cpu_count(), "mem_total_mb": mem_kb and mem_kb // 1024,
@@ -189,7 +197,7 @@ def main():
             print(f"n={n}: insert {r['insert_per_doc_ms']} ms/doc, 1ª página {r['query_first_page']['median_ms']} ms, "
                   f"profunda cursor {r['query_deep_page_cursor']['median_ms']} ms vs offset {r['query_deep_page_offset']['median_ms']} ms",
                   flush=True)
-    result["max_rss_mb"] = round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024, 1)
+    result["max_rss_mb"] = _max_rss_mb()
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("resultado:", a.out)

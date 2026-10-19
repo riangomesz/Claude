@@ -223,7 +223,10 @@ class SecurityGuardsTest(unittest.TestCase):
             stage = t / "stage"; stage.mkdir()
             n = Normalizer("ref_sym", "instagram", "V", 30, content_sha256=sha("sym"))
             n.add_transcript(A.transcript_from_segments([{"start": 0, "end": 1, "text": "tutorial"}]))
-            (stage / (safe_name("ref_sym") + ".md")).symlink_to(target)
+            try:
+                (stage / (safe_name("ref_sym") + ".md")).symlink_to(target)
+            except OSError:  # Windows sem privilégio para criar link simbólico
+                self.skipTest("sistema não permite criar link simbólico")
             export_reference(Classifier().classify(n.build()), stage)
             self.assertEqual(target.read_text(encoding="utf-8"), "original do cofre")
             self.assertFalse((stage / (safe_name("ref_sym") + ".md")).is_symlink())

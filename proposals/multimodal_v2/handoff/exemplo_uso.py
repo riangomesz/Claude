@@ -1,13 +1,14 @@
-"""Exemplo de uso para o Antigravity (Estágio 2: modo sombra). Somente leitura no banco legado.
+"""Modo sombra para o Antigravity (Estágio 2). Somente leitura no catálogo legado.
 
-    python3 handoff/exemplo_uso.py --legacy-db <caminho do catalog.sqlite> --out <pasta de saída fora do Vault> [--limit 200]
-    python3 handoff/exemplo_uso.py --demo --out <pasta>      (sem banco: usa fixtures sintéticas)
+    python -X utf8 handoff/exemplo_uso.py --legacy-db <catalog.sqlite> --out <pasta de trabalho fora do Vault> [--limit 200]
+    python -X utf8 handoff/exemplo_uso.py --demo --out <pasta>          (sem banco: fixtures sintéticas)
 
 O que faz:
-1. Lê `instagram_items` em modo `ro` (o SQLite recusa qualquer escrita).
-2. Roda o classificador atual (rótulos armazenados) ao lado do novo, SEM gravar nada no banco.
-3. Escreve `relatorio_sombra.json` e `relatorio_sombra.md` na pasta --out (que não pode ser um Vault).
-Não cria banco novo, não altera curadoria, não chama rede nem modelos.
+1. Por padrão tira um SNAPSHOT do catálogo pela API de backup do SQLite, abrindo a origem em `mode=ro`
+   (o banco vivo só é lido durante a cópia; nada é escrito nele). `--no-snapshot` lê a origem direto, também `ro`.
+2. Roda o classificador atual (rótulos armazenados) ao lado do novo, sem gravar nada em banco algum.
+3. Escreve em --out: relatorio_sombra.json, relatorio_sombra.md e revisao_divergencias.csv (para o curador).
+Não altera curadoria, não chama rede nem modelos. --out não pode ser um Vault do Obsidian nem já conter um snapshot.
 """
 from __future__ import annotations
 
@@ -21,28 +22,39 @@ sys.path.insert(0, str(HERE))
 sys.dont_write_bytecode = True
 
 from ii_mm.obsidian_export import assert_staging  # noqa: E402
-from ii_mm.shadow import read_legacy_rows_readonly, render_markdown, run_shadow  # noqa: E402
+from ii_mm.shadow import export_review_csv, read_legacy_rows_readonly, render_markdown, run_shadow, snapshot_readonly  # noqa: E402
 
 
-def main() -> int:
+def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--legacy-db")
     ap.add_argument("--demo", action="store_true")
     ap.add_argument("--out", required=True)
     ap.add_argument("--limit", type=int, default=200)
-    a = ap.parse_args()
+    ap.add_argument("--no-snapshot", action="store_true", help="ler a origem diretamente (mode=ro), sem cópia")
+    a = ap.parse_args(argv)
     out = assert_staging(Path(a.out))
     out.mkdir(parents=True, exist_ok=True)
     if a.demo:
         rows = json.loads((HERE / "fixtures" / "legacy" / "shadow_rows.json").read_text(encoding="utf-8"))
+        source = "fixtures sintéticas"
     elif a.legacy_db:
-        rows = read_legacy_rows_readonly(Path(a.legacy_db), limit=a.limit)
+        db = Path(a.legacy_db)
+        if not a.no_snapshot:
+            info = snapshot_readonly(db, out / "snapshot_catalogo.sqlite")
+            print(f"snapshot: {info['snapshot']} ({info['rows_instagram_items']} linhas)")
+            db = Path(info["snapshot"])
+        rows = read_legacy_rows_readonly(db, limit=a.limit)
+        source = str(Path(a.legacy_db).resolve())
     else:
         ap.error("informe --legacy-db ou --demo")
     report = run_shadow(rows)
+    report["source"] = source
     (out / "relatorio_sombra.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     (out / "relatorio_sombra.md").write_text(render_markdown(report), encoding="utf-8")
+    n = export_review_csv(report, out / "revisao_divergencias.csv")
     print(json.dumps(report["totals"], ensure_ascii=False))
+    print(f"divergências para revisão: {n} (revisao_divergencias.csv)")
     return 0
 
 

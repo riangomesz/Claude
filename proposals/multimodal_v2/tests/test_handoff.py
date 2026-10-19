@@ -1,6 +1,7 @@
 """Missão Suprema 02, T14: pacote de integração verificável."""
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -51,12 +52,14 @@ class HandoffPackageTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             out = Path(t) / "saida"
             r = subprocess.run([sys.executable, str(ROOT / "handoff" / "exemplo_uso.py"), "--demo", "--out", str(out)],
-                               capture_output=True, text=True, timeout=60, env={"PYTHONDONTWRITEBYTECODE": "1", "PATH": "/usr/bin:/bin"})
+                               capture_output=True, text=True, encoding="utf-8", timeout=60,
+                               env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1"))
             self.assertEqual(r.returncode, 0, r.stderr[-500:])
             self.assertTrue((out / "relatorio_sombra.md").is_file())
             vault = Path(t) / "Cofre"; (vault / ".obsidian").mkdir(parents=True)
             r = subprocess.run([sys.executable, str(ROOT / "handoff" / "exemplo_uso.py"), "--demo", "--out", str(vault / "x")],
-                               capture_output=True, text=True, timeout=60, env={"PYTHONDONTWRITEBYTECODE": "1", "PATH": "/usr/bin:/bin"})
+                               capture_output=True, text=True, encoding="utf-8", timeout=60,
+                               env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1"))
             self.assertNotEqual(r.returncode, 0)
             self.assertIn("cofre", r.stderr)
 

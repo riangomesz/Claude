@@ -21,7 +21,8 @@ class CurrentBehaviourPinned(unittest.TestCase):
     @unittest.skipUnless(os.environ.get("PROJETO_MVP_DIR"), "defina PROJETO_MVP_DIR para fixar o comportamento atual")
     def test_current_code_matches_golden(self):
         sys.dont_write_bytecode = True
-        sys.path.insert(0, str(Path(os.environ["PROJETO_MVP_DIR"]).resolve()))
+        from tests import _helpers
+        sys.path.insert(0, str(_helpers.projeto_dir()))  # cópia descartável; nada é lido do projeto vivo
         from core.curation import evaluate_item_curation, suggest_editorial_category  # noqa: E402
         for c in GOLDEN:
             with self.subTest(caption=c["caption"]):

@@ -87,7 +87,7 @@ class VerifyPackageMalformedTest(unittest.TestCase):
             (p / "frames" / "a.jpg").write_bytes(b"a")
             h = hashlib.sha256(b"a").hexdigest()
             entry = {"pacote_id": "P01", "file": "frames/a.jpg", "sha256": h}
-            (p / "manifesto_pacote.json").write_text(json.dumps({"frames": [entry, dict(entry, pacote_id="P02")]}))
+            (p / "manifesto_pacote.json").write_text(json.dumps({"frames": [entry, dict(entry, pacote_id="P02")]}), encoding="utf-8")
             self.assertTrue(any("duplicidade" in x for x in verify(p)))
 
     def test_missing_frame_and_empty_manifest(self):
