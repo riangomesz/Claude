@@ -84,7 +84,8 @@ MEDIA_GRAPH = StageGraph({
     "frames": ("scenes",),              # seleção de quadros (manifesto)
     "metrics": ("frames",),             # métricas temporais entre quadros
     "visual_analysis": ("frames",),     # análise visual opcional (observações registradas)
-    "assemble": ("probe", "transcribe", "scenes", "frames", "metrics", "visual_analysis"),  # evidências + normalização
+    # evidências + normalização; depende de `acquire` DIRETAMENTE: o SHA-256 da mídia é a identidade de conteúdo no ii_mm
+    "assemble": ("acquire", "probe", "transcribe", "scenes", "frames", "metrics", "visual_analysis"),
     "classify": ("assemble",),          # classificação multimodal (ii_mm.Classifier)
     "index": ("classify",),             # índice de conhecimento (com curadoria)
     "export": ("index",),               # nota em staging do Obsidian

@@ -24,6 +24,7 @@ from ii_mm import adapters as AD
 from ii_mm.classifier import Classifier
 from ii_mm.contract import canonical_json, validate_document
 from ii_mm.db.repository import Repository
+from .refscope import RefScopedRepository
 from ii_mm.dedup import analysis_input_hash
 from ii_mm.narrative import suggest_blocks
 from ii_mm.normalize import Normalizer
@@ -309,7 +310,7 @@ def stage_classify(ctx: StageContext) -> StageOutput:
 
 
 def reviewed(conn: sqlite3.Connection, reference_id: str) -> Optional[Dict[str, Any]]:
-    repo = Repository(conn)
+    repo = RefScopedRepository(conn)   # análise da REFERÊNCIA (I1), não só do vídeo
     if repo.current_analysis_id(reference_id) is None:
         return None
     return ReviewService(repo).reviewed_document(reference_id)
@@ -319,7 +320,7 @@ def stage_index(ctx: StageContext) -> StageOutput:
     doc = reviewed(ctx.conn, ctx.reference_id)
     if doc is None:
         raise DependencyMissing("referência sem análise corrente")
-    aid = Repository(ctx.conn).current_analysis_id(ctx.reference_id)
+    aid = RefScopedRepository(ctx.conn).current_analysis_id(ctx.reference_id)
     rows = K.rows_for(doc, K.curation_targets(ctx.conn, ctx.reference_id))
     digest = _d([list(r) for r in rows])
     res = {"analysis_id": aid, "rows": len(rows), "facets": sorted({r[0] for r in rows}),

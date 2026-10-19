@@ -40,4 +40,16 @@ de recebimento continua OK após cada checkpoint.
   - URL com credenciais embutidas (`usuario:senha@host`) seria gravada → `clean_url` usa só o hostname;
   - `author_handle`/hashtags/legenda aceitavam caracteres de controle (NUL, escape ANSI) → recusados na validação;
   - API: o motor por thread vazaria conexões no servidor HTTP com várias threads → motor por chamada, fechado ao final.
-- Próximo passo: demonstração ponta a ponta reproduzível, benchmark 82/1.000/10.000, documentação e handoff.
+
+### C3: demonstração ponta a ponta + defeito de identidade + incompatibilidade I1
+- `ii_be/demo.py`: 18 passos com dados sintéticos, queda simulada e retomada; duas execuções dão o mesmo resumo
+  (`tests/test_demo.py`).
+- **D-BE1 (defeito do backend, corrigido):** a etapa `assemble` não dependia diretamente de `acquire`; o documento ia para
+  o ii_mm sem `content_sha256` e a deduplicação por conteúdo (`videos`) não acontecia. Corrigido no grafo; regressão em
+  `tests/test_shared_media.py`.
+- **I1 (incompatibilidade do ii_mm, não alterado):** a análise corrente é por VÍDEO; com o mesmo arquivo em duas
+  referências, `current_analysis_id(primeira)` passa a devolver o documento da outra publicação. Mitigação no backend:
+  `RefScopedRepository` (subclasse) usado por revisão, índice, facetas e API. Os filtros SQL do catálogo do ii_mm
+  continuam por vídeo (limitação registrada para uma futura rc2 do núcleo).
+- Testes: 84, todos OK.
+- Próximo passo: benchmark 82/1.000/10.000, documentação (arquitetura, contratos, README, handoff, adoção) e relatório.

@@ -25,7 +25,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from . import _ii_mm  # noqa: F401
 from ii_mm.catalog import QueryError
 from ii_mm.contract import canonical_json
-from ii_mm.db.repository import Repository
+from .refscope import RefScopedRepository as Repository
 from . import artifacts as A
 from . import knowledge as K
 from .classification import ClassificationService

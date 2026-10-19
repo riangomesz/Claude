@@ -29,7 +29,7 @@ import sqlite3
 from typing import Any, Dict, List, Optional
 
 from . import _ii_mm  # noqa: F401
-from ii_mm.db.repository import Repository
+from .refscope import RefScopedRepository as Repository
 from ii_mm.review import ReviewConflict, ReviewError, ReviewService
 from .clock import iso
 from .db import tx
