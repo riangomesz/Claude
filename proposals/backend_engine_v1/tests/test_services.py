@@ -180,6 +180,17 @@ class SearchTest(unittest.TestCase):
             self.assertEqual(len(set(got)), 3)
             self.assertIsNone(p2["next_cursor"])
 
+    def test_author_time_range_and_ingestion_date_filters(self):
+        with TempEngine() as t:
+            a, b, c = dataset(t)
+            conn = t.engine.conn
+            self.assertEqual([r["reference_id"] for r in search(conn, {"author": "autor_demo"})["items"]], [a])
+            hit = search(conn, {"evidence_tag": "punch_in_scale", "time_range": [13.0, 15.0]})["items"]
+            self.assertEqual([r["reference_id"] for r in hit], [a])
+            self.assertEqual(search(conn, {"evidence_tag": "punch_in_scale", "time_range": [0.0, 5.0]})["items"], [])
+            self.assertEqual(len(search(conn, {"ingested_from": "2000-01-01T00:00:00+00:00"})["items"]), 3)
+            self.assertEqual(search(conn, {"ingested_from": "2999-01-01T00:00:00+00:00"})["items"], [])
+
     def test_invalid_and_hostile_filters(self):
         with TempEngine() as t:
             a, b, c = dataset(t)

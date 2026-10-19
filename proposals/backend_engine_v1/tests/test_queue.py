@@ -65,6 +65,22 @@ class EnqueueAndClaimTest(unittest.TestCase):
             self.assertEqual(kinds.count("transcribe"), 1)       # limite por tipo
 
 
+class RescheduleTest(unittest.TestCase):
+    def test_reschedule_delay_and_priority_only_for_pending_jobs(self):
+        with TempEngine(memory=True) as t:
+            q = q_for(t)
+            a = q.enqueue("demo", priority=100).job_id
+            b = q.enqueue("demo", priority=100).job_id
+            self.assertEqual(q.reschedule(a, delay_s=300), "queued")
+            self.assertEqual(q.reschedule(b, priority=1), "queued")
+            self.assertEqual(q.claim("w").job_id, b)
+            self.assertIsNone(q.claim("w"))                          # a foi adiado
+            t.clock.advance(301)
+            self.assertEqual(q.claim("w").job_id, a)
+            self.assertEqual(q.reschedule(a, delay_s=10), "claimed")  # em execução: não mexe
+            self.assertEqual(q.reschedule("job_inexistente"), "inexistente")
+
+
 class LeaseTest(unittest.TestCase):
     def test_expired_lease_is_recovered_and_old_owner_cannot_write(self):
         with TempEngine(memory=True) as t:
@@ -208,3 +224,34 @@ class CancelAndRequeueTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class QueryPlanTest(unittest.TestCase):
+    """Regressão D-BE2 (benchmark): claim e dedup não podem varrer a fila nem ordenar em árvore temporária."""
+
+    def test_claim_and_dedup_use_their_indexes(self):
+        from ii_be.queue import CLAIM_SQL, NOT_TERMINAL_SQL
+        with TempEngine(memory=True) as t:
+            q = q_for(t)
+            prev = None
+            for i in range(300):
+                prev = q.enqueue("demo", dedup_key=f"k{i}", depends_on=[prev] if prev and i % 2 else []).job_id
+            c = t.engine.conn
+            claim = (f"SELECT j.* FROM be_jobs j INDEXED BY idx_be_jobs_claim WHERE {CLAIM_SQL} AND j.not_before <= ? "
+                     "ORDER BY j.priority, j.not_before, j.created_at, j.job_id LIMIT 1")
+            plan = " | ".join(r[-1] for r in c.execute("EXPLAIN QUERY PLAN " + claim, (1e12,)))
+            self.assertIn("idx_be_jobs_claim", plan)
+            self.assertNotIn("TEMP B-TREE", plan)
+            dplan = " | ".join(r[-1] for r in c.execute(f"EXPLAIN QUERY PLAN SELECT job_id FROM be_jobs WHERE dedup_key = ? AND {NOT_TERMINAL_SQL}", ("k1",)))
+            self.assertIn("idx_be_jobs_active_dedup", dplan)
+            blocked = c.execute("SELECT COUNT(*) FROM be_jobs WHERE blocked_deps > 0").fetchone()[0]
+            self.assertEqual(blocked, 150)
+            seen = 0
+            while True:
+                j = q.claim("w")
+                if j is None:
+                    break
+                q.complete(j.job_id, "w", {})
+                seen += 1
+            self.assertEqual(seen, 300)                                # blocked_deps mantida até o fim
+            self.assertEqual(c.execute("SELECT COUNT(*) FROM be_jobs WHERE blocked_deps > 0").fetchone()[0], 0)

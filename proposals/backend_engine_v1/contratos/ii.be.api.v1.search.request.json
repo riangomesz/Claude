@@ -1,0 +1,11 @@
+{
+  "filters": {
+    "category": "tutorial",
+    "requires": [
+      "visual"
+    ],
+    "text": "legendas",
+    "tool": "CapCut"
+  },
+  "limit": 20
+}

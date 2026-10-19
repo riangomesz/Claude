@@ -263,7 +263,20 @@ BE004 = Migration(4, "gateway_e_idempotencia_da_api", (
     )""",
 ))
 
-BE_MIGRATIONS: Tuple[Migration, ...] = (BE001, BE002, BE003, BE004)
+# BE005 (benchmark de 1.000 referências): o claim varria todos os jobs elegíveis com NOT EXISTS e ordenava numa árvore
+# temporária a cada chamada (6,9 ms com 4.000 jobs; vazão de 501 → 93 jobs/s de 82 para 1.000 referências).
+# `blocked_deps` (dependências ainda não concluídas) é mantida pela fila e o índice parcial entrega o próximo job
+# já na ordem do claim.
+BE005 = Migration(5, "indice_de_claim_e_dependencias_pendentes", (
+    "ALTER TABLE be_jobs ADD COLUMN blocked_deps INTEGER NOT NULL DEFAULT 0",
+    "UPDATE be_jobs SET blocked_deps = (SELECT COUNT(*) FROM be_job_deps d JOIN be_jobs p ON p.job_id = d.depends_on "
+    "WHERE d.job_id = be_jobs.job_id AND p.state <> 'completed')",
+    "CREATE INDEX idx_be_jobs_claim ON be_jobs(priority, not_before, created_at, job_id) "
+    "WHERE state IN ('queued','retry_scheduled','waiting_dependency') AND blocked_deps = 0 AND cancel_requested = 0",
+    "CREATE INDEX idx_be_jobs_running_kind ON be_jobs(state, kind)",
+))
+
+BE_MIGRATIONS: Tuple[Migration, ...] = (BE001, BE002, BE003, BE004, BE005)
 BE_LATEST = BE_MIGRATIONS[-1].version
 
 

@@ -1,0 +1,9 @@
+{
+  "api": "ii.be.api.v1",
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": null,
+    "message": "reference_id: reference_id inválido"
+  },
+  "ok": false
+}

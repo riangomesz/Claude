@@ -1,0 +1,27 @@
+{
+  "budget": {
+    "max_usd": 0
+  },
+  "evidence": {
+    "frames": [
+      {
+        "frame_id": "P01",
+        "t_s": 9.0
+      }
+    ],
+    "reference_id": "ref_7c31f3b640df075051a7",
+    "text_evidence": [
+      {
+        "claim": "passo a passo no CapCut",
+        "evidence_id": "ev_exemplo",
+        "status": "transcript_claim",
+        "untrusted": true
+      }
+    ]
+  },
+  "model": "mock-visual-1",
+  "prompt_version": "visual_review.v1",
+  "provider": "mock",
+  "reference_id": "ref_7c31f3b640df075051a7",
+  "schema_version": "ii.be.analysis_request.v1"
+}

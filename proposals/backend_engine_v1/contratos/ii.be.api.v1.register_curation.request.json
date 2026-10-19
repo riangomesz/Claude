@@ -1,0 +1,10 @@
+{
+  "action": "triage",
+  "expected_etag": "0.0",
+  "idempotency_key": "exemplo-curadoria-0001",
+  "params": {
+    "value": "manter"
+  },
+  "reference_id": "ref_7c31f3b640df075051a7",
+  "reviewer": "human:curador"
+}

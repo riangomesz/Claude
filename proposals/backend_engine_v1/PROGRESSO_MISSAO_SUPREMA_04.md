@@ -52,4 +52,24 @@ de recebimento continua OK após cada checkpoint.
   `RefScopedRepository` (subclasse) usado por revisão, índice, facetas e API. Os filtros SQL do catálogo do ii_mm
   continuam por vídeo (limitação registrada para uma futura rc2 do núcleo).
 - Testes: 84, todos OK.
-- Próximo passo: benchmark 82/1.000/10.000, documentação (arquitetura, contratos, README, handoff, adoção) e relatório.
+
+### C4: escala, benchmark, contratos, documentação e entrega
+- **D-BE2 (escala, corrigido):** o benchmark mostrou a fila caindo de 501 para 93 jobs/s (82 → 1.000 referências).
+  `EXPLAIN` confirmou varredura + ordenação no `claim` e dedup fora do índice parcial. Migração BE005 (`blocked_deps`
+  + `idx_be_jobs_claim`); `claim` de 6,9 ms → 0,012 ms; vazão estável em ~340 jobs/s até 10.000 referências.
+- **D-BE7 (portabilidade, corrigido):** a varredura de portabilidade da RC1 (que cobre toda a árvore `proposals/`) acusou
+  leitura de `/proc/meminfo` sem encoding no benchmark; corrigido e coberto por `tests/test_portability.py`.
+- Benchmark 82/1.000/10.000: `BENCHMARK_BACKEND.md` + `benchmarks/resultados_backend_ms04.json`.
+- Contratos gerados pelo código: `contratos/` (`tools/contracts.py`, conferido por teste).
+- Documentos: `ARQUITETURA_BACKEND.md`, `README_OPERACIONAL.md`, `HANDOFF_ANTIGRAVITY_BACKEND.md`, `PLANO_ADOCAO_BACKEND.md`,
+  `RELATORIO_MISSAO_SUPREMA_04_BACKEND.md`.
+- Validação final: backend 94 testes OK em 3.11.17/3.12.3/3.13.16; RC1 384 OK (com e sem cópia do clone); validador da RC1
+  OK; clone `c6845a4` limpo; `main` em `34ee777`.
+
+## Estado atual e próximo passo executável
+
+- Estado: missão concluída na nuvem; nada integrado; nada verificado no Windows.
+- Bloqueios: Windows (sem acesso), mídias/catálogo reais (indisponíveis), piloto `DQV5dm6gCvH` (`blocked_missing_evidence`).
+- Próximo passo para quem continuar: validar a RC1 no Windows (handoff da Missão 03) e depois rodar, numa pasta nova,
+  `py -3 -X utf8 run_tests.py` e `py -3 -X utf8 -m ii_be.demo` em `proposals\backend_engine_v1`, comparando
+  `18_verification` com o relatório. Depois, escrever o adaptador do snapshot de `instagram_items` (Estágio 3 do plano).

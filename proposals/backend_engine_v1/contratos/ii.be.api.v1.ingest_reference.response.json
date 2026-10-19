@@ -1,0 +1,22 @@
+{
+  "api": "ii.be.api.v1",
+  "data": {
+    "alias_conflicts": [],
+    "canonical_key": "instagram:SYNTHcontrato1",
+    "created": true,
+    "duplicate": false,
+    "media_state": "none",
+    "metadata_changed": [
+      "author_handle",
+      "caption",
+      "duration_s",
+      "hashtags"
+    ],
+    "reference_id": "ref_7c31f3b640df075051a7"
+  },
+  "meta": {
+    "operation": "ingest_reference",
+    "replayed": false
+  },
+  "ok": true
+}

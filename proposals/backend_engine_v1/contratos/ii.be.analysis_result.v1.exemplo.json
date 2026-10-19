@@ -1,0 +1,23 @@
+{
+  "hypotheses": [],
+  "observations": [
+    {
+      "frame_refs": [
+        "P01"
+      ],
+      "t_s": 9.0,
+      "tag": "ui_screen_visible",
+      "text": "[MOCK] descrição simulada; não é observação real"
+    }
+  ],
+  "provenance": {
+    "evidence_sha256": "a712cc42dfe97b87fad3a43e54d95442b86c220043d5aed1dfa6ae687741ac83",
+    "merged_into_evidence": false,
+    "mock": true,
+    "model": "mock-visual-1",
+    "prompt_version": "visual_review.v1",
+    "provider": "mock",
+    "request_id": "ar_55f4eabee85c5141b6450d35"
+  },
+  "schema_version": "ii.be.analysis_result.v1"
+}

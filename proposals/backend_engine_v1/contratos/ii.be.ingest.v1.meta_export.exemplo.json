@@ -1,0 +1,11 @@
+{
+  "acquisition_hint": "metadata_only",
+  "metadata": {
+    "author_handle": "autor_sintetico"
+  },
+  "observed_at": "2025-10-09T08:53:20+00:00",
+  "schema_version": "ii.be.ingest.v1",
+  "source_kind": "meta_export",
+  "source_ref": "saved_posts.json#saved_saved_media[0]",
+  "url": "https://www.instagram.com/p/SYNTHcontrato2/"
+}

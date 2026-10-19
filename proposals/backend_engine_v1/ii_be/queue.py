@@ -37,6 +37,9 @@ from .errors import Decision, RetryPolicy, classify_exception, safe_message
 from .events import emit
 
 ACTIVE = ("queued", "claimed", "running", "waiting_dependency", "retry_scheduled")
+# Literais idênticos aos dos índices parciais (o SQLite só usa o índice se o termo da consulta for o mesmo).
+NOT_TERMINAL_SQL = "state NOT IN ('completed','failed','cancelled','dead_letter')"
+CLAIM_SQL = "j.state IN ('queued','retry_scheduled','waiting_dependency') AND j.blocked_deps = 0 AND j.cancel_requested = 0"
 TERMINAL = ("completed", "failed", "cancelled", "dead_letter")
 CLAIMABLE = ("queued", "retry_scheduled", "waiting_dependency")
 OUTCOME_FOR = {"retry_scheduled": "retry", "waiting_dependency": "waiting_dependency", "failed": "failed",
@@ -104,8 +107,7 @@ class JobQueue:
         if not 1 <= int(max_attempts) <= 50:
             raise ValueError("max_attempts fora de 1..50")
         if dedup_key:
-            row = c.execute(f"SELECT job_id, state FROM be_jobs WHERE dedup_key = ? AND state IN ({','.join('?' * len(ACTIVE))})",
-                            (dedup_key, *ACTIVE)).fetchone()
+            row = c.execute(f"SELECT job_id, state FROM be_jobs WHERE dedup_key = ? AND {NOT_TERMINAL_SQL}", (dedup_key,)).fetchone()
             if row:
                 return EnqueueResult(row["job_id"], False, row["state"])
         deps = list(dict.fromkeys(depends_on))
@@ -117,11 +119,12 @@ class JobQueue:
             dep_states[d] = r["state"]
         now = self.clock.now()
         jid = self._new_id(c, f"{kind}|{reference_id}|{stage}|{run_id}|{dedup_key}|{now!r}")
-        state = "queued" if all(s == "completed" for s in dep_states.values()) else "waiting_dependency"
+        blocked = sum(1 for s in dep_states.values() if s != "completed")
+        state = "queued" if blocked == 0 else "waiting_dependency"
         c.execute("INSERT INTO be_jobs(job_id, kind, reference_id, stage, run_id, dedup_key, priority, state, max_attempts, not_before, "
-                  "payload_json, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                  "payload_json, created_at, updated_at, blocked_deps) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                   (jid, kind, reference_id, stage, run_id, dedup_key, int(priority), state, int(max_attempts), now + max(0.0, delay_s),
-                   json.dumps(payload or {}, ensure_ascii=False, sort_keys=True), now, now))
+                   json.dumps(payload or {}, ensure_ascii=False, sort_keys=True), now, now, blocked))
         c.executemany("INSERT INTO be_job_deps(job_id, depends_on) VALUES (?,?)", [(jid, d) for d in deps])
         return EnqueueResult(jid, True, state)
 
@@ -132,8 +135,8 @@ class JobQueue:
         except sqlite3.IntegrityError:
             # corrida entre dois produtores com a mesma dedup_key: o índice único garantiu um só; devolve o vencedor
             if kw.get("dedup_key"):
-                row = self.conn.execute(f"SELECT job_id, state FROM be_jobs WHERE dedup_key = ? AND state IN ({','.join('?' * len(ACTIVE))})",
-                                        (kw["dedup_key"], *ACTIVE)).fetchone()
+                row = self.conn.execute(f"SELECT job_id, state FROM be_jobs WHERE dedup_key = ? AND {NOT_TERMINAL_SQL}",
+                                        (kw["dedup_key"],)).fetchone()
                 if row:
                     return EnqueueResult(row["job_id"], False, row["state"])
             raise
@@ -173,15 +176,13 @@ class JobQueue:
             if self.max_running is not None and sum(running.values()) >= self.max_running:
                 return None
             full = [k for k, lim in self.kind_limits.items() if running.get(k, 0) >= lim]
-            where = [f"j.state IN ({','.join('?' * len(CLAIMABLE))})", "j.not_before <= ?", "j.cancel_requested = 0",
-                     "NOT EXISTS (SELECT 1 FROM be_job_deps d JOIN be_jobs p ON p.job_id = d.depends_on "
-                     "WHERE d.job_id = j.job_id AND p.state <> 'completed')"]
-            args: List[Any] = [*CLAIMABLE, now]
+            where = [CLAIM_SQL, "j.not_before <= ?"]
+            args: List[Any] = [now]
             if kinds:
                 where.append(f"j.kind IN ({','.join('?' * len(kinds))})"); args += kinds
             if full:
                 where.append(f"j.kind NOT IN ({','.join('?' * len(full))})"); args += full
-            row = c.execute(f"SELECT j.* FROM be_jobs j WHERE {' AND '.join(where)} "
+            row = c.execute(f"SELECT j.* FROM be_jobs j INDEXED BY idx_be_jobs_claim WHERE {' AND '.join(where)} "
                             "ORDER BY j.priority, j.not_before, j.created_at, j.job_id LIMIT 1", args).fetchone()
             if row is None:
                 return None
@@ -222,6 +223,7 @@ class JobQueue:
         for d in c.execute("SELECT job_id FROM be_job_deps WHERE depends_on = ?", (job_id,)).fetchall():
             pending = c.execute("SELECT COUNT(*) FROM be_job_deps d JOIN be_jobs p ON p.job_id = d.depends_on "
                                 "WHERE d.job_id = ? AND p.state <> 'completed'", (d["job_id"],)).fetchone()[0]
+            c.execute("UPDATE be_jobs SET blocked_deps=?, updated_at=? WHERE job_id=?", (pending, now, d["job_id"]))
             if pending == 0:
                 c.execute("UPDATE be_jobs SET state='queued', updated_at=? WHERE job_id=? AND state='waiting_dependency'", (now, d["job_id"]))
 
@@ -316,8 +318,8 @@ class JobQueue:
                 raise ValueError(f"job inexistente: {job_id}")
             if r["state"] not in ("failed", "dead_letter", "cancelled"):
                 return r["state"]
-            if r["dedup_key"] and c.execute(f"SELECT 1 FROM be_jobs WHERE dedup_key = ? AND job_id <> ? AND state IN ({','.join('?' * len(ACTIVE))})",
-                                            (r["dedup_key"], job_id, *ACTIVE)).fetchone():
+            if r["dedup_key"] and c.execute(f"SELECT 1 FROM be_jobs WHERE dedup_key = ? AND job_id <> ? AND {NOT_TERMINAL_SQL}",
+                                            (r["dedup_key"], job_id)).fetchone():
                 return "superseded_by_active"
             c.execute("UPDATE be_jobs SET state='queued', failures=0, busy_retries=0, dependency_waits=0, cancel_requested=0, not_before=?, "
                       "last_error_class=NULL, last_error=NULL, finished_at=NULL, updated_at=? WHERE job_id=?", (now, now, job_id))

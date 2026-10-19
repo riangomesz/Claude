@@ -1,0 +1,18 @@
+{
+  "aggregate_id": "ref_7c31f3b640df075051a7",
+  "event_id": "evt_1c0cac957617a56b9b29a072",
+  "payload": {
+    "canonical_key": "instagram:SYNTHcontrato1",
+    "created": true,
+    "metadata_changed": [
+      "author_handle",
+      "caption",
+      "duration_s",
+      "hashtags"
+    ],
+    "reference_id": "ref_7c31f3b640df075051a7",
+    "source_kind": "instagram"
+  },
+  "schema": "ii.be.event.v1",
+  "type": "reference.ingested"
+}

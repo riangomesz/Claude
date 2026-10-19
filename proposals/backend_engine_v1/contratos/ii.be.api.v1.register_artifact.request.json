@@ -1,0 +1,7 @@
+{
+  "idempotency_key": "exemplo-artefato-0001",
+  "kind": "srt",
+  "origin": "tool:whisper",
+  "reference_id": "ref_7c31f3b640df075051a7",
+  "relpath": "tools/SYNTHcontrato1/legenda.srt"
+}
