@@ -582,19 +582,19 @@
       "sha256_lf": "0ca642e1e35149e29697a0671130634cde1b1a996f22afb806314c54f2282aea"
     },
     {
-      "bytes_lf": 7048,
+      "bytes_lf": 7815,
       "path": "multimodal_v2/PLANO_INTEGRACAO_SEGURA.md",
-      "sha256_lf": "11cfd43780c8f3c5a79d58ca5d72fc93b52cc7ae99aa5298a4741fc9a48d61d8"
+      "sha256_lf": "2a723021def91a89f7f76e305e1b5d54af40b783a128cc474e909c18fd0759e6"
     },
     {
-      "bytes_lf": 8744,
+      "bytes_lf": 9258,
       "path": "multimodal_v2/MATRIZ_COMPATIBILIDADE.md",
-      "sha256_lf": "44f73f6363cefdbd04d6dd05d02fe7431802e57741295a71d1c412cbff363aab"
+      "sha256_lf": "ccc0da434de69e77e114bb5eb087fa04ceb65ca0a2564104a1fd5211eb3dde36"
     },
     {
-      "bytes_lf": 5826,
+      "bytes_lf": 7384,
       "path": "multimodal_v2/RISCO_E_ROLLBACK.md",
-      "sha256_lf": "38760cf30892c2c6c46766bb815c95a67418f7dd2988c5a1a1f3c6409a71568f"
+      "sha256_lf": "8786a22a7376f940c2b47cc8e156c0611dc6f63e958addbc12a59128d6ee383b"
     }
   ],
   "hash_note": "sha256_lf = SHA-256 com CRLF normalizado para LF (estável entre Linux e Windows)",

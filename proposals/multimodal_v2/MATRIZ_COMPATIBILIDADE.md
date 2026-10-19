@@ -2,7 +2,7 @@
 
 Base verificada: clone de `riangomesz/Projeto-MVP` no commit `c6845a4` (estado **publicado**). As assinaturas foram extraídas por AST, sem importar módulos pesados. O esquema foi conferido montando o catálogo legado num banco temporário com o próprio código do clone (`ii_mm/db/legacy_fixture.py`).
 
-**Ressalva:** o estado local do Antigravity pode ter avançado além desse commit. Tudo marcado como COMPATÍVEL vale para `c6845a4` e precisa ser reconfirmado no Windows com `PROJETO_MVP_DIR=<clone local> python3 run_tests.py`.
+**Ressalva:** o estado local do Antigravity pode ter avançado além desse commit. Tudo marcado como COMPATÍVEL vale para `c6845a4` e precisa ser reconfirmado no Windows com `ii_rc.ps1 -Etapa Testes -ProjetoMvp <projeto local>` e `-Etapa Compatibilidade` (relatório gerado por `tools/compat_report.py`).
 
 Legenda: **COMPATÍVEL** (usa direto) · **ADAPTADOR NECESSÁRIO** (adaptador existe e está testado) · **INCOMPATÍVEL** (não deve ser ligado como está) · **NÃO VERIFICADO** (sem acesso ao formato real).
 
@@ -27,7 +27,7 @@ Legenda: **COMPATÍVEL** (usa direto) · **ADAPTADOR NECESSÁRIO** (adaptador ex
 | `curation.evaluate_item_curation` | `(caption, hashtags, owner_username, owner_name) -> (categoria, regra)` | COMPATÍVEL (golden) | Comportamento fixado por `test_regression_current` (17 casos) |
 | `curation.suggest_editorial_category` | `(caption, hashtags, owner_username, post_type) -> dict ou None` | COMPATÍVEL (modo sombra) | Injetada em `shadow.run_shadow(legacy_suggest=…)` |
 | `curation_category` / `curation_rule` armazenados | colunas | ADAPTADOR NECESSÁRIO | Viram `inference` (rótulo legado), nunca categoria v2 |
-| `editorial_category` + `editorial_category_source` | colunas | ADAPTADOR NECESSÁRIO | Origem manual vai para `human_decisions` (importação explícita pela revisão); automática vira `inference` |
+| `editorial_category` + `editorial_category_source` | colunas | ADAPTADOR NECESSÁRIO | Só origem explicitamente automática (`legacy.AUTOMATIC_EDITORIAL_SOURCES`) vira `inference`; manual, nula ou desconhecida vai para `human_decisions` (D-RC2, Missão 03: no código de `c6845a4` o padrão é `human` no `review_server` e `manual` no painel) |
 | `triage_decision`, `quality_rating`, `curator_note` | colunas | COMPATÍVEL (preservadas) | Ficam em `x_legacy`; não são categoria de conteúdo |
 | `content_miner.classify_content_for_rian` | `(title_or_caption, author, hashtags, …, real_views, real_likes) -> dict` | INCOMPATÍVEL como fonte de evidência | Produz score numérico (0 a 100) e "tier"; não importar como confiança. Só pode ser comparado em modo sombra |
 | Pilares do `content_miner` (6) × categorias v2 (9) | `PILLARS_METADATA` | ADAPTADOR NECESSÁRIO (não implementado) | Mapeamento é editorial: decidir com o curador |
@@ -69,6 +69,6 @@ Legenda: **COMPATÍVEL** (usa direto) · **ADAPTADOR NECESSÁRIO** (adaptador ex
 
 ## Lacunas para o Antigravity confirmar no Windows
 
-1. Rodar `PROJETO_MVP_DIR=<clone local> python3 run_tests.py`. Os 6 testes opt-in conferem o DDL, a regressão, o modo sombra com a função real e a fixture legada.
+1. Rodar `ii_rc.ps1 -Etapa Testes -ProjetoMvp <projeto local>` e `-Etapa Compatibilidade` (`GUIA_WINDOWS_POWERSHELL.md`). Os 13 testes opt-in conferem o DDL, a regressão, o modo sombra com a função real, a fixture legada e a baseline de contratos, sempre sobre uma cópia temporária do código.
 2. Conferir os valores reais de `tipo` em `revisao_visual_fase5.json` contra `FICHA_TIPO_TO_TAG`.
-3. Confirmar se `editorial_category_source` usa os valores esperados (`manual`, `manual_do_usuario`, …) para decisões humanas.
+3. Conferir os valores distintos de `editorial_category_source` no snapshot do catálogo local. Em `c6845a4` são `human` (padrão do `review_server`) e `manual` (painel). Qualquer valor que represente sugestão automática gravada precisa entrar em `legacy.AUTOMATIC_EDITORIAL_SOURCES`.

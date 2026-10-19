@@ -31,6 +31,17 @@ Riscos encontrados ou confirmados nas Missões 01 e 02. **Estado** indica o que 
 | T08 | Filtro sem valor existente varria o catálogo | Checagem de existência por índice | `T08ZeroResultFiltersTest` |
 | F1 | Fixture legada criava pastas dentro do clone | Redirecionamento e teste de isolamento em cópia | `LegacyFixtureIsolationTest` |
 
+## Riscos no `ii_mm` e no pacote (corrigidos na Missão 03)
+
+| # | Risco | Correção | Teste |
+|---|---|---|---|
+| D-RC1 | O pacote da Missão 02 não continha os testes v1, o golden nem o marcador do piloto exigidos por `run_tests.py`; a baseline de contratos também ficava de fora | Lista do pacote corrigida; o validador acusa arquivo extra ou ausente | `SelfContainedPackageTest` (zip extraído roda a própria suíte) |
+| D-RC2 | `editorial_category` com origem nula ou desconhecida era tratada como rótulo automático | Só `AUTOMATIC_EDITORIAL_SOURCES` vira inferência; o resto é decisão humana | `EditorialSourceRevalidationTest` |
+| D-RC3 | HTML/Markdown ativo no relatório do modo sombra | Escape com `_esc`; CSV com fórmulas neutralizadas | `D3ReportInjectionTest` |
+| D-RC4 | Lease vencia durante etapa longa e o executor antigo sobrescrevia o estado do novo dono | `ctx.heartbeat()`, `LeaseLost`, conferência de posse antes de gravar | `test_ms03_lease` |
+| D-RC5 | Snapshot em passo único segurava o bloqueio compartilhado durante a cópia inteira (1,7 s para 139 MB): um escritor do legado com timeout de 5 s falharia num catálogo grande | Cópia em blocos com prazo de 120 s; destino parcial apagado | `test_writer_can_commit_while_snapshot_is_in_progress`, `test_snapshot_gives_up_instead_of_waiting_forever_on_exclusive_lock` |
+| W2–W6, PS1, PS2 | Portabilidade para Windows (módulo `resource`, encoding, symlink, URIs com ADS, script PowerShell) | Ver `DEPENDENCIAS_WINDOWS.md` | `test_ms03_portability`, `test_ms03_docs` |
+
 ## Riscos residuais (aceitos e conhecidos)
 
 1. **Sem validação em dados reais:** tudo foi testado com dados sintéticos e o clone publicado (`c6845a4`). O estado local do Antigravity pode divergir.
