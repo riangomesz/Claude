@@ -1,0 +1,268 @@
+{
+  "assets": [
+    {
+      "asset_ref": "asset_01",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S01",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_02",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S02",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_03",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S03",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_04",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S04",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "trilha",
+      "kind": "música/voz",
+      "needed_for": "todos",
+      "status": "a definir (licença)"
+    }
+  ],
+  "briefing": {
+    "conceito": "Mostrar o processo real de produção em tela, em passos curtos, terminando no resultado final.",
+    "direcao_de_arte": "Tela de trabalho limpa alternada com planos do resultado final; paleta fria e contraste suave. Linguagem visual do perfil: acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa.",
+    "medicao": [
+      "cada etapa legível em tela de celular",
+      "resultado final sem artefatos visíveis",
+      "tempo total adequado ao formato"
+    ],
+    "mensagem": "Vídeo cinematográfico com IA tem método, não mágica.",
+    "objetivo": "Gerar confiança mostrando COMO um vídeo cinematográfico com IA é construído, do briefing ao resultado.",
+    "publico": "marcas e profissionais que avaliam contratar vídeo com IA",
+    "restricoes": [
+      "não prometer resultado que o vídeo não demonstre",
+      "identificar conteúdo gerado por IA quando a plataforma exigir",
+      "não imitar rosto, voz ou marca de terceiros sem autorização",
+      "não copiar planos, textos, voz ou identidade do autor da referência",
+      "4 técnica(s)/ferramenta(s) da referência ainda não verificadas: validar antes de prometer o mesmo resultado"
+    ]
+  },
+  "checklist_entrega": [
+    "mensagem central clara nos primeiros segundos",
+    "texto legível em celular",
+    "sem cópia de plano, texto ou identidade da referência",
+    "conteúdo gerado por IA identificado quando exigido",
+    "restrições do perfil respeitadas: não prometer resultado que o vídeo não demonstre; identificar conteúdo gerado por IA quando a plataforma exigir; não imitar rosto, voz ou marca de terceiros sem autorização",
+    "aprovação humana registrada"
+  ],
+  "origin": "proposta",
+  "pacing_source": "observed",
+  "plano_de_producao": [
+    {
+      "fase": "Pré-produção",
+      "tarefas": [
+        "fechar roteiro e mensagem",
+        "aprovar direção de arte",
+        "listar assets"
+      ]
+    },
+    {
+      "fase": "Produção",
+      "tarefas": [
+        "produzir os planos da shot list",
+        "gravar/gerar áudio"
+      ]
+    },
+    {
+      "fase": "Pós-produção",
+      "tarefas": [
+        "montar a timeline",
+        "aplicar texto e ênfases",
+        "etalonagem e mixagem",
+        "exportar 9:16"
+      ]
+    },
+    {
+      "fase": "Entrega",
+      "tarefas": [
+        "revisão humana",
+        "checklist final"
+      ]
+    }
+  ],
+  "prompts_sugeridos": [
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; vertical 9:16; sem texto embutido",
+      "shot_id": "S01",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar as etapas, uma por vez, legíveis em tela de celular; vertical 9:16; sem texto embutido",
+      "shot_id": "S02",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; vertical 9:16; sem texto embutido",
+      "shot_id": "S03",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; vertical 9:16; sem texto embutido",
+      "shot_id": "S04",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; 7.9s",
+      "shot_id": "S01",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar as etapas, uma por vez, legíveis em tela de celular; 6.2s",
+      "shot_id": "S02",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; 5.5s",
+      "shot_id": "S03",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; 4.4s",
+      "shot_id": "S04",
+      "type": "vídeo"
+    }
+  ],
+  "proposal_id": "prop_718f9b23f6cd98dc91c7",
+  "roteiro": [
+    {
+      "beat": "gancho",
+      "duration_s": 7.9,
+      "intent": "abrir com a promessa em uma frase e um elemento visual forte",
+      "message_seed": "Vídeo cinematográfico com IA tem método, não mágica.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "processo",
+      "duration_s": 6.2,
+      "intent": "mostrar as etapas, uma por vez, legíveis em tela de celular",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "resultado",
+      "duration_s": 5.5,
+      "intent": "mostrar o resultado final sem texto sobreposto",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "chamada",
+      "duration_s": 4.4,
+      "intent": "chamada única e específica",
+      "message_seed": "Vídeo cinematográfico com IA tem método, não mágica.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    }
+  ],
+  "shot_list": [
+    {
+      "action": "abrir com a promessa em uma frase e um elemento visual forte",
+      "asset_ref": "asset_01",
+      "audio": "[voz/música a definir]",
+      "beat": "gancho",
+      "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+      "duration_s": 7.9,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "[a definir]",
+      "origin": "proposta",
+      "shot_id": "S01",
+      "start_s": 0.0
+    },
+    {
+      "action": "mostrar as etapas, uma por vez, legíveis em tela de celular",
+      "asset_ref": "asset_02",
+      "audio": "[voz/música a definir]",
+      "beat": "processo",
+      "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+      "duration_s": 6.2,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "[a definir]",
+      "origin": "proposta",
+      "shot_id": "S02",
+      "start_s": 7.9
+    },
+    {
+      "action": "mostrar o resultado final sem texto sobreposto",
+      "asset_ref": "asset_03",
+      "audio": "[voz/música a definir]",
+      "beat": "resultado",
+      "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+      "duration_s": 5.5,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "[a definir]",
+      "origin": "proposta",
+      "shot_id": "S03",
+      "start_s": 14.1
+    },
+    {
+      "action": "chamada única e específica",
+      "asset_ref": "asset_04",
+      "audio": "[voz/música a definir]",
+      "beat": "chamada",
+      "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+      "duration_s": 4.4,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "[a definir]",
+      "origin": "proposta",
+      "shot_id": "S04",
+      "start_s": 19.6
+    }
+  ],
+  "storyboard_textual": [
+    "Quadro 1 (gancho, 7.9s): abrir com a promessa em uma frase e um elemento visual forte. Câmera: Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento. [PROPOSTA]",
+    "Quadro 2 (processo, 6.2s): mostrar as etapas, uma por vez, legíveis em tela de celular. Câmera: Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento. [PROPOSTA]",
+    "Quadro 3 (resultado, 5.5s): mostrar o resultado final sem texto sobreposto. Câmera: Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento. [PROPOSTA]",
+    "Quadro 4 (chamada, 4.4s): chamada única e específica. Câmera: Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento. [PROPOSTA]"
+  ],
+  "timeline_edicao": [
+    {
+      "clip": "asset_01",
+      "edit": "Cortes curtos entre etapas, texto de etapa na tela, resultado final sem texto sobreposto.",
+      "in_s": 0.0,
+      "out_s": 7.9,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_02",
+      "edit": "Cortes curtos entre etapas, texto de etapa na tela, resultado final sem texto sobreposto.",
+      "in_s": 7.9,
+      "out_s": 14.1,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_03",
+      "edit": "Cortes curtos entre etapas, texto de etapa na tela, resultado final sem texto sobreposto.",
+      "in_s": 14.1,
+      "out_s": 19.6,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_04",
+      "edit": "Cortes curtos entre etapas, texto de etapa na tela, resultado final sem texto sobreposto.",
+      "in_s": 19.6,
+      "out_s": 24.0,
+      "track": "V1"
+    }
+  ],
+  "total_duration_s": 24.0
+}

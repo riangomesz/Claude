@@ -265,25 +265,29 @@ class CreativeEngine:
 
     def _settle(self, inv: Dict[str, Any]) -> str:
         iid = inv["investigation_id"]
-        tasks = [dict(t) for t in self.conn.execute("SELECT specialist, state FROM ce_tasks WHERE investigation_id = ?", (iid,))]
-        wanted = [t for t in tasks if t["state"] != "skipped" or True]
-        done = [t for t in tasks if t["state"] == "done"]
-        open_ = [t for t in tasks if t["state"] in ("pending", "running")]
-        stuck = [t for t in tasks if t["state"] in ("blocked_provider", "blocked_dependency", "awaiting_approval", "failed")]
-        if not tasks or all(t["state"] == "skipped" for t in tasks):
-            state = "blocked" if tasks else "planned"
-        elif open_:
-            state = "running"
-        elif stuck and done:
-            state = "partial"
-        elif stuck:
-            state = "blocked"
-        else:
-            state = "complete"
-        now = self.clock.now()
         reconcile(self.conn, iid, inv["bundle"])
-        with tx(self.conn) as c:
-            c.execute("UPDATE ce_investigations SET state = ?, updated_at = ? WHERE investigation_id = ? AND state != 'superseded'", (state, now, iid))
+        BAD = ("blocked_provider", "blocked_dependency", "awaiting_approval", "failed", "skipped")
+        now = self.clock.now()
+        with tx(self.conn) as c:  # estado derivado e gravado na MESMA transação: workers concorrentes não regridem o estado
+            rows = [dict(t) for t in c.execute("SELECT task_id, specialist, state, depends_on_json FROM ce_tasks WHERE investigation_id = ?", (iid,))]
+            st = {t["task_id"]: t["state"] for t in rows}
+
+            def waiting_on_bad(t) -> bool:  # pendente atrás de uma dependência travada não está "em andamento"
+                return t["state"] == "pending" and any(st[d] in BAD for d in json.loads(t["depends_on_json"]))
+            done = [t for t in rows if t["state"] == "done"]
+            open_ = [t for t in rows if t["state"] in ("pending", "running") and not waiting_on_bad(t)]
+            stuck = [t for t in rows if t["state"] in ("blocked_provider", "blocked_dependency", "awaiting_approval", "failed") or waiting_on_bad(t)]
+            if not rows or all(t["state"] == "skipped" for t in rows):
+                state = "blocked" if rows else "planned"
+            elif open_:
+                state = "running"
+            elif stuck and done:
+                state = "partial"
+            elif stuck:
+                state = "blocked"
+            else:
+                state = "complete"
+            c.execute("UPDATE ce_investigations SET state = ?, updated_at = ? WHERE investigation_id = ? AND state NOT IN ('superseded','awaiting_start_approval')", (state, now, iid))
             if state in ("partial", "complete"):
                 EV.emit(c, "investigation.completed" if state == "complete" else "investigation.partial", iid,
                         {"state": state, "done": len(done), "stuck": [t["specialist"] for t in stuck]}, now, f"{iid}|{state}|{len(done)}|{len(stuck)}")

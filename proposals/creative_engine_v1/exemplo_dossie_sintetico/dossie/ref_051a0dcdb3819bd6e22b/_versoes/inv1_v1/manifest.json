@@ -1,0 +1,287 @@
+{
+  "banner": "DADOS SINTÉTICOS DE DEMONSTRAÇÃO — nenhum vídeo real foi assistido; especialistas são MOCK",
+  "claims_by_state": {
+    "claimed": 5,
+    "contradicted": 1,
+    "hypothesis": 10,
+    "supported": 13,
+    "supported_static": 1
+  },
+  "content_hash": "76c55137e69f89218314b69822f4de6f",
+  "dossier_version": 1,
+  "evidence_index": {
+    "ev_00c8db8d37779c12f304": {
+      "claim": "Primeiro abre a timeline, em seguida clica em legendas automáticas",
+      "source": "whisper",
+      "status": "transcript_claim",
+      "t_start": 7.8
+    },
+    "ev_10563938d727309e9669": {
+      "claim": "Nome 'CapCut' legível no canto superior da interface",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 9.0
+    },
+    "ev_128bd5dbe1a5f75d71e6": {
+      "claim": "Legenda muda de palavra entre os quadros",
+      "source": "agent_observation",
+      "status": "inference",
+      "t_start": 14.0
+    },
+    "ev_1361449df20000399790": {
+      "claim": "candidato a mudança de cena (score 0.41)",
+      "source": "scene_detection",
+      "status": "measured_signal",
+      "t_start": 7.9
+    },
+    "ev_51268193d7e0f84d5e2a": {
+      "claim": "Apresentador embaixo, tela da ferramenta em cima",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 9.0
+    },
+    "ev_579825c3cf63e9a08db2": {
+      "claim": "Para tudo e olha isso aqui",
+      "source": "whisper",
+      "status": "transcript_claim",
+      "t_start": 0.0
+    },
+    "ev_6024c746e79be206e01b": {
+      "claim": "1080x1920 @ 30.0 fps, 24.0 s",
+      "source": "ffprobe",
+      "status": "measured_signal",
+      "t_start": 0.0
+    },
+    "ev_81e9c7bbb6af8436981c": {
+      "claim": "candidato a mudança de cena (score 0.12)",
+      "source": "scene_detection",
+      "status": "measured_signal",
+      "t_start": 19.6
+    },
+    "ev_957197b66c494afd8bc7": {
+      "claim": "Rosto maior no segundo quadro do par",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 14.0
+    },
+    "ev_a5a2ccf2dd43d2c47d9a": {
+      "claim": "Nesse vídeo vou mostrar o passo a passo no CapCut",
+      "source": "whisper",
+      "status": "transcript_claim",
+      "t_start": 2.4
+    },
+    "ev_b41c1145dcecac3f3542": {
+      "claim": "Comenta e clica no link na bio com desconto",
+      "source": "whisper",
+      "status": "transcript_claim",
+      "t_start": 19.5
+    },
+    "ev_c9a17d799122297a6c59": {
+      "claim": "Selo de 50% de desconto na tela",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 21.0
+    },
+    "ev_e37f6f9466d3d170304a": {
+      "claim": "Legenda branca com contorno sobre o apresentador",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 9.0
+    },
+    "ev_e78a1e8bed097fd38d06": {
+      "claim": "Fica 100% automático e mais rápido",
+      "source": "whisper",
+      "status": "transcript_claim",
+      "t_start": 14.0
+    },
+    "ev_f4a654a990bcf064aef7": {
+      "claim": "Fluxo de automação com n8n e motion",
+      "source": "instagram_metadata",
+      "status": "metadata_claim",
+      "t_start": null
+    },
+    "ev_f511f4f719f2ffae87a8": {
+      "claim": "candidato a mudança de cena (score 0.37)",
+      "source": "scene_detection",
+      "status": "measured_signal",
+      "t_start": 14.05
+    },
+    "ev_f7b8823f9dfc9a38ead4": {
+      "claim": "Interface de edição com timeline e botão de legendas",
+      "source": "agent_observation",
+      "status": "observed_visual",
+      "t_start": 9.0
+    }
+  },
+  "files": [
+    {
+      "bytes": 3793,
+      "path": "00_RESUMO_EXECUTIVO.md",
+      "sha256": "b7470a42be53edc541ebca155e7afc86d2862702db94a2d57c203fa869c42e37"
+    },
+    {
+      "bytes": 4285,
+      "path": "01_ANALISE_AUDIOVISUAL.md",
+      "sha256": "84e6e25c37281cf028eeccd7f4000600c3bade81b7fbd82e76badd506e7e30b4"
+    },
+    {
+      "bytes": 3411,
+      "path": "02_ENGENHARIA_REVERSA.md",
+      "sha256": "6072f90ecf018be9b1f143fea6f9f4189ea673675266d06de974cde28990f3f5"
+    },
+    {
+      "bytes": 1890,
+      "path": "03_FERRAMENTAS_E_TECNICAS.md",
+      "sha256": "a20076fcf17dd19d6cf816c83f9fd1111bedde20ade080887ce8460e9f7b7b47"
+    },
+    {
+      "bytes": 5886,
+      "path": "04_APLICACAO_RIAN_ROCHA_IA.md",
+      "sha256": "1ee66a44b9d17d642e78920c071428f3fa08992134efdd9783c979fed3662d14"
+    },
+    {
+      "bytes": 5743,
+      "path": "05_APLICACAO_OBJETARIA.md",
+      "sha256": "e6fd7ecec2e39c18699bf1d1c81bfa97a35cb0d0deffde86e522843232ccfd3e"
+    },
+    {
+      "bytes": 5700,
+      "path": "06_ROTEIRO_ORIGINAL.md",
+      "sha256": "c5ef1a13eae2de82b4436721ae6a4f5f6de18fa555ae0ee5c535d28dc3e79a4a"
+    },
+    {
+      "bytes": 6122,
+      "path": "07_PLANO_DE_PRODUCAO.md",
+      "sha256": "54da3b9154b5a2e7a77313cf53aef0c0862824b891897ef4a2686ab2f412dd8a"
+    },
+    {
+      "bytes": 2009,
+      "path": "08_PERGUNTAS_EM_ABERTO.md",
+      "sha256": "72258fc3345e51a8849155ab27b52179520a095a49e78610ba35f01f89056f3a"
+    },
+    {
+      "bytes": 1552,
+      "path": "README.md",
+      "sha256": "a72c55ccb5b3a40626b5cbb41aa4a711dbd54aa775712b4f6ec2661bccc52c13"
+    },
+    {
+      "bytes": 17118,
+      "path": "estruturados/afirmacoes.json",
+      "sha256": "7d99e59cbfa80a0fc19dacff89c5551b4b0ecae021862314acf21c54ba15bb93"
+    },
+    {
+      "bytes": 11926,
+      "path": "estruturados/kit_prop_13cab15c8aed72b10ffd.json",
+      "sha256": "9606614288216ce570def85d56d78915081e1ca3d0a530949a0eb275243c76f0"
+    },
+    {
+      "bytes": 10053,
+      "path": "estruturados/kit_prop_18bec6e76121e63a6850.json",
+      "sha256": "dfacb828d2133b5e1fab8ffd35fe3b0ceb134c10b80054a48d510b37d11d2336"
+    },
+    {
+      "bytes": 11813,
+      "path": "estruturados/kit_prop_63c2ec98bcca5cdd75ca.json",
+      "sha256": "79dc2104469c28737a03d69eb455815f1f89c058373fcb693156b5d40360355f"
+    },
+    {
+      "bytes": 10599,
+      "path": "estruturados/kit_prop_718f9b23f6cd98dc91c7.json",
+      "sha256": "c283708a3f0854da612e6af6067c185845847ead37f782a71d5b56b991007417"
+    },
+    {
+      "bytes": 2572,
+      "path": "estruturados/perguntas_em_aberto.json",
+      "sha256": "ea494b76f08fc8dd2dfebecd0aacad6daf4022ddf03eebe94cedc6a7f9539e1c"
+    },
+    {
+      "bytes": 4436,
+      "path": "estruturados/plano_reproducao.json",
+      "sha256": "50e978dc06e4ad62d1918de84312af3c4ef6fbdb7ff01bbbadb8a99be973b964"
+    },
+    {
+      "bytes": 3113,
+      "path": "estruturados/prompts_prop_13cab15c8aed72b10ffd.json",
+      "sha256": "f5681a736b41fe8d27a2ddb0c27a0122dcd808bd2ea77928b57ec66396b3765a"
+    },
+    {
+      "bytes": 2597,
+      "path": "estruturados/prompts_prop_18bec6e76121e63a6850.json",
+      "sha256": "39c6bbe39c38972d323371729898d0251a4ae8a5033ca0c97a2f50853c1be2e4"
+    },
+    {
+      "bytes": 3208,
+      "path": "estruturados/prompts_prop_63c2ec98bcca5cdd75ca.json",
+      "sha256": "72e70216dd02dbe8c66d331bdfee320c0fdb1e1031bfde8b4ea6f41baf9c7b92"
+    },
+    {
+      "bytes": 2587,
+      "path": "estruturados/prompts_prop_718f9b23f6cd98dc91c7.json",
+      "sha256": "bef2ec03ed1e6b3150215980b752f9eac30b214f93a9cf01dafd5780b892d7cd"
+    },
+    {
+      "bytes": 1200,
+      "path": "estruturados/shot_list_prop_13cab15c8aed72b10ffd.csv",
+      "sha256": "2c286c91f6186ef45689d6a62ac20919d49ed56c28451d2ab04aa9b1d4f4347f"
+    },
+    {
+      "bytes": 2141,
+      "path": "estruturados/shot_list_prop_13cab15c8aed72b10ffd.json",
+      "sha256": "aa9038c1ac210a5abb410e4b98c98ff1fe075fa3b5612cda48bf5718790467b5"
+    },
+    {
+      "bytes": 948,
+      "path": "estruturados/shot_list_prop_18bec6e76121e63a6850.csv",
+      "sha256": "f0bb096e21c3e8fdfd05dcf72073543c18843b32119d5ce5b6c3fcff76cd18a7"
+    },
+    {
+      "bytes": 1675,
+      "path": "estruturados/shot_list_prop_18bec6e76121e63a6850.json",
+      "sha256": "9352870b2142e590f0027ec0f6a2da027f4e501ef9d6e76e525d376fcfaa4dcf"
+    },
+    {
+      "bytes": 1111,
+      "path": "estruturados/shot_list_prop_63c2ec98bcca5cdd75ca.csv",
+      "sha256": "39074e0ad5c871110fe0875f06f850f337471e55786c2838b76ee938b3d4c6a9"
+    },
+    {
+      "bytes": 2052,
+      "path": "estruturados/shot_list_prop_63c2ec98bcca5cdd75ca.json",
+      "sha256": "86791a2840465c712a3261d7432abc9819647b2f5133cf47a2784bbe24823dd0"
+    },
+    {
+      "bytes": 1096,
+      "path": "estruturados/shot_list_prop_718f9b23f6cd98dc91c7.csv",
+      "sha256": "7032661673c64af69d138852ee5ea15c0c0f3052d52dade5027c673527d5b4d4"
+    },
+    {
+      "bytes": 1829,
+      "path": "estruturados/shot_list_prop_718f9b23f6cd98dc91c7.json",
+      "sha256": "8bdaf17d96786d1d77bf763363c14092f8547a00c732ae3145fc617377704e47"
+    }
+  ],
+  "generator": "ii_ce/0.1.0",
+  "human_reviews": [],
+  "input_hash": "68ebe592a6303892d22d7b008cf4cb87",
+  "investigation_id": "inv_0077c0f60aa15fa431b0",
+  "reference_id": "ref_051a0dcdb3819bd6e22b",
+  "schema_version": "ii.ce.dossier_manifest.v1",
+  "sections_without_data": [],
+  "seq": 1,
+  "state": "complete",
+  "versions": {
+    "analysis_id": "an_1_be800f1021b4d7d4",
+    "classifier": "ii_mm.classifier/2.0.0",
+    "generator": "ii_ce/0.1.0",
+    "profiles": {
+      "objetaria": {
+        "hash": "2abb8128dbafc857",
+        "version": "1.0.0"
+      },
+      "rian_rocha_ia": {
+        "hash": "d498bb13c4240d52",
+        "version": "1.0.0"
+      }
+    }
+  }
+}

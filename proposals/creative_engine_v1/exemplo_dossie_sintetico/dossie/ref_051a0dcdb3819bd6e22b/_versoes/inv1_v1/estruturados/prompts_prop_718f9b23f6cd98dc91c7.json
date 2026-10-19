@@ -1,0 +1,50 @@
+[
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; vertical 9:16; sem texto embutido",
+    "shot_id": "S01",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar as etapas, uma por vez, legíveis em tela de celular; vertical 9:16; sem texto embutido",
+    "shot_id": "S02",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; vertical 9:16; sem texto embutido",
+    "shot_id": "S03",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; vertical 9:16; sem texto embutido",
+    "shot_id": "S04",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; 7.9s",
+    "shot_id": "S01",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar as etapas, uma por vez, legíveis em tela de celular; 6.2s",
+    "shot_id": "S02",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; 5.5s",
+    "shot_id": "S03",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; 4.4s",
+    "shot_id": "S04",
+    "type": "vídeo"
+  }
+]

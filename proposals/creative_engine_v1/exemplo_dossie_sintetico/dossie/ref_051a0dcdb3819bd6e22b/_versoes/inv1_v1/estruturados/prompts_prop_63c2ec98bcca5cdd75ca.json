@@ -1,0 +1,62 @@
+[
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com a promessa em uma frase e um elemento visual forte; vertical 9:16; sem texto embutido",
+    "shot_id": "S01",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar o desenho/projeto; vertical 9:16; sem texto embutido",
+    "shot_id": "S02",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar etapas reais de fabricação; vertical 9:16; sem texto embutido",
+    "shot_id": "S03",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar o resultado final sem texto sobreposto; vertical 9:16; sem texto embutido",
+    "shot_id": "S04",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; chamada única e específica; vertical 9:16; sem texto embutido",
+    "shot_id": "S05",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Detalhes de processo e plano aberto do ambiente.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com a promessa em uma frase e um elemento visual forte; 3.7s",
+    "shot_id": "S01",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Detalhes de processo e plano aberto do ambiente.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar o desenho/projeto; 6.7s",
+    "shot_id": "S02",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Detalhes de processo e plano aberto do ambiente.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar etapas reais de fabricação; 5.2s",
+    "shot_id": "S03",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Detalhes de processo e plano aberto do ambiente.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar o resultado final sem texto sobreposto; 4.7s",
+    "shot_id": "S04",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Detalhes de processo e plano aberto do ambiente.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; chamada única e específica; 3.7s",
+    "shot_id": "S05",
+    "type": "vídeo"
+  }
+]

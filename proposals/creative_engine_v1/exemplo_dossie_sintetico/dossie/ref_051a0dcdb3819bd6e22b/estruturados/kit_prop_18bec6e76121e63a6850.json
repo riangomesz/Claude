@@ -1,0 +1,268 @@
+{
+  "assets": [
+    {
+      "asset_ref": "asset_01",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S01",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_02",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S02",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_03",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S03",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_04",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S04",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "trilha",
+      "kind": "música/voz",
+      "needed_for": "todos",
+      "status": "a definir (licença)"
+    }
+  ],
+  "briefing": {
+    "conceito": "Apresentação cinematográfica do produto com foco em textura, forma e contexto de uso.",
+    "direcao_de_arte": "Luz rasante revelando textura; fundo neutro; paleta do próprio material. Linguagem visual do perfil: texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica.",
+    "medicao": [
+      "textura legível",
+      "cor fiel ao material real",
+      "composição limpa"
+    ],
+    "mensagem": "O material é parte do projeto.",
+    "objetivo": "Apresentar um produto com sofisticação, destacando material, textura e acabamento.",
+    "publico": "arquitetos e designers de interiores",
+    "restricoes": [
+      "não mostrar medidas, prazos ou preços não confirmados",
+      "mostrar o produto real quando a imagem for apresentada como produto",
+      "indicar quando uma imagem for ilustração gerada por IA",
+      "não copiar planos, textos, voz ou identidade do autor da referência",
+      "4 técnica(s)/ferramenta(s) da referência ainda não verificadas: validar antes de prometer o mesmo resultado"
+    ]
+  },
+  "checklist_entrega": [
+    "mensagem central clara nos primeiros segundos",
+    "texto legível em celular",
+    "sem cópia de plano, texto ou identidade da referência",
+    "conteúdo gerado por IA identificado quando exigido",
+    "restrições do perfil respeitadas: não mostrar medidas, prazos ou preços não confirmados; mostrar o produto real quando a imagem for apresentada como produto; indicar quando uma imagem for ilustração gerada por IA",
+    "aprovação humana registrada"
+  ],
+  "origin": "proposta",
+  "pacing_source": "observed",
+  "plano_de_producao": [
+    {
+      "fase": "Pré-produção",
+      "tarefas": [
+        "fechar roteiro e mensagem",
+        "aprovar direção de arte",
+        "listar assets"
+      ]
+    },
+    {
+      "fase": "Produção",
+      "tarefas": [
+        "produzir os planos da shot list",
+        "gravar/gerar áudio"
+      ]
+    },
+    {
+      "fase": "Pós-produção",
+      "tarefas": [
+        "montar a timeline",
+        "aplicar texto e ênfases",
+        "etalonagem e mixagem",
+        "exportar 9:16"
+      ]
+    },
+    {
+      "fase": "Entrega",
+      "tarefas": [
+        "revisão humana",
+        "checklist final"
+      ]
+    }
+  ],
+  "prompts_sugeridos": [
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com o plano mais impactante do resultado; vertical 9:16; sem texto embutido",
+      "shot_id": "S01",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; close na textura e no acabamento; vertical 9:16; sem texto embutido",
+      "shot_id": "S02",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar a peça no ambiente; vertical 9:16; sem texto embutido",
+      "shot_id": "S03",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; assinatura discreta da marca; vertical 9:16; sem texto embutido",
+      "shot_id": "S04",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com o plano mais impactante do resultado; 7.9s",
+      "shot_id": "S01",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; close na textura e no acabamento; 6.2s",
+      "shot_id": "S02",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar a peça no ambiente; 5.5s",
+      "shot_id": "S03",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; assinatura discreta da marca; 4.4s",
+      "shot_id": "S04",
+      "type": "vídeo"
+    }
+  ],
+  "proposal_id": "prop_18bec6e76121e63a6850",
+  "roteiro": [
+    {
+      "beat": "gancho visual",
+      "duration_s": 7.9,
+      "intent": "abrir com o plano mais impactante do resultado",
+      "message_seed": "O material é parte do projeto.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "detalhe de material",
+      "duration_s": 6.2,
+      "intent": "close na textura e no acabamento",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "contexto de uso",
+      "duration_s": 5.5,
+      "intent": "mostrar a peça no ambiente",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "assinatura",
+      "duration_s": 4.4,
+      "intent": "assinatura discreta da marca",
+      "message_seed": "O material é parte do projeto.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    }
+  ],
+  "shot_list": [
+    {
+      "action": "abrir com o plano mais impactante do resultado",
+      "asset_ref": "asset_01",
+      "audio": "[voz/música a definir]",
+      "beat": "gancho visual",
+      "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+      "duration_s": 7.9,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S01",
+      "start_s": 0.0
+    },
+    {
+      "action": "close na textura e no acabamento",
+      "asset_ref": "asset_02",
+      "audio": "[voz/música a definir]",
+      "beat": "detalhe de material",
+      "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+      "duration_s": 6.2,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S02",
+      "start_s": 7.9
+    },
+    {
+      "action": "mostrar a peça no ambiente",
+      "asset_ref": "asset_03",
+      "audio": "[voz/música a definir]",
+      "beat": "contexto de uso",
+      "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+      "duration_s": 5.5,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S03",
+      "start_s": 14.1
+    },
+    {
+      "action": "assinatura discreta da marca",
+      "asset_ref": "asset_04",
+      "audio": "[voz/música a definir]",
+      "beat": "assinatura",
+      "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+      "duration_s": 4.4,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S04",
+      "start_s": 19.6
+    }
+  ],
+  "storyboard_textual": [
+    "Quadro 1 (gancho visual, 7.9s): abrir com o plano mais impactante do resultado. Câmera: Planos de detalhe lentos, plano geral de contexto, movimento suave. [PROPOSTA]",
+    "Quadro 2 (detalhe de material, 6.2s): close na textura e no acabamento. Câmera: Planos de detalhe lentos, plano geral de contexto, movimento suave. [PROPOSTA]",
+    "Quadro 3 (contexto de uso, 5.5s): mostrar a peça no ambiente. Câmera: Planos de detalhe lentos, plano geral de contexto, movimento suave. [PROPOSTA]",
+    "Quadro 4 (assinatura, 4.4s): assinatura discreta da marca. Câmera: Planos de detalhe lentos, plano geral de contexto, movimento suave. [PROPOSTA]"
+  ],
+  "timeline_edicao": [
+    {
+      "clip": "asset_01",
+      "edit": "Ritmo calmo, cortes na batida, texto mínimo, assinatura ao final.",
+      "in_s": 0.0,
+      "out_s": 7.9,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_02",
+      "edit": "Ritmo calmo, cortes na batida, texto mínimo, assinatura ao final.",
+      "in_s": 7.9,
+      "out_s": 14.1,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_03",
+      "edit": "Ritmo calmo, cortes na batida, texto mínimo, assinatura ao final.",
+      "in_s": 14.1,
+      "out_s": 19.6,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_04",
+      "edit": "Ritmo calmo, cortes na batida, texto mínimo, assinatura ao final.",
+      "in_s": 19.6,
+      "out_s": 24.0,
+      "track": "V1"
+    }
+  ],
+  "total_duration_s": 24.0
+}

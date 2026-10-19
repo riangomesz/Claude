@@ -1,0 +1,5 @@
+shot_id,beat,start_s,duration_s,framing,camera,action,on_screen_text,audio,asset_ref,origin
+S01,gancho visual,0.0,7.9,a definir conforme a direção de arte,"Planos de detalhe lentos, plano geral de contexto, movimento suave.",abrir com o plano mais impactante do resultado,,[voz/música a definir],asset_01,proposta
+S02,detalhe de material,7.9,6.2,a definir conforme a direção de arte,"Planos de detalhe lentos, plano geral de contexto, movimento suave.",close na textura e no acabamento,,[voz/música a definir],asset_02,proposta
+S03,contexto de uso,14.1,5.5,a definir conforme a direção de arte,"Planos de detalhe lentos, plano geral de contexto, movimento suave.",mostrar a peça no ambiente,,[voz/música a definir],asset_03,proposta
+S04,assinatura,19.6,4.4,a definir conforme a direção de arte,"Planos de detalhe lentos, plano geral de contexto, movimento suave.",assinatura discreta da marca,,[voz/música a definir],asset_04,proposta

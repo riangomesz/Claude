@@ -1,0 +1,5 @@
+shot_id,beat,start_s,duration_s,framing,camera,action,on_screen_text,audio,asset_ref,origin
+S01,gancho,0.0,7.9,a definir conforme a direção de arte,Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.,abrir com a promessa em uma frase e um elemento visual forte,[a definir],[voz/música a definir],asset_01,proposta
+S02,processo,7.9,6.2,a definir conforme a direção de arte,Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.,"mostrar as etapas, uma por vez, legíveis em tela de celular",[a definir],[voz/música a definir],asset_02,proposta
+S03,resultado,14.1,5.5,a definir conforme a direção de arte,Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.,mostrar o resultado final sem texto sobreposto,[a definir],[voz/música a definir],asset_03,proposta
+S04,chamada,19.6,4.4,a definir conforme a direção de arte,Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.,chamada única e específica,[a definir],[voz/música a definir],asset_04,proposta

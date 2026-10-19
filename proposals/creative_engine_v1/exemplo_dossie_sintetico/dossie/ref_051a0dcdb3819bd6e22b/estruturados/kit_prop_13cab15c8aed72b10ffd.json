@@ -1,0 +1,314 @@
+{
+  "assets": [
+    {
+      "asset_ref": "asset_01",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S01",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_02",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S02",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_03",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S03",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_04",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S04",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "asset_05",
+      "kind": "plano de vídeo ou imagem",
+      "needed_for": "S05",
+      "status": "a produzir"
+    },
+    {
+      "asset_ref": "trilha",
+      "kind": "música/voz",
+      "needed_for": "todos",
+      "status": "a definir (licença)"
+    }
+  ],
+  "briefing": {
+    "conceito": "Antes/depois de uma tarefa repetitiva, com o fluxo automatizado visível passo a passo.",
+    "direcao_de_arte": "Interface limpa, destaque no fluxo, números do antes/depois. Linguagem visual do perfil: acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa.",
+    "medicao": [
+      "fluxo reproduzível por quem assiste",
+      "antes/depois mensurável",
+      "sem dados reais de clientes"
+    ],
+    "mensagem": "O que se repete pode ser automatizado.",
+    "objetivo": "Demonstrar um processo empresarial sendo automatizado por um agente ou fluxo.",
+    "publico": "gestores e donos de negócio com processos manuais repetitivos",
+    "restricoes": [
+      "não prometer resultado que o vídeo não demonstre",
+      "identificar conteúdo gerado por IA quando a plataforma exigir",
+      "não imitar rosto, voz ou marca de terceiros sem autorização",
+      "não copiar planos, textos, voz ou identidade do autor da referência",
+      "4 técnica(s)/ferramenta(s) da referência ainda não verificadas: validar antes de prometer o mesmo resultado"
+    ]
+  },
+  "checklist_entrega": [
+    "mensagem central clara nos primeiros segundos",
+    "texto legível em celular",
+    "sem cópia de plano, texto ou identidade da referência",
+    "conteúdo gerado por IA identificado quando exigido",
+    "restrições do perfil respeitadas: não prometer resultado que o vídeo não demonstre; identificar conteúdo gerado por IA quando a plataforma exigir; não imitar rosto, voz ou marca de terceiros sem autorização",
+    "aprovação humana registrada"
+  ],
+  "origin": "proposta",
+  "pacing_source": "observed",
+  "plano_de_producao": [
+    {
+      "fase": "Pré-produção",
+      "tarefas": [
+        "fechar roteiro e mensagem",
+        "aprovar direção de arte",
+        "listar assets"
+      ]
+    },
+    {
+      "fase": "Produção",
+      "tarefas": [
+        "produzir os planos da shot list",
+        "gravar/gerar áudio"
+      ]
+    },
+    {
+      "fase": "Pós-produção",
+      "tarefas": [
+        "montar a timeline",
+        "aplicar texto e ênfases",
+        "etalonagem e mixagem",
+        "exportar 9:16"
+      ]
+    },
+    {
+      "fase": "Entrega",
+      "tarefas": [
+        "revisão humana",
+        "checklist final"
+      ]
+    }
+  ],
+  "prompts_sugeridos": [
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; vertical 9:16; sem texto embutido",
+      "shot_id": "S01",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar a tarefa repetitiva ou a dor; vertical 9:16; sem texto embutido",
+      "shot_id": "S02",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o fluxo automatizado funcionando; vertical 9:16; sem texto embutido",
+      "shot_id": "S03",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; vertical 9:16; sem texto embutido",
+      "shot_id": "S04",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar; não é o prompt do autor da referência",
+      "prompt": "acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; vertical 9:16; sem texto embutido",
+      "shot_id": "S05",
+      "type": "imagem"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; abrir com a promessa em uma frase e um elemento visual forte; 3.7s",
+      "shot_id": "S01",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar a tarefa repetitiva ou a dor; 6.7s",
+      "shot_id": "S02",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o fluxo automatizado funcionando; 5.2s",
+      "shot_id": "S03",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; mostrar o resultado final sem texto sobreposto; 4.7s",
+      "shot_id": "S04",
+      "type": "vídeo"
+    },
+    {
+      "note": "sugestão a testar",
+      "prompt": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.; acabamento cinematográfico, luz controlada, alto contraste suave, tipografia limpa; chamada única e específica; 3.7s",
+      "shot_id": "S05",
+      "type": "vídeo"
+    }
+  ],
+  "proposal_id": "prop_13cab15c8aed72b10ffd",
+  "roteiro": [
+    {
+      "beat": "gancho",
+      "duration_s": 3.7,
+      "intent": "abrir com a promessa em uma frase e um elemento visual forte",
+      "message_seed": "O que se repete pode ser automatizado.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "problema",
+      "duration_s": 6.7,
+      "intent": "mostrar a tarefa repetitiva ou a dor",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "fluxo",
+      "duration_s": 5.2,
+      "intent": "mostrar o fluxo automatizado funcionando",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "resultado",
+      "duration_s": 4.7,
+      "intent": "mostrar o resultado final sem texto sobreposto",
+      "message_seed": null,
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    },
+    {
+      "beat": "chamada",
+      "duration_s": 3.7,
+      "intent": "chamada única e específica",
+      "message_seed": "O que se repete pode ser automatizado.",
+      "texto": "[a definir pelo roteirista com a mensagem central]"
+    }
+  ],
+  "shot_list": [
+    {
+      "action": "abrir com a promessa em uma frase e um elemento visual forte",
+      "asset_ref": "asset_01",
+      "audio": "[voz/música a definir]",
+      "beat": "gancho",
+      "camera": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.",
+      "duration_s": 3.7,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S01",
+      "start_s": 0.0
+    },
+    {
+      "action": "mostrar a tarefa repetitiva ou a dor",
+      "asset_ref": "asset_02",
+      "audio": "[voz/música a definir]",
+      "beat": "problema",
+      "camera": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.",
+      "duration_s": 6.7,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S02",
+      "start_s": 3.7
+    },
+    {
+      "action": "mostrar o fluxo automatizado funcionando",
+      "asset_ref": "asset_03",
+      "audio": "[voz/música a definir]",
+      "beat": "fluxo",
+      "camera": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.",
+      "duration_s": 5.2,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S03",
+      "start_s": 10.4
+    },
+    {
+      "action": "mostrar o resultado final sem texto sobreposto",
+      "asset_ref": "asset_04",
+      "audio": "[voz/música a definir]",
+      "beat": "resultado",
+      "camera": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.",
+      "duration_s": 4.7,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S04",
+      "start_s": 15.6
+    },
+    {
+      "action": "chamada única e específica",
+      "asset_ref": "asset_05",
+      "audio": "[voz/música a definir]",
+      "beat": "chamada",
+      "camera": "Gravação de tela com destaques; rosto ou avatar opcional para a abertura.",
+      "duration_s": 3.7,
+      "framing": "a definir conforme a direção de arte",
+      "on_screen_text": "",
+      "origin": "proposta",
+      "shot_id": "S05",
+      "start_s": 20.3
+    }
+  ],
+  "storyboard_textual": [
+    "Quadro 1 (gancho, 3.7s): abrir com a promessa em uma frase e um elemento visual forte. Câmera: Gravação de tela com destaques; rosto ou avatar opcional para a abertura. [PROPOSTA]",
+    "Quadro 2 (problema, 6.7s): mostrar a tarefa repetitiva ou a dor. Câmera: Gravação de tela com destaques; rosto ou avatar opcional para a abertura. [PROPOSTA]",
+    "Quadro 3 (fluxo, 5.2s): mostrar o fluxo automatizado funcionando. Câmera: Gravação de tela com destaques; rosto ou avatar opcional para a abertura. [PROPOSTA]",
+    "Quadro 4 (resultado, 4.7s): mostrar o resultado final sem texto sobreposto. Câmera: Gravação de tela com destaques; rosto ou avatar opcional para a abertura. [PROPOSTA]",
+    "Quadro 5 (chamada, 3.7s): chamada única e específica. Câmera: Gravação de tela com destaques; rosto ou avatar opcional para a abertura. [PROPOSTA]"
+  ],
+  "timeline_edicao": [
+    {
+      "clip": "asset_01",
+      "edit": "Ritmo constante, ênfase por zoom nos pontos críticos, legenda sincronizada.",
+      "in_s": 0.0,
+      "out_s": 3.7,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_02",
+      "edit": "Ritmo constante, ênfase por zoom nos pontos críticos, legenda sincronizada.",
+      "in_s": 3.7,
+      "out_s": 10.4,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_03",
+      "edit": "Ritmo constante, ênfase por zoom nos pontos críticos, legenda sincronizada.",
+      "in_s": 10.4,
+      "out_s": 15.6,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_04",
+      "edit": "Ritmo constante, ênfase por zoom nos pontos críticos, legenda sincronizada.",
+      "in_s": 15.6,
+      "out_s": 20.3,
+      "track": "V1"
+    },
+    {
+      "clip": "asset_05",
+      "edit": "Ritmo constante, ênfase por zoom nos pontos críticos, legenda sincronizada.",
+      "in_s": 20.3,
+      "out_s": 24.0,
+      "track": "V1"
+    }
+  ],
+  "total_duration_s": 24.0
+}

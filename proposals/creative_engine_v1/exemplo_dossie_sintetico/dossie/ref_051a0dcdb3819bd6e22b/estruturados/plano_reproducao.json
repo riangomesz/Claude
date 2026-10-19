@@ -1,0 +1,131 @@
+{
+  "10_verificacoes_finais": [
+    "texto legível em tela de celular",
+    "áudio sem cortes bruscos",
+    "formato 9:16 e duração de destino",
+    "itens 'não verificados' da engenharia reversa testados ou marcados como hipótese",
+    "revisão humana das hipóteses aceitas"
+  ],
+  "1_resultado_pretendido": "Reproduzir os princípios observados: legenda_sobreposta, punch_in, split_screen. Reprodução de PRINCÍPIOS, não cópia do vídeo.",
+  "2_materiais_necessarios": [
+    "roteiro e texto de tela",
+    "material bruto (gravação de tela, vídeo ou imagens geradas)",
+    "áudio (fala e/ou trilha)",
+    "acesso a: CapCut",
+    "acesso a: n8n"
+  ],
+  "3_softwares_possiveis": {
+    "comprovados_ou_mencionados": [
+      "CapCut",
+      "n8n"
+    ],
+    "nota": "sugestões por categoria; software específico NÃO confirmado",
+    "sugeridos_por_categoria": [
+      "editor de vídeo com camada de texto",
+      "qualquer editor com escala/keyframe",
+      "editor com camadas"
+    ]
+  },
+  "4_etapas_de_producao": [
+    {
+      "evidence_ids": [
+        "ev_a5a2ccf2dd43d2c47d9a"
+      ],
+      "key": "passo:01",
+      "source": "dito pelo autor",
+      "text": "Nesse vídeo vou mostrar o passo a passo no CapCut"
+    },
+    {
+      "evidence_ids": [
+        "ev_00c8db8d37779c12f304"
+      ],
+      "key": "passo:02",
+      "source": "dito pelo autor",
+      "text": "Primeiro abre a timeline, em seguida clica em legendas automáticas"
+    },
+    {
+      "source": "inferido das técnicas",
+      "text": "Preparo (roteiro, material, ferramentas): definir roteiro e mensagem | reunir material e ferramentas listados"
+    },
+    {
+      "source": "inferido das técnicas",
+      "text": "Montagem (planos e cortes): split_screen: definir a grade; posicionar camadas; alinhar duração e áudio"
+    },
+    {
+      "source": "inferido das técnicas",
+      "text": "Texto e legendas: legenda_sobreposta: definir o texto e a divisão em linhas; criar camada de texto; posicionar dentro da área segura vertical; sincronizar com a fala"
+    },
+    {
+      "source": "inferido das técnicas",
+      "text": "Ênfase e movimento: punch_in: duplicar o trecho ou aplicar keyframe de escala; recortar o enquadramento; alinhar ao ponto de ênfase da fala"
+    },
+    {
+      "source": "inferido das técnicas",
+      "text": "Acabamento e exportação: revisar áudio e legibilidade | exportar no formato de destino"
+    }
+  ],
+  "5_configuracoes_conhecidas": [
+    {
+      "evidence_id": "ev_6024c746e79be206e01b",
+      "status": "medido",
+      "value": "1080x1920 @ 30.0 fps, 24.0 s"
+    }
+  ],
+  "6_parametros_que_precisam_de_teste": [
+    "fonte, tamanho e contorno",
+    "percentual de escala",
+    "proporção da divisão",
+    "se foi corte seco ou animado",
+    "se é gerada automaticamente ou manual"
+  ],
+  "7_ordem_de_execucao": [
+    {
+      "items": [
+        "definir roteiro e mensagem",
+        "reunir material e ferramentas listados"
+      ],
+      "phase": "Preparo (roteiro, material, ferramentas)"
+    },
+    {
+      "items": [
+        "split_screen: definir a grade; posicionar camadas; alinhar duração e áudio"
+      ],
+      "phase": "Montagem (planos e cortes)"
+    },
+    {
+      "items": [
+        "legenda_sobreposta: definir o texto e a divisão em linhas; criar camada de texto; posicionar dentro da área segura vertical; sincronizar com a fala"
+      ],
+      "phase": "Texto e legendas"
+    },
+    {
+      "items": [
+        "punch_in: duplicar o trecho ou aplicar keyframe de escala; recortar o enquadramento; alinhar ao ponto de ênfase da fala"
+      ],
+      "phase": "Ênfase e movimento"
+    },
+    {
+      "items": [
+        "revisar áudio e legibilidade",
+        "exportar no formato de destino"
+      ],
+      "phase": "Acabamento e exportação"
+    }
+  ],
+  "8_criterios_de_qualidade": [
+    "foco claro em um dos lados",
+    "legível em tela de celular sem zoom",
+    "nitidez preservada após o zoom",
+    "resultado comparado lado a lado com a referência apenas como estudo, nunca publicado como cópia"
+  ],
+  "9_erros_comuns": {
+    "fonte": "conhecimento geral de produção, NÃO observado neste vídeo",
+    "itens": [
+      "contraste baixo sobre fundo claro",
+      "perda de nitidez em fonte de baixa resolução",
+      "reenquadramento que corta o rosto",
+      "texto sob a interface da plataforma",
+      "áudio de duas fontes competindo"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "action": "abrir com a promessa em uma frase e um elemento visual forte",
+    "asset_ref": "asset_01",
+    "audio": "[voz/música a definir]",
+    "beat": "gancho",
+    "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+    "duration_s": 7.9,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S01",
+    "start_s": 0.0
+  },
+  {
+    "action": "mostrar as etapas, uma por vez, legíveis em tela de celular",
+    "asset_ref": "asset_02",
+    "audio": "[voz/música a definir]",
+    "beat": "processo",
+    "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+    "duration_s": 6.2,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S02",
+    "start_s": 7.9
+  },
+  {
+    "action": "mostrar o resultado final sem texto sobreposto",
+    "asset_ref": "asset_03",
+    "audio": "[voz/música a definir]",
+    "beat": "resultado",
+    "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+    "duration_s": 5.5,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S03",
+    "start_s": 14.1
+  },
+  {
+    "action": "chamada única e específica",
+    "asset_ref": "asset_04",
+    "audio": "[voz/música a definir]",
+    "beat": "chamada",
+    "camera": "Gravação de tela com zoom nos pontos de decisão; planos finais com movimento lento.",
+    "duration_s": 4.4,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S04",
+    "start_s": 19.6
+  }
+]

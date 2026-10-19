@@ -1,0 +1,6 @@
+shot_id,beat,start_s,duration_s,framing,camera,action,on_screen_text,audio,asset_ref,origin
+S01,gancho,0.0,3.7,a definir conforme a direção de arte,Gravação de tela com destaques; rosto ou avatar opcional para a abertura.,abrir com a promessa em uma frase e um elemento visual forte,,[voz/música a definir],asset_01,proposta
+S02,problema,3.7,6.7,a definir conforme a direção de arte,Gravação de tela com destaques; rosto ou avatar opcional para a abertura.,mostrar a tarefa repetitiva ou a dor,,[voz/música a definir],asset_02,proposta
+S03,fluxo,10.4,5.2,a definir conforme a direção de arte,Gravação de tela com destaques; rosto ou avatar opcional para a abertura.,mostrar o fluxo automatizado funcionando,,[voz/música a definir],asset_03,proposta
+S04,resultado,15.6,4.7,a definir conforme a direção de arte,Gravação de tela com destaques; rosto ou avatar opcional para a abertura.,mostrar o resultado final sem texto sobreposto,,[voz/música a definir],asset_04,proposta
+S05,chamada,20.3,3.7,a definir conforme a direção de arte,Gravação de tela com destaques; rosto ou avatar opcional para a abertura.,chamada única e específica,,[voz/música a definir],asset_05,proposta

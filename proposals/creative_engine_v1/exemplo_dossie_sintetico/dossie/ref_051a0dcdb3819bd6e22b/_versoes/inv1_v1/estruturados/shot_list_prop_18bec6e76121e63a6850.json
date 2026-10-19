@@ -1,0 +1,54 @@
+[
+  {
+    "action": "abrir com o plano mais impactante do resultado",
+    "asset_ref": "asset_01",
+    "audio": "[voz/música a definir]",
+    "beat": "gancho visual",
+    "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+    "duration_s": 7.9,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "",
+    "origin": "proposta",
+    "shot_id": "S01",
+    "start_s": 0.0
+  },
+  {
+    "action": "close na textura e no acabamento",
+    "asset_ref": "asset_02",
+    "audio": "[voz/música a definir]",
+    "beat": "detalhe de material",
+    "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+    "duration_s": 6.2,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "",
+    "origin": "proposta",
+    "shot_id": "S02",
+    "start_s": 7.9
+  },
+  {
+    "action": "mostrar a peça no ambiente",
+    "asset_ref": "asset_03",
+    "audio": "[voz/música a definir]",
+    "beat": "contexto de uso",
+    "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+    "duration_s": 5.5,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "",
+    "origin": "proposta",
+    "shot_id": "S03",
+    "start_s": 14.1
+  },
+  {
+    "action": "assinatura discreta da marca",
+    "asset_ref": "asset_04",
+    "audio": "[voz/música a definir]",
+    "beat": "assinatura",
+    "camera": "Planos de detalhe lentos, plano geral de contexto, movimento suave.",
+    "duration_s": 4.4,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "",
+    "origin": "proposta",
+    "shot_id": "S04",
+    "start_s": 19.6
+  }
+]

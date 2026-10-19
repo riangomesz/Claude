@@ -1,0 +1,727 @@
+{
+  "name": "II · Investigação criativa (MS06) — INATIVO",
+  "nodes": [
+    {
+      "parameters": {
+        "width": 620,
+        "height": 300,
+        "content": "## Instagram Intelligence — investigação criativa (MS06)\n**INATIVO e SEM credenciais.** Chama só a API local do backend (`ii.ce.api.v1`, 127.0.0.1).\nA lógica fica no backend; este fluxo orquestra e é idempotente (repetir não duplica).\n\n**Humano decide:** aprovação de modelos pagos, revisão de hipóteses e aprovação do dossiê são feitas no painel/API por uma PESSOA. O backend recusa atores `n8n:`.\n\nNós desabilitados = ativação progressiva (Obsidian, eventos)."
+      },
+      "id": "1a6b7be7-0000-4000-8000-3f6126270b96",
+      "name": "Nota",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ii-ce/referencia-aprovada",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7bca5dd3-0000-4000-8000-32d8b6fa32a6",
+      "name": "Webhook: referência aprovada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "8fd5ad24-0000-4000-8000-5610604127d4"
+    },
+    {
+      "parameters": {},
+      "id": "f43eab00-0000-4000-8000-d73f10fea7f8",
+      "name": "Teste manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "base_url",
+              "value": "http://127.0.0.1:8777",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "max_rodadas",
+              "value": 3,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfe85a6c-0000-4000-8000-a2adf85a1858",
+      "name": "Configuração",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "reference_id",
+              "value": "={{ $json.body?.reference_id ?? $json.reference_id ?? 'ref_00000000000000000000' }}",
+              "type": "string"
+            },
+            {
+              "id": "b2",
+              "name": "depth",
+              "value": "={{ $json.body?.depth ?? 'standard' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b6afdc92-0000-4000-8000-70890836fc97",
+      "name": "Normalizar entrada",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/open_investigation",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { reference_id: $json.reference_id, depth: $json.depth, limits: { max_calls: 4, max_usd: 0 }, requested_by: 'n8n:fluxo-investigacao' } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "5fd98327-0000-4000-8000-6b2484defd29",
+      "name": "Abrir investigação",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        100
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "blocked_no_evidence",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "d35802ba-0000-4000-8000-9b2e0374ebda",
+      "name": "Sem evidências?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        960,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/run_investigation",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { investigation_id: $('Abrir investigação').item.json.data.investigation_id, max_tasks: 10, retry_blocked: $runIndex > 0 } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "e11aa4e0-0000-4000-8000-3fd3576c902e",
+      "name": "Executar tarefas permitidas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        200
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/get_status",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { investigation_id: $('Abrir investigação').item.json.data.investigation_id } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "f0214fb3-0000-4000-8000-f1079ad9aa40",
+      "name": "Consultar status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        200
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d1",
+              "leftValue": "={{ ['running','partial'].includes($json.data.state) && $runIndex < $('Configuração').first().json.max_rodadas }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "4888df61-0000-4000-8000-b9704e4ecb15",
+      "name": "Pendências retomáveis?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 60,
+        "unit": "seconds"
+      },
+      "id": "28b6501f-0000-4000-8000-9a01947ae193",
+      "name": "Esperar antes de retomar",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/generate_dossier",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { investigation_id: $('Abrir investigação').item.json.data.investigation_id } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "cb5a7b1a-0000-4000-8000-a563518da019",
+      "name": "Gerar dossiê",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        200
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/export_obsidian",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { investigation_id: $('Abrir investigação').item.json.data.investigation_id } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "219ba13b-0000-4000-8000-e3b340e4989b",
+      "name": "Exportar para staging do Obsidian",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        200
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "665272a5-0000-4000-8000-4f2202e499e2",
+      "name": "Aguardando curadoria humana",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, investigation_id: $('Abrir investigação').item.json.data.investigation_id, awaiting_human: true } }}",
+        "options": {}
+      },
+      "id": "41a51db2-0000-4000-8000-cd1e23857dae",
+      "name": "Responder status",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, reason: 'blocked_no_evidence', investigation_id: $json.data.investigation_id } }}",
+        "options": {}
+      },
+      "id": "896b5be0-0000-4000-8000-471c322e6add",
+      "name": "Responder: sem evidências",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1200,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e1",
+              "name": "erro",
+              "value": "={{ $json.error ?? 'falha na API local' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "db815660-0000-4000-8000-b854805f8bc9",
+      "name": "Registrar erro",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseCode": 502,
+        "responseBody": "={{ { ok: false, erro: $json.erro } }}",
+        "options": {}
+      },
+      "id": "33a3a04e-0000-4000-8000-a1395f90b9de",
+      "name": "Responder erro",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "25e95229-0000-4000-8000-6c859930022b",
+      "name": "Agenda: eventos (desabilitado)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        760
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/poll_events",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { consumer: 'n8n-ce', limit: 50 } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "7959b346-0000-4000-8000-41a44dce096c",
+      "name": "Ler eventos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        760
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').first().json.base_url }}/v1/ack_events",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { consumer: 'n8n-ce', event_ids: $json.data.events.map(e => e.event_id) } }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "0cb005a1-0000-4000-8000-fca494bee5c8",
+      "name": "Confirmar eventos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        760
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Webhook: referência aprovada": {
+      "main": [
+        [
+          {
+            "node": "Configuração",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Teste manual": {
+      "main": [
+        [
+          {
+            "node": "Configuração",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configuração": {
+      "main": [
+        [
+          {
+            "node": "Normalizar entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar entrada": {
+      "main": [
+        [
+          {
+            "node": "Abrir investigação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Abrir investigação": {
+      "main": [
+        [
+          {
+            "node": "Sem evidências?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executar tarefas permitidas": {
+      "main": [
+        [
+          {
+            "node": "Consultar status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar status": {
+      "main": [
+        [
+          {
+            "node": "Pendências retomáveis?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar antes de retomar": {
+      "main": [
+        [
+          {
+            "node": "Executar tarefas permitidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar dossiê": {
+      "main": [
+        [
+          {
+            "node": "Exportar para staging do Obsidian",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exportar para staging do Obsidian": {
+      "main": [
+        [
+          {
+            "node": "Aguardando curadoria humana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguardando curadoria humana": {
+      "main": [
+        [
+          {
+            "node": "Responder status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar erro": {
+      "main": [
+        [
+          {
+            "node": "Responder erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda: eventos (desabilitado)": {
+      "main": [
+        [
+          {
+            "node": "Ler eventos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler eventos": {
+      "main": [
+        [
+          {
+            "node": "Confirmar eventos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sem evidências?": {
+      "main": [
+        [
+          {
+            "node": "Responder: sem evidências",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Executar tarefas permitidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pendências retomáveis?": {
+      "main": [
+        [
+          {
+            "node": "Esperar antes de retomar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gerar dossiê",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "ii_target": "n8n 1.x com nós: webhook v2, httpRequest 4.2, if 2, set 3.4, wait 1.1, respondToWebhook 1.1. NÃO validado numa instalação real."
+  },
+  "tags": []
+}

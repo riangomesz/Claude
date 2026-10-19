@@ -1,0 +1,16 @@
+{"event_id": "evt_fc44495594bc883e3c9a7711", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"depth": "deep", "reference_id": "ref_051a0dcdb3819bd6e22b", "reference_kind": "complexo", "seq": 1, "state": "planned"}, "type": "investigation.created"}
+{"event_id": "evt_85c1ce46859ac10f01732710", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"claims": 14, "specialist": "audiovisual", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_1586756deb4410183d364306", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"claims": 8, "specialist": "reproducao", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_fa89d9e60f9efeacbc3d5174", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"claims": 6, "specialist": "criativo", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_17de3a174fe715a763ae3b97", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"claims": 5, "specialist": "implementacao", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_40ca4cbdf40e41d33b8e6c50", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"done": 4, "state": "complete", "stuck": []}, "type": "investigation.completed"}
+{"event_id": "evt_f9accc2d056a2c04a8887f89", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"content_hash": "76c55137e69f89218314b69822f4de6f", "sections_without_data": [], "version": 1}, "type": "dossier.generated"}
+{"event_id": "evt_5fadd44790cebba0438bc632", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"decision": "confirm", "key": "ferramenta:capcut", "reference_id": "ref_051a0dcdb3819bd6e22b"}, "type": "review.registered"}
+{"event_id": "evt_1ac9f5538b417d2e1d997b01", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"decision": "reject", "key": "producao:split_screen", "reference_id": "ref_051a0dcdb3819bd6e22b"}, "type": "review.registered"}
+{"event_id": "evt_7b36d22cdd5c1e57b6aa6ebf", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"content_hash": "f6b627ef52c40eff74ed81af3a08bf48", "sections_without_data": [], "version": 2}, "type": "dossier.generated"}
+{"event_id": "evt_8610082e639bb2382deac6cd", "investigation_id": "inv_2cb3ae2356c140667e47", "payload": {"depth": "standard", "reference_id": "ref_051a0dcdb3819bd6e22b", "reference_kind": "complexo", "seq": 2, "state": "planned"}, "type": "investigation.created"}
+{"event_id": "evt_2c527ccea29ba011349e8c7e", "investigation_id": "inv_2cb3ae2356c140667e47", "payload": {"claims": 14, "specialist": "audiovisual", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_a6d7a9ef49d6e86d76751c98", "investigation_id": "inv_2cb3ae2356c140667e47", "payload": {"claims": 8, "specialist": "reproducao", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_bd4356076618b180118013be", "investigation_id": "inv_2cb3ae2356c140667e47", "payload": {"claims": 6, "specialist": "criativo", "usd": 0.0}, "type": "task.completed"}
+{"event_id": "evt_761fbfe3e5c4f5e4742a57e1", "investigation_id": "inv_2cb3ae2356c140667e47", "payload": {"done": 3, "state": "complete", "stuck": []}, "type": "investigation.completed"}
+{"event_id": "evt_83efce7cc9756b26f14c4fd0", "investigation_id": "inv_0077c0f60aa15fa431b0", "payload": {"notes": 6}, "type": "obsidian.exported"}

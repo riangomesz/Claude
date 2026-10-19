@@ -1,0 +1,67 @@
+[
+  {
+    "action": "abrir com a promessa em uma frase e um elemento visual forte",
+    "asset_ref": "asset_01",
+    "audio": "[voz/música a definir]",
+    "beat": "gancho",
+    "camera": "Detalhes de processo e plano aberto do ambiente.",
+    "duration_s": 3.7,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S01",
+    "start_s": 0.0
+  },
+  {
+    "action": "mostrar o desenho/projeto",
+    "asset_ref": "asset_02",
+    "audio": "[voz/música a definir]",
+    "beat": "projeto",
+    "camera": "Detalhes de processo e plano aberto do ambiente.",
+    "duration_s": 6.7,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S02",
+    "start_s": 3.7
+  },
+  {
+    "action": "mostrar etapas reais de fabricação",
+    "asset_ref": "asset_03",
+    "audio": "[voz/música a definir]",
+    "beat": "fabricação",
+    "camera": "Detalhes de processo e plano aberto do ambiente.",
+    "duration_s": 5.2,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S03",
+    "start_s": 10.4
+  },
+  {
+    "action": "mostrar o resultado final sem texto sobreposto",
+    "asset_ref": "asset_04",
+    "audio": "[voz/música a definir]",
+    "beat": "resultado",
+    "camera": "Detalhes de processo e plano aberto do ambiente.",
+    "duration_s": 4.7,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S04",
+    "start_s": 15.6
+  },
+  {
+    "action": "chamada única e específica",
+    "asset_ref": "asset_05",
+    "audio": "[voz/música a definir]",
+    "beat": "chamada",
+    "camera": "Detalhes de processo e plano aberto do ambiente.",
+    "duration_s": 3.7,
+    "framing": "a definir conforme a direção de arte",
+    "on_screen_text": "[a definir]",
+    "origin": "proposta",
+    "shot_id": "S05",
+    "start_s": 20.3
+  }
+]

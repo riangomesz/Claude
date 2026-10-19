@@ -1,0 +1,727 @@
+[
+  {
+    "agents": [
+      "criativo"
+    ],
+    "claim_ids": [
+      "3bc616c7587baeca69d9"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "aplicacao_comercial",
+    "evidence_ids": [],
+    "human_note": null,
+    "human_state": null,
+    "key": "aplicacao:oportunidade",
+    "kind": "recommendation",
+    "state": "hypothesis",
+    "strongest_status": null,
+    "summary": "Reaproveitar os princípios criativos observados em conteúdo original, sem copiar planos, textos ou identidade do autor.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "459de5a919403d549838"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_f511f4f719f2ffae87a8"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "cena:14.1",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "measured_signal",
+    "summary": "Candidato a mudança de cena em 14.1s (medido).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "0bd0f908a5b9588159f3"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_81e9c7bbb6af8436981c"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "cena:19.6",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "measured_signal",
+    "summary": "Candidato a mudança de cena em 19.6s (medido).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "384c79612b8cf79e182d"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_1361449df20000399790"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "cena:7.9",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "measured_signal",
+    "summary": "Candidato a mudança de cena em 7.9s (medido).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "79e1333b7125a24ca92d",
+      "cbd289d1c67a69be8de1"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_10563938d727309e9669",
+      "ev_a5a2ccf2dd43d2c47d9a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "ferramenta:capcut",
+    "kind": "tool",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "CapCut: visualmente identificada.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "645a8591513c7d9f512e"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_f4a654a990bcf064aef7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "ferramenta:n8n",
+    "kind": "tool",
+    "state": "claimed",
+    "strongest_status": "metadata_claim",
+    "summary": "n8n: metadata_only.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "30546c008c7b4c2dfedd"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_6024c746e79be206e01b"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "formato:probe",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "measured_signal",
+    "summary": "Formato medido: 1080x1920 @ 30.0 fps, 24.0 s.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "implementacao"
+    ],
+    "claim_ids": [
+      "d78694acd3e8f3228833"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_a5a2ccf2dd43d2c47d9a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "impl:ferramenta:capcut",
+    "kind": "recommendation",
+    "state": "hypothesis",
+    "strongest_status": "transcript_claim",
+    "summary": "Requisito: ter capcut disponível e licenciado antes de reproduzir o fluxo.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "implementacao"
+    ],
+    "claim_ids": [
+      "64afd362ab2dd7c8c1fd"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_f4a654a990bcf064aef7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "impl:ferramenta:n8n",
+    "kind": "recommendation",
+    "state": "hypothesis",
+    "strongest_status": "metadata_claim",
+    "summary": "Requisito: ter n8n disponível e licenciado antes de reproduzir o fluxo.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "implementacao"
+    ],
+    "claim_ids": [
+      "7773bc04328412f6add8"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_a5a2ccf2dd43d2c47d9a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "impl:passo:01",
+    "kind": "recommendation",
+    "state": "hypothesis",
+    "strongest_status": "transcript_claim",
+    "summary": "Tarefa implementável: reproduzir o passo:01 e registrar o resultado esperado.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "implementacao"
+    ],
+    "claim_ids": [
+      "4299ef6d09b25fe2338d"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_00c8db8d37779c12f304"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "impl:passo:02",
+    "kind": "recommendation",
+    "state": "hypothesis",
+    "strongest_status": "transcript_claim",
+    "summary": "Tarefa implementável: reproduzir o passo:02 e registrar o resultado esperado.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "criativo"
+    ],
+    "claim_ids": [
+      "c0a526f12623b42dd2a3"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "conteudo",
+    "evidence_ids": [
+      "ev_1361449df20000399790",
+      "ev_81e9c7bbb6af8436981c",
+      "ev_f511f4f719f2ffae87a8"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "narrativa:estrutura",
+    "kind": "hypothesis",
+    "state": "hypothesis",
+    "strongest_status": "measured_signal",
+    "summary": "Estrutura provável em 4 blocos (a partir de 3 candidatos a cena).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "criativo"
+    ],
+    "claim_ids": [
+      "4bf849eeca7bcf747fc0"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "conteudo",
+    "evidence_ids": [
+      "ev_579825c3cf63e9a08db2"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "narrativa:gancho",
+    "kind": "narrative",
+    "state": "claimed",
+    "strongest_status": "transcript_claim",
+    "summary": "Abertura (até 3s): “Para tudo e olha isso aqui”",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "criativo"
+    ],
+    "claim_ids": [
+      "c26e37aba719410f5e5d"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "conteudo",
+    "evidence_ids": [
+      "ev_f4a654a990bcf064aef7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "narrativa:legenda",
+    "kind": "narrative",
+    "state": "claimed",
+    "strongest_status": "metadata_claim",
+    "summary": "Legenda do autor: “Fluxo de automação com n8n e motion”",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "criativo"
+    ],
+    "claim_ids": [
+      "fdd9b03334bfd446d0b9"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "conteudo",
+    "evidence_ids": [
+      "ev_c9a17d799122297a6c59"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "narrativa:oferta",
+    "kind": "narrative",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Elemento de oferta visível em 21.0s: Selo de 50% de desconto na tela",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "9be83b5f236666621c9c"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_a5a2ccf2dd43d2c47d9a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "passo:01",
+    "kind": "process",
+    "state": "claimed",
+    "strongest_status": "transcript_claim",
+    "summary": "Passo dito na fala (2.4s): “Nesse vídeo vou mostrar o passo a passo no CapCut”",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "cd93af017698f87a7c49"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_00c8db8d37779c12f304"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "passo:02",
+    "kind": "process",
+    "state": "claimed",
+    "strongest_status": "transcript_claim",
+    "summary": "Passo dito na fala (7.8s): “Primeiro abre a timeline, em seguida clica em legendas automáticas”",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "c035f91de8db62f14ef0"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_e37f6f9466d3d170304a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "producao:legenda_sobreposta",
+    "kind": "hypothesis",
+    "state": "hypothesis",
+    "strongest_status": "observed_visual",
+    "summary": "Hipótese de produção: texto sobreposto à imagem (legenda gravada ou camada de texto).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "3f42118f3fb17dd8ba83"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_957197b66c494afd8bc7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "producao:punch_in",
+    "kind": "hypothesis",
+    "state": "hypothesis",
+    "strongest_status": "observed_visual",
+    "summary": "Hipótese de produção: aumento de escala (zoom digital) para dar ênfase.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "reproducao"
+    ],
+    "claim_ids": [
+      "fb9ffb9c6fc064dfc091"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "engenharia_reversa",
+    "evidence_ids": [
+      "ev_51268193d7e0f84d5e2a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "producao:split_screen",
+    "kind": "hypothesis",
+    "state": "hypothesis",
+    "strongest_status": "observed_visual",
+    "summary": "Hipótese de produção: dois ou mais elementos lado a lado no quadro.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual",
+      "criativo"
+    ],
+    "claim_ids": [
+      "9575c29ceea9e1358289",
+      "d0d1406a84a79439b9d1"
+    ],
+    "conflict": true,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_e37f6f9466d3d170304a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "tecnica:legenda_sobreposta",
+    "kind": "technique",
+    "state": "contradicted",
+    "strongest_status": "observed_visual",
+    "summary": "criativo: NÃO identifico esta técnica nas evidências que recebi (divergência simulada). | audiovisual: Técnica 'legenda_sobreposta' (observed_in_frame): a técnica aparece no quadro. Não prova: como ela surge, quanto dura ou se é animada.",
+    "values": [
+      "absent",
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "e55191e4d21f6881b5d3"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_957197b66c494afd8bc7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "tecnica:punch_in",
+    "kind": "technique",
+    "state": "supported_static",
+    "strongest_status": "observed_visual",
+    "summary": "Técnica 'punch_in' (frame_pair_difference): houve mudança entre dois instantes. Não prova: a trajetória, a curva de movimento ou se houve animação contínua.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "cc634881f41e20adfd9a"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_51268193d7e0f84d5e2a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "tecnica:split_screen",
+    "kind": "technique",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Técnica 'split_screen' (observed_in_frame): a técnica aparece no quadro. Não prova: como ela surge, quanto dura ou se é animada.",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "08607d50b099af521720"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_128bd5dbe1a5f75d71e6"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:animated_caption",
+    "kind": "hypothesis",
+    "state": "hypothesis",
+    "strongest_status": "inference",
+    "summary": "Possível: Legenda muda de palavra entre os quadros (inferência, não observada).",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "843874556ec86cc530b6"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_e37f6f9466d3d170304a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:burned_caption",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 9.0s: Legenda branca com contorno sobre o apresentador",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "3d5863b746582a527f0c"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_c9a17d799122297a6c59"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:price_or_discount_on_screen",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 21.0s: Selo de 50% de desconto na tela",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "acb2c7cb009e81654a6b"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_957197b66c494afd8bc7"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:punch_in_scale",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 14.0s: Rosto maior no segundo quadro do par",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "f889341c479df6ed227d"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_51268193d7e0f84d5e2a"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:split_screen",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 9.0s: Apresentador embaixo, tela da ferramenta em cima",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "0b6e9616018678a3a124"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_10563938d727309e9669"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:tool_name_visible",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 9.0s: Nome 'CapCut' legível no canto superior da interface",
+    "values": [
+      "present"
+    ]
+  },
+  {
+    "agents": [
+      "audiovisual"
+    ],
+    "claim_ids": [
+      "0209b143aff0fc761e8c"
+    ],
+    "conflict": false,
+    "corrected_value": null,
+    "domain": "linguagem_audiovisual",
+    "evidence_ids": [
+      "ev_f7b8823f9dfc9a38ead4"
+    ],
+    "human_note": null,
+    "human_state": null,
+    "key": "visual:ui_screen_visible",
+    "kind": "observation",
+    "state": "supported",
+    "strongest_status": "observed_visual",
+    "summary": "Em 9.0s: Interface de edição com timeline e botão de legendas",
+    "values": [
+      "present"
+    ]
+  }
+]

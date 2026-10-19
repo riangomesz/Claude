@@ -1,0 +1,78 @@
+[
+  {
+    "keys": [
+      "ferramenta:n8n"
+    ],
+    "kind": "nao_verificado",
+    "text": "'ferramenta:n8n' foi dito/escrito, mas não visto no vídeo."
+  },
+  {
+    "keys": [
+      "passo:01"
+    ],
+    "kind": "nao_verificado",
+    "text": "'passo:01' foi dito/escrito, mas não visto no vídeo."
+  },
+  {
+    "keys": [
+      "passo:02"
+    ],
+    "kind": "nao_verificado",
+    "text": "'passo:02' foi dito/escrito, mas não visto no vídeo."
+  },
+  {
+    "keys": [
+      "producao:legenda_sobreposta"
+    ],
+    "kind": "hipotese_aberta",
+    "text": "Hipótese sem decisão humana: Hipótese de produção: texto sobreposto à imagem (legenda gravada ou camada de texto)."
+  },
+  {
+    "keys": [
+      "producao:punch_in"
+    ],
+    "kind": "hipotese_aberta",
+    "text": "Hipótese sem decisão humana: Hipótese de produção: aumento de escala (zoom digital) para dar ênfase."
+  },
+  {
+    "keys": [
+      "tecnica:legenda_sobreposta"
+    ],
+    "kind": "contradicao",
+    "text": "Especialistas divergem em 'tecnica:legenda_sobreposta': criativo: NÃO identifico esta técnica nas evidências que recebi (divergência simulada). | audiovisual: Técnica 'legenda_sobreposta' (observed_in_frame): a técnica aparece no quadro. Não prova: como ela surge, quanto dura ou se é animada."
+  },
+  {
+    "keys": [
+      "tecnica:punch_in"
+    ],
+    "kind": "movimento_nao_comprovado",
+    "text": "'tecnica:punch_in' aparece no quadro, mas movimento/duração não foram comprovados."
+  },
+  {
+    "keys": [
+      "visual:animated_caption"
+    ],
+    "kind": "hipotese_aberta",
+    "text": "Hipótese sem decisão humana: Possível: Legenda muda de palavra entre os quadros (inferência, não observada)."
+  },
+  {
+    "keys": [],
+    "kind": "pergunta_do_especialista",
+    "text": "Há movimento real nas técnicas marcadas só como 'aparece no quadro'? (exige vídeo/sequência de quadros)"
+  },
+  {
+    "keys": [],
+    "kind": "pergunta_do_especialista",
+    "text": "Quais licenças e versões das ferramentas o usuário já possui?"
+  },
+  {
+    "keys": [],
+    "kind": "pergunta_do_especialista",
+    "text": "Quais parâmetros exatos (duração, escala, fonte) o autor usou? Não constam nas evidências."
+  },
+  {
+    "keys": [],
+    "kind": "pergunta_do_especialista",
+    "text": "Qual era o objetivo comercial do autor? Não é observável."
+  }
+]

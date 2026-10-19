@@ -1,0 +1,50 @@
+[
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com o plano mais impactante do resultado; vertical 9:16; sem texto embutido",
+    "shot_id": "S01",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; close na textura e no acabamento; vertical 9:16; sem texto embutido",
+    "shot_id": "S02",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar a peça no ambiente; vertical 9:16; sem texto embutido",
+    "shot_id": "S03",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar; não é o prompt do autor da referência",
+    "prompt": "texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; assinatura discreta da marca; vertical 9:16; sem texto embutido",
+    "shot_id": "S04",
+    "type": "imagem"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; abrir com o plano mais impactante do resultado; 7.9s",
+    "shot_id": "S01",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; close na textura e no acabamento; 6.2s",
+    "shot_id": "S02",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; mostrar a peça no ambiente; 5.5s",
+    "shot_id": "S03",
+    "type": "vídeo"
+  },
+  {
+    "note": "sugestão a testar",
+    "prompt": "Planos de detalhe lentos, plano geral de contexto, movimento suave.; texturas de metal em close, luz rasante, paleta terrosa do corten e frio do inox, composição arquitetônica; assinatura discreta da marca; 4.4s",
+    "shot_id": "S04",
+    "type": "vídeo"
+  }
+]

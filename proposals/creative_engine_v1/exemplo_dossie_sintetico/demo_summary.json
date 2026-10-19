@@ -1,0 +1,209 @@
+{
+  "all_checks_passed": true,
+  "banner": "DADOS SINTÉTICOS DE DEMONSTRAÇÃO — nenhum vídeo real foi assistido; especialistas são MOCK",
+  "checks": {
+    "cada_tarefa_concluiu_uma_vez": true,
+    "divergencia_registrada": true,
+    "dossie_gerado": true,
+    "dossie_idempotente": true,
+    "eventos_entregues_uma_vez": true,
+    "investigacao_idempotente": true,
+    "nova_versao_preserva_decisoes_humanas": true,
+    "obsidian_idempotente": true,
+    "queda_deixou_tarefa_em_execucao": true,
+    "retomada_concluiu": true,
+    "revisao_humana_gera_nova_versao_sem_perder_a_anterior": true,
+    "sem_afirmacoes_duplicadas": true,
+    "versao_anterior_preservada": true
+  },
+  "conflicts": [
+    "tecnica:legenda_sobreposta"
+  ],
+  "dossier_v1": {
+    "created": true,
+    "dossier_version": 1,
+    "sections_without_data": []
+  },
+  "dossier_v2": {
+    "created": true,
+    "dossier_version": 2
+  },
+  "events_delivered": 16,
+  "investigation_object": {
+    "analyses": {
+      "claims_by_domain": {
+        "aplicacao_comercial": 1,
+        "conteudo": 4,
+        "engenharia_reversa": 12,
+        "linguagem_audiovisual": 15
+      }
+    },
+    "content_hash": "d99ada0dc99c6de9463ee0c40fec78d2",
+    "depth": "deep",
+    "dossier_version": 2,
+    "dossier_versions": [
+      {
+        "content_hash": "76c55137e69f89218314b69822f4de6f",
+        "version": 1
+      },
+      {
+        "content_hash": "f6b627ef52c40eff74ed81af3a08bf48",
+        "version": 2
+      }
+    ],
+    "evidence": {
+      "by_status": {
+        "inference": 1,
+        "measured_signal": 4,
+        "metadata_claim": 1,
+        "observed_visual": 6,
+        "transcript_claim": 5
+      },
+      "total": 17
+    },
+    "human_reviews": 2,
+    "input_hash": "68ebe592a6303892d22d7b008cf4cb87",
+    "investigation_id": "inv_0077c0f60aa15fa431b0",
+    "media": {
+      "sha256": "931908f4c971d3347a4f8b7c2e21d9b5b072baca6b7c6614c42d7d3a6d139a1d"
+    },
+    "previous": [],
+    "reference_id": "ref_051a0dcdb3819bd6e22b",
+    "schema_version": "ii.ce.investigation.v1",
+    "seq": 1,
+    "stages": {
+      "done": [
+        "audiovisual",
+        "reproducao",
+        "criativo",
+        "implementacao"
+      ],
+      "failed": [],
+      "pending": [],
+      "skipped": []
+    },
+    "state": "superseded",
+    "supersedes": null,
+    "versions": {
+      "analysis_id": "an_1_be800f1021b4d7d4",
+      "classifier": "ii_mm.classifier/2.0.0",
+      "generator": "ii_ce/0.1.0",
+      "profiles": {
+        "objetaria": {
+          "hash": "2abb8128dbafc857",
+          "version": "1.0.0"
+        },
+        "rian_rocha_ia": {
+          "hash": "d498bb13c4240d52",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "pilot_DQV5dm6gCvH": "BLOQUEADO: vídeo e artefatos não disponíveis neste ambiente; usadas fixtures",
+  "plan": {
+    "reference_kind": "complexo",
+    "tasks": [
+      {
+        "reason": "complexo: evidências visuais e medidas precisam de leitura separando observação de inferência",
+        "selected": true,
+        "specialist": "audiovisual"
+      },
+      {
+        "reason": "complexo: há processo/ferramenta a reproduzir; reprodução técnica priorizada",
+        "selected": true,
+        "specialist": "reproducao"
+      },
+      {
+        "reason": "complexo: narrativa, gancho e direção de arte alimentam a adaptação comercial",
+        "selected": true,
+        "specialist": "criativo"
+      },
+      {
+        "reason": "complexo: transforma processos e ferramentas já identificados em requisitos implementáveis (depende de reproducao)",
+        "selected": true,
+        "specialist": "implementacao"
+      }
+    ]
+  },
+  "reference_id": "ref_051a0dcdb3819bd6e22b",
+  "run_after_resume": {
+    "executed": 2,
+    "investigation_id": "inv_0077c0f60aa15fa431b0",
+    "state": "complete"
+  },
+  "status": {
+    "awaiting_human": true,
+    "conflicts": [
+      "tecnica:legenda_sobreposta"
+    ],
+    "depth": "deep",
+    "dossier": {
+      "approved": false,
+      "version": 2
+    },
+    "groups": {
+      "claimed": 5,
+      "contradicted": 1,
+      "hypothesis": 10,
+      "supported": 13,
+      "supported_static": 1
+    },
+    "investigation_id": "inv_0077c0f60aa15fa431b0",
+    "pending_approvals": [],
+    "progress": {
+      "done": 4,
+      "planned": 4,
+      "skipped": 0
+    },
+    "reference_id": "ref_051a0dcdb3819bd6e22b",
+    "reference_kind": "complexo",
+    "schema_version": "ii.ce.status.v1",
+    "seq": 1,
+    "state": "superseded",
+    "tasks": [
+      {
+        "attempts": 1,
+        "error": null,
+        "est_usd": 0.0,
+        "kind": "analise_audiovisual",
+        "reason": "complexo: evidências visuais e medidas precisam de leitura separando observação de inferência",
+        "specialist": "audiovisual",
+        "state": "done",
+        "usd": 0.0
+      },
+      {
+        "attempts": 1,
+        "error": null,
+        "est_usd": 0.0,
+        "kind": "reproducao_tecnica",
+        "reason": "complexo: há processo/ferramenta a reproduzir; reprodução técnica priorizada",
+        "specialist": "reproducao",
+        "state": "done",
+        "usd": 0.0
+      },
+      {
+        "attempts": 2,
+        "error": null,
+        "est_usd": 0.0,
+        "kind": "analise_criativa",
+        "reason": "complexo: narrativa, gancho e direção de arte alimentam a adaptação comercial",
+        "specialist": "criativo",
+        "state": "done",
+        "usd": 0.0
+      },
+      {
+        "attempts": 1,
+        "error": null,
+        "est_usd": 0.0,
+        "kind": "plano_implementacao",
+        "reason": "complexo: transforma processos e ferramentas já identificados em requisitos implementáveis (depende de reproducao)",
+        "specialist": "implementacao",
+        "state": "done",
+        "usd": 0.0
+      }
+    ],
+    "usd_spent": 0.0
+  },
+  "synthetic": true
+}

@@ -27,6 +27,11 @@ def latest_reviews(conn: sqlite3.Connection, reference_id: str) -> Dict[str, Dic
 
 
 def reconcile(conn: sqlite3.Connection, investigation_id: str, bundle: Dict[str, Any]) -> List[Dict[str, Any]]:
+    with tx(conn) as c:
+        return _reconcile_tx(c, investigation_id, bundle)
+
+
+def _reconcile_tx(conn: sqlite3.Connection, investigation_id: str, bundle: Dict[str, Any]) -> List[Dict[str, Any]]:
     ev = ev_index(bundle)
     levels = {t["technique"]: t.get("level") for t in bundle["facets"].get("techniques", [])}
     reviews = latest_reviews(conn, bundle["reference_id"])
@@ -69,7 +74,8 @@ def reconcile(conn: sqlite3.Connection, investigation_id: str, bundle: Dict[str,
         groups.append({"key": key, "domain": best["domain"], "kind": sorted(kinds)[0], "state": state, "human_state": HUMAN_STATE[rv["decision"]] if rv else None,
                        "strongest_status": strongest, "agents": agents, "claim_ids": [c["claim_id"] for c in cl], "evidence_ids": ids,
                        "values": values, "conflict": conflict, "summary": summary, "human_note": (rv or {}).get("note"), "corrected_value": (rv or {}).get("corrected_value")})
-    with tx(conn) as c:
+    if True:
+        c = conn
         c.execute("DELETE FROM ce_groups WHERE investigation_id = ?", (investigation_id,))
         for g in groups:
             c.execute("INSERT INTO ce_groups(investigation_id, key, domain, kind, state, human_state, strongest_status, agents_json, claim_ids_json, "
