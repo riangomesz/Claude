@@ -6,7 +6,7 @@ Etapa 03 da Missão Suprema 03. **A suíte passar no Linux não prova compatibil
 
 | Item | Requisito | Base da afirmação |
 |---|---|---|
-| Python | **3.11 ou superior** | Suíte executada em 3.11.15, 3.12 e 3.13.16 (Linux). Não há API exclusiva do 3.11 no código, e a sintaxe é conferida com `feature_version=(3, 10)`, mas 3.10 **não foi executado**, por isso o mínimo declarado é 3.11 |
+| Python | **3.11 ou superior** | Suíte executada em 3.11.17, 3.12.3 e 3.13.16 (Linux). Não há API exclusiva do 3.11 no código, e a sintaxe é conferida com `feature_version=(3, 10)`, mas 3.10 **não foi executado**, por isso o mínimo declarado é 3.11 |
 | SQLite | **3.24.0 ou superior** (UPSERT `ON CONFLICT DO UPDATE` e comparação de tuplas na paginação) | O Python do Windows traz o próprio `sqlite3.dll`; `verificar_recebimento.py` imprime a versão e executa uma sonda em memória com UPSERT e comparação de tuplas |
 | Pacotes externos | **nenhum** | `tests/test_ms03_portability.py` não precisa de rede; o inventário (`tools/inventory.py`) lista só módulos da stdlib |
 | Módulos da stdlib usados | `argparse`, `ast`, `base64`, `contextlib`, `copy`, `csv`, `dataclasses`, `datetime`, `hashlib`, `hmac`, `importlib`, `json`, `math`, `os`, `pathlib`, `random`, `re`, `sqlite3`, `tempfile`, `time`, `typing`, `unicodedata`, `urllib`, `uuid` (núcleo) e mais `shutil`, `subprocess`, `zipfile`, `trace`, `platform` nas ferramentas | Todos existem no Windows. `verificar_recebimento.py` confere a importação de cada um antes de qualquer execução |

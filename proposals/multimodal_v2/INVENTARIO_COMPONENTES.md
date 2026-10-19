@@ -3,7 +3,7 @@
 Etapa 01 da Missão Suprema 03. A tabela da seção 1 é **gerada** por `python -X utf8 tools/inventory.py` (AST, sem importar nada) e pode ser regenerada a qualquer momento. As seções 2 a 4 descrevem propósito, contratos, compatibilidade e limitações de cada componente. O teste `tests/test_ms03_docs.py` falha se um módulo do `ii_mm` ficar fora deste documento.
 
 **Legenda de status de compatibilidade:**
-- **L** = testado no Linux com Python 3.11.15, 3.12 e 3.13.16;
+- **L** = testado no Linux com Python 3.11.17, 3.12.3 e 3.13.16;
 - **W-est** = conferido estaticamente para Windows (sintaxe 3.10, encoding explícito, nenhum módulo POSIX, nomes de arquivo válidos);
 - **W** = executado no Windows. **Nenhum componente tem W:** é exatamente o que o Estágio 1 do Antigravity confere.
 

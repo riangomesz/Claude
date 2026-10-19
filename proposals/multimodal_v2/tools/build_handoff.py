@@ -54,7 +54,7 @@ PACKAGE = {
 # Pastas inteiramente controladas pelo pacote: qualquer arquivo a mais nelas é sinal de adulteração ou sobra.
 MANAGED_DIRS = ["multimodal_v2/ii_mm", "multimodal_v2/tests", "multimodal_v2/fixtures", "multimodal_v2/tools",
                 "multimodal_v2/handoff"]
-REQUIREMENTS = {"python_min": "3.11", "python_tested": ["3.11.15", "3.12", "3.13.16"], "sqlite_min": "3.24.0",
+REQUIREMENTS = {"python_min": "3.11", "python_tested": ["3.11.17", "3.12.3", "3.13.16"], "sqlite_min": "3.24.0",
                 "external_packages": [], "os_tested": ["Linux x86_64 (container de nuvem)"], "os_not_tested": ["Windows"]}
 FORBIDDEN_SUFFIXES = (".sqlite", ".sqlite3", ".db", ".mp4", ".mov", ".jpg", ".jpeg", ".png", ".webp", ".wav", ".mp3", ".env", ".pem", ".key")
 MANIFEST_NAME = "MANIFESTO_PACOTE.json"

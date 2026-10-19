@@ -392,9 +392,9 @@
       "sha256_lf": "ac70ee0e45259b01e753940aa7c3fb3ccf472bd019fdf38b038bd950dd43f976"
     },
     {
-      "bytes_lf": 11302,
+      "bytes_lf": 11304,
       "path": "multimodal_v2/tools/build_handoff.py",
-      "sha256_lf": "e168fd788bbcee574f05e3b821cb846afef7aceb5d4fcc9eacdd362ea5aece9b"
+      "sha256_lf": "a455dfed63affe8f6780565d30885f51a3fe4072372485892f9ed2266f346f86"
     },
     {
       "bytes_lf": 1919,
@@ -552,14 +552,14 @@
       "sha256_lf": "aeda1081187dc1060259e524970f1e7d301cff629d0ff8c933b4b9219ae6fce1"
     },
     {
-      "bytes_lf": 13848,
+      "bytes_lf": 13850,
       "path": "multimodal_v2/INVENTARIO_COMPONENTES.md",
-      "sha256_lf": "d3fbae8648744b8848e4f418886444e2a5a8980772c644278fec155c9945327e"
+      "sha256_lf": "97b11b211933bdeb40313630c72d2ef955e95eefaa562d28c91c9b8cc8089395"
     },
     {
-      "bytes_lf": 7119,
+      "bytes_lf": 7121,
       "path": "multimodal_v2/DEPENDENCIAS_WINDOWS.md",
-      "sha256_lf": "487c3685212aa309b5a2b06d17346255a489b4201d0b67fa900e127231d87c54"
+      "sha256_lf": "c35064456601106b0e98989e6d3f109a2cb5ef76876af7bf1cc3387ef91c9651"
     },
     {
       "bytes_lf": 11700,
@@ -616,8 +616,8 @@
     ],
     "python_min": "3.11",
     "python_tested": [
-      "3.11.15",
-      "3.12",
+      "3.11.17",
+      "3.12.3",
       "3.13.16"
     ],
     "sqlite_min": "3.24.0"
