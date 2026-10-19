@@ -1,0 +1,12 @@
+{
+  "_nota": "SINTETICO: estrutura no formato da exportacao de dados da conta (saved_posts.json); valores inventados para teste",
+  "saved_saved_media": [
+    {"title": "autor_sintetico_a", "string_map_data": {"Saved on": {"href": "https://www.instagram.com/reel/SYNTHmeta01/", "timestamp": 1760000000}}},
+    {"title": "autor_sintetico_b", "string_map_data": {"Saved on": {"href": "https://www.instagram.com/p/SYNTHmeta02/?igsh=SYNTHshare", "timestamp": 1760000100}}},
+    {"title": "sem_link", "string_map_data": {"Saved on": {"timestamp": 1760000200}}},
+    {"title": "outro_site", "string_map_data": {"Saved on": {"href": "https://example.com/post/1", "timestamp": 1760000300}}}
+  ],
+  "likes_media_likes": [
+    {"title": "autor_sintetico_a", "string_list_data": [{"href": "https://www.instagram.com/reel/SYNTHmeta01/", "value": "👍", "timestamp": 1760000400}]}
+  ]
+}
