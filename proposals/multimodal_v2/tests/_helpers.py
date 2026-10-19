@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
 sys.dont_write_bytecode = True
 
 # Só código do Projeto-MVP entra na cópia: nada de storage/, review_notes/, .git, bancos ou mídia.
-PROJETO_SAFE_DIRS = ("core", "config")
+PROJETO_SAFE_DIRS = ("core", "config", "temporal_intelligence")
 _IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", "*.sqlite", "*.sqlite3", "*.db", "*.bak", "*.mp4", "*.jpg", "*.png", "*.webp")
 _COPY = None
 

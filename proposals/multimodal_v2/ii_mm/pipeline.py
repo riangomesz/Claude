@@ -15,6 +15,9 @@ e a referência de saída. Regras:
 - `awaiting_review` só conclui quando o handler devolve uma saída (ex.: id da revisão); `None` = aguardando.
 - Posse e lease (Missão Suprema 02): cada executor tem um `owner`. Uma etapa `running` de OUTRO dono com lease
   válido não é tocada (estado `busy`); lease vencido (dono caiu) libera a retomada; o mesmo dono retoma na hora.
+- Heartbeat (Missão Suprema 03): etapa mais longa que o lease chama `ctx.heartbeat()` para renová-lo; se a posse
+  já foi perdida, levanta `LeaseLost`. Ao concluir, a posse é conferida antes de gravar: quem perdeu o lease não
+  sobrescreve o estado de quem assumiu.
 """
 from __future__ import annotations
 
@@ -33,12 +36,17 @@ TERMINAL_FAILED = "failed"
 Handler = Callable[["StageContext"], Optional[str]]
 
 
+class LeaseLost(RuntimeError):
+    """O lease desta etapa expirou e outro executor assumiu; o trabalho em andamento deve parar."""
+
+
 @dataclass
 class StageContext:
     video_pk: int
     stage: str
     upstream: Dict[str, str]
     attempt: int
+    heartbeat: Callable[[], None] = lambda: None  # etapas longas chamam periodicamente para renovar o lease
 
 
 @dataclass
@@ -72,6 +80,23 @@ class Pipeline:
 
     def _row(self, video_pk: int, stage: str):
         return self.conn.execute("SELECT * FROM processing_state WHERE video_pk = ? AND stage = ?", (video_pk, stage)).fetchone()
+
+    def _renew(self, video_pk: int, stage: str) -> None:
+        self.conn.execute("BEGIN IMMEDIATE")
+        try:
+            cur = self.conn.execute("UPDATE processing_state SET lease_until = ?, updated_at = ? WHERE video_pk = ? AND stage = ? "
+                                    "AND status = 'running' AND owner = ?", (self.clock() + self.lease_s, _now(), video_pk, stage, self.owner))
+            self.conn.execute("COMMIT")
+        except BaseException:
+            if self.conn.in_transaction:
+                self.conn.execute("ROLLBACK")
+            raise
+        if cur.rowcount != 1:
+            raise LeaseLost(f"{stage}: posse perdida para outro executor")
+
+    def _still_owner(self, video_pk: int, stage: str) -> bool:
+        row = self.conn.execute("SELECT owner, status FROM processing_state WHERE video_pk = ? AND stage = ?", (video_pk, stage)).fetchone()
+        return bool(row) and row["owner"] == self.owner and row["status"] == "running"
 
     def _write(self, video_pk: int, stage: str, status: str, attempt: int, input_hash: str,
                output_ref: Optional[str] = None, error: Optional[str] = None, claim: bool = False) -> Optional[str]:
@@ -135,15 +160,25 @@ class Pipeline:
             if holder is not None:
                 report.state, report.error = "busy", f"{stage}: em execução por {holder} (lease válido)"
                 return report
+            ctx = StageContext(video_pk, stage, dict(upstream), attempt, heartbeat=lambda: self._renew(video_pk, stage))
             try:
-                out = self.handlers[stage](StageContext(video_pk, stage, dict(upstream), attempt))
+                out = self.handlers[stage](ctx)
             except (KeyboardInterrupt, SystemExit):
                 raise  # estado fica 'running' e será retomado
+            except LeaseLost as exc:  # outro executor é o dono agora: não grava nada
+                report.state, report.error = TERMINAL_FAILED, str(exc)
+                return report
             except Exception as exc:
+                if not self._still_owner(video_pk, stage):
+                    report.state, report.error = TERMINAL_FAILED, f"{stage}: falhou após perder a posse; estado do novo dono preservado"
+                    return report
                 self._write(video_pk, stage, "failed", attempt, ih, error=f"{exc.__class__.__name__}: {exc}"[:500])
                 report.state, report.error = TERMINAL_FAILED, f"{stage}: {exc}"
                 return report
             if out is None:
+                if not self._still_owner(video_pk, stage):
+                    report.state, report.error = TERMINAL_FAILED, f"{stage}: posse perdida durante a execução"
+                    return report
                 if stage != "awaiting_review":
                     self._write(video_pk, stage, "failed", attempt, ih, error="handler não devolveu referência de saída")
                     report.state, report.error = TERMINAL_FAILED, f"{stage}: sem saída"
@@ -151,6 +186,9 @@ class Pipeline:
                 self._write(video_pk, stage, "running", attempt, ih)
                 report.state, report.waiting_on = "awaiting_review", stage
                 report.executed.append(stage)
+                return report
+            if not self._still_owner(video_pk, stage):
+                report.state, report.error = TERMINAL_FAILED, f"{stage}: posse perdida durante a execução (lease expirou); resultado descartado"
                 return report
             self._write(video_pk, stage, "done", attempt, ih, output_ref=str(out))
             upstream[stage] = str(out)

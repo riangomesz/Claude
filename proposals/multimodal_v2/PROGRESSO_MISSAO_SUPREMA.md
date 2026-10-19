@@ -136,3 +136,22 @@ Suíte: 244 testes (240 OK, 4 pulados).
 - T17: 307 testes (297 OK + 10 pulados sem clone; 307 OK com clone). Benchmark final sem regressão; filtro sem resultado de 24 ms para 0,006 ms com 10 mil registros.
 - T16: piloto segue `blocked_missing_evidence` (verificação única no início da missão).
 - Para retomar: `RELATORIO_MISSAO_SUPREMA_02.md`, seção 10.
+
+---
+
+# Missão Suprema 03: Release Candidate `ii_mm-1.0.0-rc1`
+
+Estado inicial: `53aa749`, `main` intocada, clone limpo. Etapa 16 (verificação única): anexos vazios, piloto `blocked_missing_evidence`.
+Baseline independente: 307/307 OK em Python 3.11, 3.12 e 3.13 contra uma **cópia** descartável do clone (o clone não é mais usado em testes).
+
+### M3-C1 (commit `e2a3cd2` e seguintes)
+- Portabilidade Windows: W2 `resource` no benchmark; W3 `PATH` POSIX em teste; W4 symlink sem privilégio; W5 encoding em I/O de texto de testes; W6 URIs com `:` (ADS), nomes de dispositivo e ponto/espaço final no contrato n8n.
+- Testes opt-in passam a usar `tests/_helpers.projeto_dir()` (cópia de `core/`, `config/`, `temporal_intelligence/`). Comprovado com a pasta de origem somente leitura.
+- D-RC1: o pacote da Missão 02 não continha os testes v1, o golden nem o marcador do piloto exigidos por `run_tests.py`.
+- D-RC2: `editorial_category` com origem nula ou desconhecida passa a ser decisão humana (revalidado: o legado só grava por fluxo humano, `human`/`manual`).
+- D-RC3: injeção de HTML/Markdown no relatório do modo sombra.
+- Sombra: `snapshot_readonly` (API de backup, origem `mode=ro`) e `export_review_csv` (fórmulas neutralizadas).
+- D-RC4: lease expirava durante etapa longa e o executor antigo sobrescrevia o estado do novo dono → `ctx.heartbeat()`, `LeaseLost`, conferência de posse antes de gravar.
+- Etapas 10/11: 12 formatos e distinções de categorização; nenhuma constante do piloto no núcleo.
+- Etapa 12: `ii_mm/evaluation.py` (amostra estratificada de 30 a 50, planilha cega, validação de rótulos, concordância em contagens; taxa só com n ≥ 30).
+- Etapa 07: `tools/compat_report.py` + `handoff/baseline_contratos_c6845a4.json` (13 módulos, 65 colunas, valores reais).

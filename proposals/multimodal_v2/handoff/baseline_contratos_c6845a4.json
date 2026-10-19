@@ -1,0 +1,790 @@
+{
+  "instagram_items_columns": [
+    "audio_transcript",
+    "audio_transcript_language",
+    "audio_transcript_segments_json",
+    "audio_transcript_source",
+    "audio_transcript_status",
+    "audio_transcript_updated_at",
+    "canonical_shortcode",
+    "caption",
+    "capture_session_id",
+    "captured_at",
+    "created_at",
+    "curation_category",
+    "curation_rule",
+    "curation_updated_at",
+    "curator_note",
+    "editorial_category",
+    "editorial_category_source",
+    "editorial_tags_json",
+    "editorial_updated_at",
+    "fbid",
+    "has_media_file",
+    "hashtags_json",
+    "id",
+    "is_archived",
+    "lifecycle_stage",
+    "linked_analysis_id",
+    "linked_analysis_path",
+    "local_media_path",
+    "marked_for_deep_analysis",
+    "media_acodec",
+    "media_acquired_at",
+    "media_attempts",
+    "media_duration_sec",
+    "media_error",
+    "media_error_kind",
+    "media_fps",
+    "media_height",
+    "media_last_attempt_at",
+    "media_provenance_json",
+    "media_sha256",
+    "media_size_bytes",
+    "media_source",
+    "media_status",
+    "media_thumbnail_path",
+    "media_vcodec",
+    "media_width",
+    "origin_platform",
+    "owner_name",
+    "owner_username",
+    "post_type",
+    "provenance_occurrences_json",
+    "quality_rating",
+    "review_status",
+    "saved_date",
+    "saved_timestamp",
+    "source_file",
+    "status",
+    "thematic_relevance",
+    "timestamp_meaning",
+    "triage_decision",
+    "triage_timestamp",
+    "updated_at",
+    "url",
+    "visual_relevance",
+    "zip_internal_path"
+  ],
+  "signatures": {
+    "core/account_connection.py": {
+      "def audit_existing_catalog_origin": [
+        "db_path"
+      ],
+      "def ensure_connection_schema": [
+        "db_path"
+      ],
+      "def extract_canonical_shortcode": [
+        "url_or_id"
+      ],
+      "def extract_canonical_shortcode_and_route": [
+        "url_or_id",
+        "route_hint"
+      ],
+      "def get_account_connection_status": [
+        "db_path",
+        "account_identifier"
+      ],
+      "def get_capture_sessions_history": [
+        "db_path",
+        "limit"
+      ],
+      "def inspect_archive_identity": [
+        "archive_path"
+      ],
+      "def merge_provenance_occurrences": [
+        "existing_json_str",
+        "primary_source_file",
+        "new_occurrence"
+      ],
+      "def process_browser_captured_urls": [
+        "urls",
+        "db_path",
+        "account",
+        "username",
+        "collection",
+        "items",
+        "auto_acquire",
+        "dry_run",
+        "session_id",
+        "session_stats"
+      ],
+      "def scan_and_process_watch_folder": [
+        "db_path",
+        "target_account"
+      ],
+      "def set_item_quality_rating": [
+        "item_id",
+        "rating",
+        "db_path"
+      ]
+    },
+    "core/audio_processor.py": {
+      "class AudioMetadata": [
+        "file_path",
+        "has_audio",
+        "codec_name",
+        "sample_rate",
+        "channels",
+        "channel_layout",
+        "bit_rate",
+        "duration_sec",
+        "mean_volume_db",
+        "max_volume_db",
+        "transcript_source",
+        "transcript_text",
+        "subtitles",
+        "is_measured",
+        "measurement_method"
+      ],
+      "class SubtitleEntry": [
+        "index",
+        "start_time",
+        "end_time",
+        "text"
+      ],
+      "def extract_audio_track": [
+        "video_path",
+        "output_audio_path",
+        "sample_rate"
+      ],
+      "def parse_srt_file": [
+        "srt_path"
+      ],
+      "def probe_audio": [
+        "video_or_audio_path",
+        "associated_srt_path"
+      ]
+    },
+    "core/content_miner.py": {
+      "class SeedProfile": [
+        "total_videos",
+        "golden_creators",
+        "dominant_resolutions",
+        "average_duration_sec",
+        "pillar_distribution",
+        "generated_at"
+      ],
+      "def classify_content_for_rian": [
+        "title_or_caption",
+        "author",
+        "hashtags",
+        "has_local_video",
+        "visual_relevance",
+        "thematic_relevance",
+        "triage_decision",
+        "origin_type",
+        "duration_sec",
+        "width",
+        "height",
+        "fps",
+        "real_views",
+        "real_likes"
+      ],
+      "def ensure_miner_schema": [
+        "db_path"
+      ],
+      "def extract_seed_profile": [
+        "db_path"
+      ],
+      "def get_miner_summary": [
+        "db_path",
+        "include_external"
+      ],
+      "def ingest_secondary_account_input": [
+        "raw_input",
+        "db_path"
+      ],
+      "def list_opportunities": [
+        "db_path",
+        "pillar",
+        "origin_type",
+        "approval_status",
+        "tier",
+        "search",
+        "limit",
+        "include_external",
+        "inbox_mode",
+        "session_id"
+      ],
+      "def mine_catalog_opportunities": [
+        "db_path"
+      ],
+      "def register_custom_public_url": [
+        "url",
+        "title",
+        "notes",
+        "db_path",
+        "origin_type"
+      ],
+      "def run_autonomous_discovery_cycle": [
+        "db_path",
+        "include_external",
+        "github_queries",
+        "limit_per_query"
+      ]
+    },
+    "core/curation.py": {
+      "class CurationStats": [
+        "total_items",
+        "relevante",
+        "incerto",
+        "irrelevante",
+        "rules_applied"
+      ],
+      "def ensure_curation_columns": [
+        "db_path"
+      ],
+      "def evaluate_item_curation": [
+        "caption",
+        "hashtags",
+        "owner_username",
+        "owner_name"
+      ],
+      "def get_audio_transcript": [
+        "db_path",
+        "item_id",
+        "slide_position"
+      ],
+      "def get_curation_summary": [
+        "db_path"
+      ],
+      "def get_editorial_categories_summary": [
+        "db_path"
+      ],
+      "def normalize_editorial_category": [
+        "cat"
+      ],
+      "def run_preliminary_curation": [
+        "db_path",
+        "preserve_manual_notes"
+      ],
+      "def suggest_editorial_category": [
+        "caption",
+        "hashtags",
+        "owner_username",
+        "post_type"
+      ],
+      "def undo_triage_decision": [
+        "db_path",
+        "item_id"
+      ],
+      "def unicodedata_normalize": [
+        "text"
+      ],
+      "def update_audio_transcript": [
+        "db_path",
+        "item_id",
+        "transcript_text",
+        "source",
+        "segments",
+        "slide_position",
+        "status",
+        "language"
+      ],
+      "def update_curation": [
+        "db_path",
+        "item_id",
+        "category",
+        "curator_note"
+      ],
+      "def update_dual_curation": [
+        "db_path",
+        "item_id",
+        "thematic_relevance",
+        "visual_relevance",
+        "marked_for_deep_analysis",
+        "curator_note",
+        "is_archived"
+      ],
+      "def update_editorial_category": [
+        "db_path",
+        "item_id",
+        "category",
+        "tags",
+        "source"
+      ],
+      "def update_triage_decision": [
+        "db_path",
+        "item_id",
+        "decision",
+        "action_source"
+      ]
+    },
+    "core/instagram_importer.py": {
+      "class InstagramImportStats": [
+        "total_parsed",
+        "reels_count",
+        "posts_count",
+        "inserted_new",
+        "duplicates_skipped",
+        "total_in_db",
+        "notes_exported",
+        "review_dir"
+      ],
+      "class InstagramItem": [
+        "id",
+        "fbid",
+        "url",
+        "post_type",
+        "owner_username",
+        "owner_name",
+        "caption",
+        "hashtags",
+        "saved_timestamp",
+        "saved_date",
+        "source_file",
+        "zip_internal_path",
+        "timestamp_meaning",
+        "has_media_file",
+        "local_media_path",
+        "status",
+        "review_status",
+        "lifecycle_stage",
+        "linked_analysis_id",
+        "linked_analysis_path",
+        "origin_platform",
+        "thematic_relevance",
+        "visual_relevance",
+        "marked_for_deep_analysis",
+        "is_archived",
+        "curator_note",
+        "curation_rule"
+      ],
+      "class MetaAuditResult": [
+        "zips_inspected",
+        "instagram_total_records",
+        "facebook_raw_records",
+        "facebook_deduplicated_records",
+        "facebook_zip_duplicate_detected",
+        "sqlite_inserted_new",
+        "sqlite_duplicates_skipped",
+        "sqlite_total_in_db",
+        "media_available_count",
+        "metadata_only_count",
+        "notes_exported_count",
+        "review_dir"
+      ],
+      "def audit_and_catalog_meta_exports": [
+        "vault_entrada_path",
+        "db_path",
+        "review_dir",
+        "export_sample_count"
+      ],
+      "def extract_shortcode": [
+        "url",
+        "fallback_fbid"
+      ],
+      "def fix_meta_encoding": [
+        "text"
+      ],
+      "def get_instagram_items_from_db": [
+        "db_path",
+        "reels_only",
+        "platform",
+        "limit"
+      ],
+      "def import_meta_archive": [
+        "archive_path",
+        "db_path",
+        "account",
+        "collection"
+      ],
+      "def import_single_url": [
+        "url",
+        "db_path",
+        "account",
+        "collection",
+        "auto_acquire",
+        "post_type",
+        "owner_username",
+        "caption",
+        "media_items"
+      ],
+      "def init_instagram_db": [
+        "db_path"
+      ],
+      "def parse_facebook_saved_items": [
+        "source_path"
+      ],
+      "def parse_saved_posts": [
+        "source_path"
+      ],
+      "def run_instagram_import": [
+        "json_path",
+        "db_path",
+        "export_count",
+        "review_dir",
+        "reels_only"
+      ],
+      "def save_instagram_items_to_sqlite": [
+        "db_path",
+        "items"
+      ]
+    },
+    "core/media_acquisition.py": {
+      "class AcquisitionResult": [
+        "item_id",
+        "status",
+        "method",
+        "file_path",
+        "thumbnail_path",
+        "error_kind",
+        "error",
+        "duration_sec",
+        "width",
+        "height",
+        "vcodec",
+        "size_bytes",
+        "skipped",
+        "elapsed_ms",
+        "post_type",
+        "media_count",
+        "details"
+      ],
+      "class _CaptureLogger": [],
+      "def acquire_batch": [
+        "item_ids",
+        "db_path",
+        "limit",
+        "force",
+        "delay_sec",
+        "max_consecutive_blocks",
+        "on_result"
+      ],
+      "def acquire_item": [
+        "item_id",
+        "db_path",
+        "force"
+      ],
+      "def cancel_batch_acquisition": [],
+      "def classify_error": [
+        "message"
+      ],
+      "def classify_source": [
+        "url",
+        "local_media_path",
+        "db_path"
+      ],
+      "def determine_real_post_type": [
+        "url",
+        "slide_types",
+        "current_post_type",
+        "fallback_post_type"
+      ],
+      "def ensure_media_schema": [
+        "db_path"
+      ],
+      "def get_batch_progress": [],
+      "def get_media_summary": [
+        "db_path"
+      ],
+      "def get_post_media_items": [
+        "post_id",
+        "db_path"
+      ],
+      "def make_image_thumbnail": [
+        "image_path",
+        "item_id",
+        "db_path"
+      ],
+      "def make_thumbnail": [
+        "video",
+        "item_id",
+        "duration",
+        "db_path"
+      ],
+      "def probe_image": [
+        "path"
+      ],
+      "def probe_media": [
+        "path"
+      ],
+      "def recover_interrupted": [
+        "db_path"
+      ],
+      "def register_post_media_items": [
+        "post_id",
+        "slides",
+        "db_path",
+        "update_parent_type"
+      ],
+      "def select_candidates": [
+        "db_path",
+        "statuses",
+        "limit"
+      ],
+      "def select_failed_candidates": [
+        "db_path",
+        "limit"
+      ],
+      "def select_inbox_pending_candidates": [
+        "db_path",
+        "limit"
+      ],
+      "def sha256_file": [
+        "path"
+      ],
+      "def start_background_acquisition": [
+        "item_id",
+        "db_path",
+        "force"
+      ],
+      "def start_background_batch_acquisition": [
+        "item_ids",
+        "db_path",
+        "limit",
+        "force",
+        "delay_sec"
+      ],
+      "def start_failed_batch_acquisition": [
+        "db_path",
+        "limit",
+        "delay_sec"
+      ],
+      "def start_inbox_batch_acquisition": [
+        "db_path",
+        "limit",
+        "delay_sec"
+      ]
+    },
+    "core/scene_analyzer.py": {
+      "class SceneAnalysisResult": [
+        "total_scenes",
+        "total_cuts",
+        "scenes",
+        "mean_pixel_difference",
+        "critical_intervals",
+        "fastest_cut_ms",
+        "recommended_micro_focus"
+      ],
+      "class SceneInterval": [
+        "scene_id",
+        "start_sec",
+        "end_sec",
+        "start_frame",
+        "end_frame",
+        "duration_sec",
+        "is_micro_cut",
+        "mean_pixel_diff",
+        "has_high_visual_change"
+      ],
+      "def analyze_scenes": [
+        "video_path",
+        "threshold"
+      ],
+      "def compute_motion_curve": [
+        "video_path",
+        "sample_interval"
+      ],
+      "def detect_scenes": [
+        "video_path",
+        "threshold"
+      ]
+    },
+    "core/studio_adapter.py": {
+      "def classify_curation_state": [
+        "triage_decision",
+        "is_archived",
+        "media_status"
+      ],
+      "def filter_by_curation": [
+        "items",
+        "curation_filter"
+      ],
+      "def get_curation_state_for": [
+        "video_id",
+        "db_path"
+      ],
+      "def get_ro_sqlite_connection": [
+        "db_path"
+      ],
+      "def get_video_temporal_studio_data": [
+        "video_id",
+        "db_path"
+      ],
+      "def list_studio_catalog": [
+        "db_path"
+      ],
+      "def normalize_curation_filter": [
+        "value"
+      ],
+      "def resolve_contact_sheet_path": [
+        "video_id"
+      ],
+      "def resolve_safe_frame_path": [
+        "video_id",
+        "window_folder",
+        "file_name"
+      ],
+      "def summarize_curation_counts": [
+        "items"
+      ]
+    },
+    "core/transcription.py": {
+      "def distinguish_text_layers": [
+        "caption",
+        "audio_transcript",
+        "ocr_text",
+        "ai_analysis_text"
+      ],
+      "def find_associated_media_file": [
+        "row",
+        "base_dir"
+      ],
+      "def find_associated_media_target": [
+        "row",
+        "base_dir",
+        "db_path",
+        "slide_position"
+      ],
+      "def find_associated_srt": [
+        "media_file"
+      ],
+      "def run_local_faster_whisper": [
+        "audio_path",
+        "model_name",
+        "language"
+      ],
+      "def run_local_whisper_cli": [
+        "audio_path"
+      ],
+      "def transcribe_video_speech": [
+        "media_path",
+        "gemini_client",
+        "allow_network_api"
+      ]
+    },
+    "core/trash_manager.py": {
+      "def check_file_sharing": [
+        "db_path",
+        "item_id",
+        "video_path"
+      ],
+      "def ensure_trash_schema": [
+        "db_path"
+      ],
+      "def is_path_safe_to_trash": [
+        "file_path",
+        "base_dir",
+        "managed_dirs"
+      ],
+      "def list_trash_items": [
+        "db_path"
+      ],
+      "def move_item_to_trash": [
+        "item_id",
+        "db_path",
+        "action_source",
+        "retention_days"
+      ],
+      "def purge_expired_trash": [
+        "db_path",
+        "dry_run"
+      ],
+      "def restore_item_from_trash": [
+        "item_id",
+        "db_path",
+        "record_history"
+      ]
+    },
+    "core/vision_client.py": {
+      "class AnalysisResult": [
+        "macro",
+        "micro",
+        "cost"
+      ],
+      "class VisualMacroAnalysis": [
+        "status",
+        "art_direction",
+        "dominant_palette",
+        "lighting_and_atmosphere",
+        "pacing_and_rhythm",
+        "style_tags",
+        "verifiable_observations",
+        "inferred_hypotheses",
+        "limitations_or_ambiguities",
+        "audio_visual_coherence",
+        "summary_text"
+      ],
+      "class VisualMicroAnalysis": [
+        "status",
+        "interval_analyzed",
+        "curator_focus",
+        "kinetic_behavior",
+        "inferred_easing_curves",
+        "typography_and_layout",
+        "camera_and_effects",
+        "verifiable_observations",
+        "reproduction_hypotheses",
+        "practical_applications",
+        "limitations_or_uncertainties"
+      ],
+      "def get_gemini_client": [
+        "api_key"
+      ],
+      "def run_macro_analysis": [
+        "client",
+        "metadata",
+        "macro_frames",
+        "model_name",
+        "audio_context",
+        "max_output_tokens"
+      ],
+      "def run_micro_analysis": [
+        "client",
+        "interval_str",
+        "curator_note",
+        "evidence_image_path",
+        "model_name",
+        "max_output_tokens"
+      ]
+    },
+    "temporal_intelligence/metric_calculator.py": {
+      "def calculate_window_differences": [
+        "frames",
+        "split_ratio"
+      ],
+      "def compute_frame_luminances": [
+        "frame_bgr",
+        "split_ratio"
+      ],
+      "def compute_histogram_correlation": [
+        "g1",
+        "g2",
+        "bins"
+      ],
+      "def compute_pairwise_metrics": [
+        "frame_prev",
+        "frame_curr",
+        "split_ratio"
+      ],
+      "def compute_ssim_numpy": [
+        "img1_gray",
+        "img2_gray",
+        "block_size"
+      ],
+      "def split_frame_regions": [
+        "frame_bgr",
+        "split_ratio"
+      ]
+    },
+    "temporal_intelligence/transition_detector.py": {
+      "def detect_transitions_in_window": [
+        "diff_list"
+      ],
+      "def evaluate_transition_candidate": [
+        "diff_metric"
+      ]
+    }
+  },
+  "values": {
+    "editorial_source_default_function": "human",
+    "editorial_source_default_server": "human",
+    "triage_valid_decisions": [
+      "descartar",
+      "manter",
+      "revisar_depois"
+    ]
+  }
+}
